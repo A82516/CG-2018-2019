@@ -3,6 +3,7 @@
 
 #include <math.h>
 #include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -17,6 +18,7 @@ class Point{
 		float getX();
 		float getY();
 		float getZ();
+		string to_String();
 };
 
 #endif

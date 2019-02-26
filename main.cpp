@@ -8,7 +8,11 @@
 #include <math.h>
 
 #include <stdio.h>
+#include <iostream>
+#include <vector>
 #include "headers/Point.h"
+#include "generator.cpp"
+
 
 float ay = 0;
 
@@ -219,6 +223,9 @@ void renderScene(void) {
 	//draw_cone(1,2,100,100);
 	//glColor3f(0,0,0);
 	//glutWireCone(1,2,5,3);
+	vector<Point*> vec;
+    shpere_vertex(1,10,10,vec);
+    write_file("sphere.3ds",vec);
 
 	// End of frame
 	glutSwapBuffers();
