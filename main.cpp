@@ -11,7 +11,7 @@
 #include <iostream>
 #include <vector>
 #include "headers/Point.h"
-#include "generator.cpp"
+
 
 
 float ay = 0;
@@ -172,7 +172,7 @@ void draw_box(float x,float y,float z){
 }
 
 void draw_cone(float radius,float height,int slices,int stacks){
-		float angle, height_act = 0, radius_act = 0;
+		float angle, height_act = 0, height_next = 0, radius_act = 0, radius_next = 0;
 		glColor3f(0.4,0.1,0.792);
 		glBegin(GL_TRIANGLES);
 		int k = 0,i;
@@ -186,15 +186,31 @@ void draw_cone(float radius,float height,int slices,int stacks){
 		}
 
 		for(i = 0; i < slices; i++){
-			for(k = 0; k < stacks; k++){
+			for(k = 0; k < stacks - 1; k++){
 				height_act = k * (height / stacks);
+				height_next = (k+1) * (height / stacks);
 				radius_act = (radius * (height - height_act)) / height;
+				radius_next = (radius * (height - height_next)) / height;
 				angle = i * ((2*M_PI) / slices);
 
-				glVertex3f(0,height,0);
 				glVertex3f(radius_act*cos(angle + ((2*M_PI) / slices)),height_act,radius_act*sin(angle + ((2*M_PI) / slices)));
 				glVertex3f(radius_act*cos(angle),height_act,radius_act*sin(angle));
+				glVertex3f(radius_next*cos(angle),height_next,radius_next*sin(angle));
+
+				glVertex3f(radius_next*cos(angle),height_next,radius_next*sin(angle));
+				glVertex3f(radius_next*cos(angle + ((2*M_PI) / slices)),height_next,radius_next*sin(angle + ((2*M_PI) / slices)));
+				glVertex3f(radius_act*cos(angle + ((2*M_PI) / slices)),height_act,radius_act*sin(angle + ((2*M_PI) / slices)));
 			}
+		}
+
+		for(i = 0; i < slices; i++){
+			height_act = k * (height / stacks);
+			radius_act = (radius * (height - height_act)) / height;
+			angle = i * ((2*M_PI) / slices);
+
+			glVertex3f(0,height,0);
+			glVertex3f(radius_act*cos(angle + ((2*M_PI) / slices)),height_act,radius_act*sin(angle + ((2*M_PI) / slices)));
+			glVertex3f(radius_act*cos(angle),height_act,radius_act*sin(angle));
 		}
 
 		glEnd();
@@ -217,15 +233,12 @@ void renderScene(void) {
 
 	glPolygonMode(GL_FRONT,GL_LINE);
 	//sdraw_xyz(3);
-	draw_shpere(1,10,10);
+	//draw_shpere(1,10,10);
 	//draw_plane();
 	//draw_box(1,1,1);
-	//draw_cone(1,2,100,100);
+	draw_cone(1,2,10,10);
 	//glColor3f(0,0,0);
 	//glutWireCone(1,2,5,3);
-	vector<Point*> vec;
-    shpere_vertex(1,10,10,vec);
-    write_file("sphere.3ds",vec);
 
 	// End of frame
 	glutSwapBuffers();
