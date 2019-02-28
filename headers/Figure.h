@@ -15,6 +15,7 @@ class Figure {
     public:
         Figure(vector<Point*> pontos);
         void shpere_vertex(float radius,int slices,int stacks);
+        void cone_vertex(float radius,float height,int slices,int stacks);
         vector<Point*> getPontos();
 
 };

@@ -8,6 +8,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <string.h>
 
 
 void write_file(string file_name,vector<Point*> vertices){
@@ -27,10 +28,18 @@ void write_file(string file_name,vector<Point*> vertices){
     outputFile.close();
 }
 
-int main(){
+int main(int argc, char **argv){
 
     vector<Point*> v;
     Figure f(v);
-    f.shpere_vertex(1,10,10);
-    write_file("shpere.3d",f.getPontos());
+
+    if (argc == 3 && strcmp(argv[1],"plane")){
+
+    }
+    else if (argc == 6 && strcmp(argv[1],"sphere")){
+
+    }
+    else if (argc == 7 && strcmp(argv[1],"cone")){
+
+    }
 }

@@ -229,14 +229,14 @@ void renderScene(void) {
 		      0.0,0.0,0.0,
 			  0.0f,1.0f,0.0f);
 
-	glRotatef(ay,0,1,0);
+	glRotatef(ay,0,0,1);
 
 	glPolygonMode(GL_FRONT,GL_LINE);
 	//sdraw_xyz(3);
 	//draw_shpere(1,10,10);
 	//draw_plane();
 	//draw_box(1,1,1);
-	draw_cone(1,2,10,10);
+	draw_cone(1,2,10,1);
 	//glColor3f(0,0,0);
 	//glutWireCone(1,2,5,3);
 
