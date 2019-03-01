@@ -15,6 +15,8 @@
 #include "headers/Figure.h"
 
 
+#include "Figure.cpp"
+
 float ay = 0;
 
 void changeSize(int w, int h) {
@@ -246,11 +248,11 @@ void renderScene(void) {
 	//draw_plane();
 	//draw_box(1,1,1);
 	//draw_cone(1,2,10,1);
-	//glColor3f(0,0,0);
-	//Figure f;
-	//f.torus_vertex(1,1,20,20);
-	//f.draw();
-	//draw_anel(1,1,20,20);
+	glColor3f(0,0,0);
+	Figure f;
+	f.torus_vertex(1,1,20,20);
+	f.draw();
+	//draw_anel(1,1,1000,1000);
 
 	//glutWireSphere(1,9,9);
 	//glutWireCone(1,2,5,3);

@@ -3,6 +3,7 @@
 //
 
 #include "headers/Figure.h"
+#include "Point.cpp"
 
 void Figure::shpere_vertex(float radius,int slices,int stacks){
     int i=0;
