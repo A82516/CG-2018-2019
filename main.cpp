@@ -66,9 +66,11 @@ void draw_shpere(float radius,int slices,int stacks){
 	float alpha = 2*M_PI / slices;
 	float beta = M_PI / stacks;
 
+	int k = -(stacks / 2);
+
 	glBegin(GL_TRIANGLES);
 
-	for(int k = -(stacks / 2) ; k < (stacks / 2); k++){
+	for(; k < (stacks / 2); k++){
 
 		for(i=0; i < slices;i++){
 			alpha = 2*M_PI / slices;
@@ -246,9 +248,12 @@ void renderScene(void) {
 	//draw_plane();
 	//draw_box(1,1,1);
 	//draw_cone(1,2,10,1);
-	//glColor3f(0,0,0);
+	glColor3f(0,0,0);
+	Figure f;
+	f.shpere_vertex(1,10,10);
+	f.draw();
 
-	//glutWireSphere(1,2,10);
+	//glutWireSphere(1,9,9);
 	//glutWireCone(1,2,5,3);
 
 	// End of frame
