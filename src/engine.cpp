@@ -242,17 +242,18 @@ void renderScene(void) {
 
 	glRotatef(ay,0,0,1);
 
-	//glPolygonMode(GL_FRONT,GL_LINE);
-	//sdraw_xyz(3);
+	glPolygonMode(GL_FRONT,GL_LINE);
+	glColor3f(0,0,0);
+	draw_xyz(3);
 	//draw_shpere(3,10,10);
 	//draw_plane();
 	//draw_box(1,1,1);
 	//draw_cone(1,2,10,1);
-	glColor3f(0,0,0);
+	//glColor3f(0,0,0);
 	Figure f;
-	f.torus_vertex(1,1,20,20);
+	f.box_vertex(2,2,2,3);
 	f.draw();
-	//draw_anel(1,1,1000,1000);
+	//draw_anel(1,1,20,20);
 
 	//glutWireSphere(1,9,9);
 	//glutWireCone(1,2,5,3);
