@@ -4,6 +4,7 @@
 #include <GL/glut.h>
 #endif
 
+
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -11,7 +12,6 @@
 #include <iostream>
 #include <vector>
 #include "headers/Point.h"
-
 
 
 float ay = 0;
