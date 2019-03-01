@@ -21,26 +21,29 @@ void Figure::shpere_vertex(float radius,int slices,int stacks){
             p2 = new Point(radius*cos(i*alpha)*cos((k+1)*beta),radius*sin((k+1)*beta),radius*sin(i*alpha)*cos((k+1)*beta));
             p3 = new Point(radius*cos((i+1)*alpha)*cos(k*beta) ,radius*sin(k*beta) ,radius*sin((i+1)*alpha)*cos(k*beta));
 
-            pontos.push_back(p1);
-            pontos.push_back(p2);
-            pontos.push_back(p3);
+            pontos->push_back(p1);
+            pontos->push_back(p2);
+            pontos->push_back(p3);
 
             p1 = new Point(radius*cos(i*alpha)*cos((k+1)*beta),radius*sin((k+1)*beta),radius*sin(i*alpha)*cos((k+1)*beta));
             p2 = new Point(radius*cos((i+1)*alpha)*cos((k+1)*beta) ,radius*sin((k+1)*beta) ,radius*sin((i+1)*alpha)*cos((k+1)*beta));
             p3 = new Point(radius*cos((i+1)*alpha)*cos(k*beta) ,radius*sin(k*beta) ,radius*sin((i+1)*alpha)*cos(k*beta));
 
-            pontos.push_back(p1);
-            pontos.push_back(p2);
-            pontos.push_back(p3);
+            pontos->push_back(p1);
+            pontos->push_back(p2);
+            pontos->push_back(p3);
         }
     }
 }
 
-vector<Point*> Figure::getPontos(){
-    return pontos;
+vector<Point*>* Figure::getPontos(){
+    vector<Point*> * fim = new vector<Point*>((*pontos));
+    return fim;
 }
 
-Figure::Figure(vector<Point *> v) : pontos(v){}
+Figure::Figure(){
+    pontos = new vector<Point*>();
+}
 
 void Figure::cone_vertex(float radius,float height,int slices,int stacks){
     float angle, height_act = 0, height_next = 0, radius_act = 0, radius_next = 0;
@@ -55,9 +58,9 @@ void Figure::cone_vertex(float radius,float height,int slices,int stacks){
         p2 = new Point(0,0,0);
         p3 = new Point(radius*cos(angle),0,radius*sin(angle));
 
-        pontos.push_back(p1);
-        pontos.push_back(p2);
-        pontos.push_back(p3);
+        pontos->push_back(p1);
+        pontos->push_back(p2);
+        pontos->push_back(p3);
     }
 
     for(i = 0; i < slices; i++){
@@ -72,17 +75,17 @@ void Figure::cone_vertex(float radius,float height,int slices,int stacks){
             p2 = new Point(radius_act*cos(angle),height_act,radius_act*sin(angle));
             p3 = new Point(radius_next*cos(angle),height_next,radius_next*sin(angle));
 
-            pontos.push_back(p1);
-            pontos.push_back(p2);
-            pontos.push_back(p3);
+            pontos->push_back(p1);
+            pontos->push_back(p2);
+            pontos->push_back(p3);
 
             p1 = new Point(radius_next*cos(angle),height_next,radius_next*sin(angle));
             p2 = new Point(radius_next*cos(angle + ((2*M_PI) / slices)),height_next,radius_next*sin(angle + ((2*M_PI) / slices)));
             p3 = new Point(radius_act*cos(angle + ((2*M_PI) / slices)),height_act,radius_act*sin(angle + ((2*M_PI) / slices)));
 
-            pontos.push_back(p1);
-            pontos.push_back(p2);
-            pontos.push_back(p3);
+            pontos->push_back(p1);
+            pontos->push_back(p2);
+            pontos->push_back(p3);
         }
     }
 
@@ -95,8 +98,58 @@ void Figure::cone_vertex(float radius,float height,int slices,int stacks){
         p2 = new Point(radius_act*cos(angle + ((2*M_PI) / slices)),height_act,radius_act*sin(angle + ((2*M_PI) / slices)));
         p3 = new Point(radius_act*cos(angle),height_act,radius_act*sin(angle));
 
-        pontos.push_back(p1);
-        pontos.push_back(p2);
-        pontos.push_back(p3);
+        pontos->push_back(p1);
+        pontos->push_back(p2);
+        pontos->push_back(p3);
     }
 }
+
+void Figure::plane_vertex() {
+    Point *p1,*p2,*p3;
+
+    p1 = new Point(2,0,2);
+    p2 = new Point(2,0,-2);
+    p3 = new Point(-2,0,-2);
+
+    pontos->push_back(p1);
+    pontos->push_back(p2);
+    pontos->push_back(p3);
+
+
+    p1 = new Point(2,0,2);
+    p2 = new Point(-2,0,-2);
+    p3 = new Point(-2,0,2);
+
+    pontos->push_back(p1);
+    pontos->push_back(p2);
+    pontos->push_back(p3);
+
+    p1 = new Point(2,0,2);
+    p2 = new Point(-2,0,-2);
+    p3 = new Point(2,0,-2);
+
+    pontos->push_back(p1);
+    pontos->push_back(p2);
+    pontos->push_back(p3);
+
+    p1 = new Point(2,0,2);
+    p2 = new Point(-2,0,2);
+    p3 = new Point(-2,0,-2);
+
+    pontos->push_back(p1);
+    pontos->push_back(p2);
+    pontos->push_back(p3);
+}
+
+void Figure::draw() {
+    glBegin(GL_TRIANGLES);
+
+    vector<Point*>::iterator it;
+    for(it = pontos->begin(); it != pontos->end(); it++){
+        Point * p = (*it);
+        glVertex3f(p->getX(),p->getY(),p->getZ());
+        cout << p->to_String() << endl;
+    }
+    glEnd();
+}
+

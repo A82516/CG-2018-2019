@@ -11,6 +11,7 @@
 #include <iostream>
 #include <vector>
 #include "headers/Point.h"
+#include "headers/Figure.h"
 
 
 
@@ -99,6 +100,14 @@ void draw_plane(){
 		glVertex3f(2,0,2);
 		glVertex3f(-2,0,-2);
 		glVertex3f(-2,0,2);
+
+        glVertex3f(2,0,2);
+        glVertex3f(-2,0,-2);
+        glVertex3f(2,0,-2);
+
+        glVertex3f(2,0,2);
+        glVertex3f(-2,0,2);
+        glVertex3f(-2,0,-2);
 	glEnd();
 }
 
@@ -233,11 +242,13 @@ void renderScene(void) {
 
 	glPolygonMode(GL_FRONT,GL_LINE);
 	//sdraw_xyz(3);
-	//draw_shpere(1,10,10);
+	//draw_shpere(3,10,10);
 	//draw_plane();
 	//draw_box(1,1,1);
-	draw_cone(1,2,10,1);
+	//draw_cone(1,2,10,1);
 	//glColor3f(0,0,0);
+
+	//glutWireSphere(1,2,10);
 	//glutWireCone(1,2,5,3);
 
 	// End of frame
@@ -286,6 +297,7 @@ int main(int argc, char **argv) {
 // Callback registration for keyboard processing
 	glutKeyboardFunc(processKeys);
 	glutSpecialFunc(processSpecialKeys);
+
 
 //  OpenGL settings
 	glEnable(GL_DEPTH_TEST);
