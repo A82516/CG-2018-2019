@@ -6,35 +6,9 @@
 
 void Figure::shpere_vertex(float radius,int slices,int stacks){
     int i=0;
-    float alpha = 2*M_PI / slices;
-    float beta = M_PI / stacks;
+    float alpha;
+    float beta;
     Point *p1,*p2,*p3;
-
-    /*
-    for(i = 0; i < slices; i++){
-        beta = (M_PI / stacks) - M_PI / 2;
-        alpha = 2*M_PI / slices;
-        p1 = new Point(0.0,-radius, 0.0);
-        p2 = new Point(radius*cos(i*alpha)*cos(beta),radius*sin(beta),radius*sin(i*alpha)*cos(beta));
-        p3 = new Point(radius*cos((i+1)*alpha)*cos(beta),radius*sin(beta),radius*sin((i+1)*alpha)*cos(beta));
-
-        pontos->push_back(p1);
-        pontos->push_back(p2);
-        pontos->push_back(p3);
-    }
-
-    for(i = 0; i < slices; i++){
-        beta = M_PI / 2 - (M_PI / stacks);
-        alpha = 2*M_PI / slices;
-
-        p1 = new Point(0.0,radius, 0.0);
-        p2 = new Point(radius*cos((i+1)*alpha)*cos(beta),radius*sin(beta),radius*sin((i+1)*alpha)*cos(beta));
-        p3 = new Point(radius*cos(i*alpha)*cos(beta),radius*sin(beta),radius*sin(i*alpha)*cos(beta));
-
-        pontos->push_back(p1);
-        pontos->push_back(p2);
-        pontos->push_back(p3);
-    }*/
 
     for(int k = 0; k < stacks ; k++){
         for(i=0; i < slices;i++){
@@ -174,5 +148,42 @@ void Figure::draw() {
         glVertex3f(p->getX(),p->getY(),p->getZ());
     }
     glEnd();
+}
+
+void Figure::torus_vertex(float radius_outside,float radius_inside,int slices,int stacks){
+    float teta, fi;
+    Point *p1,*p2,*p3;
+
+    for(int i = 0; i < stacks ; i++){
+        for(int j = 0; j < slices ; j++){
+            teta = (2 * M_PI) / slices;
+            fi = (2 * M_PI) / stacks;
+
+
+            p1 = new Point((radius_outside + radius_inside*cos(j*teta))*cos(i*fi),radius_inside*sin(j*teta),(radius_outside + radius_inside*cos(j*teta))*sin(i*fi));
+            p2 = new Point((radius_outside + radius_inside*cos((j+1)*teta))*cos(i*fi),radius_inside*sin((j+1)*teta),(radius_outside + radius_inside*cos((j+1)*teta))*sin(i*fi));
+            p3 = new Point((radius_outside + radius_inside*cos(j*teta))*cos((i+1)*fi),radius_inside*sin(j*teta),(radius_outside + radius_inside*cos(j*teta))*sin((i+1)*fi));
+
+            pontos->push_back(p1);
+            pontos->push_back(p2);
+            pontos->push_back(p3);
+
+            p1 = new Point((radius_outside + radius_inside*cos((j+1)*teta))*cos(i*fi),radius_inside*sin((j+1)*teta),(radius_outside + radius_inside*cos((j+1)*teta))*sin(i*fi));
+            p2 = new Point((radius_outside + radius_inside*cos((j+1)*teta))*cos((i+1)*fi),radius_inside*sin((j+1)*teta),(radius_outside + radius_inside*cos((j+1)*teta))*sin((i+1)*fi));
+            p3 = new Point((radius_outside + radius_inside*cos(j*teta))*cos((i+1)*fi),radius_inside*sin(j*teta),(radius_outside + radius_inside*cos(j*teta))*sin((i+1)*fi));
+
+            pontos->push_back(p1);
+            pontos->push_back(p2);
+            pontos->push_back(p3);
+        }
+    }
+}
+
+void cleanVector(vector<Point*> * limpar){
+    vector<Point*>::iterator it;
+    for(it = limpar->begin(); it != limpar->end(); it++){
+        delete((*it));
+    }
+    delete(limpar);
 }
 

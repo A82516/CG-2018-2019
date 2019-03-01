@@ -113,70 +113,43 @@ void draw_plane(){
 	glEnd();
 }
 
-void draw_box(float x,float y,float z){
+void draw_box(float x,float y,float z,int partitions){
+	float dx,dy,dz;
+
+	dx = x / partitions;
+	dy = y / partitions;
+	dz = z / partitions;
+
 	glBegin(GL_TRIANGLES);
 
 		glColor3f(0.792,0.321,0.423);
 		//Face Frente
-		glVertex3f(x/2,y,z/2);
-		glVertex3f(x/2,0,z/2);
-		glVertex3f(x/2,0,-z/2);
 
 
-		glVertex3f(x/2,y,z/2);
-		glVertex3f(x/2,0,-z/2);
-		glVertex3f(x/2,y,-z/2);
+		int i = 0;
+		for(i = 0; i < partitions; i++){
+		}
+
 
 		glColor3f(0.423,0.321,0.792);
 		//Face trás
-		glVertex3f(-x/2,0,-z/2);
-		glVertex3f(-x/2,0,z/2);
-		glVertex3f(-x/2,y,z/2);
 
-		glVertex3f(-x/2,0,-z/2);
-		glVertex3f(-x/2,y,z/2);
-		glVertex3f(-x/2,y,-z/2);
 
 		glColor3f(0.6,0.2,0.1);
 		//Face lateral frente
-		glVertex3f(x/2,y,z/2);
-		glVertex3f(-x/2,y,z/2);
-		glVertex3f(-x/2,0,z/2);
 
-		glVertex3f(-x/2,0,z/2);
-		glVertex3f(x/2,0,z/2);
-		glVertex3f(x/2,y,z/2);
 
 		glColor3f(0.2,0.3,0.792);
 		//Face lateral trás
-		glVertex3f(-x/2,0,-z/2);
-		glVertex3f(-x/2,y,-z/2);
-		glVertex3f(x/2,y,-z/2);
-
-		glVertex3f(x/2,y,-z/2);
-		glVertex3f(x/2,0,-z/2);
-		glVertex3f(-x/2,0,-z/2);
 
 		glColor3f(0.4,0.1,0.792);
 
 		//Face cima
-		glVertex3f(x/2,y,z/2);
-		glVertex3f(x/2,y,-z/2);
-		glVertex3f(-x/2,y,-z/2);
 
-		glVertex3f(-x/2,y,-z/2);
-		glVertex3f(-x/2,y,z/2);
-		glVertex3f(x/2,y,z/2);
 
 		glColor3f(0.5,0.5,0.792);
 		//Face baixo
-		glVertex3f(x/2,0,z/2);
-		glVertex3f(-x/2,0,z/2);
-		glVertex3f(-x/2,0,-z/2);
 
-		glVertex3f(-x/2,0,-z/2);
-		glVertex3f(x/2,0,-z/2);
-		glVertex3f(x/2,0,z/2);
 
 	glEnd();
 
@@ -228,6 +201,31 @@ void draw_cone(float radius,float height,int slices,int stacks){
 
 }
 
+void draw_anel(float radius_outside,float radius_inside,int slices,int stacks){
+	float teta, fi;
+
+	glBegin(GL_TRIANGLES);
+	for(int i = 0; i < stacks ; i++){
+		for(int j = 0; j < slices ; j++){
+			teta = (2 * M_PI) / slices;
+			fi = (2 * M_PI) / stacks;
+
+			glColor3f(0.4,0.1,0.792);
+			glVertex3f((radius_outside + radius_inside*cos(j*teta))*cos(i*fi),radius_inside*sin(j*teta),(radius_outside + radius_inside*cos(j*teta))*sin(i*fi));
+			glVertex3f((radius_outside + radius_inside*cos((j+1)*teta))*cos(i*fi),radius_inside*sin((j+1)*teta),(radius_outside + radius_inside*cos((j+1)*teta))*sin(i*fi));
+			glVertex3f((radius_outside + radius_inside*cos(j*teta))*cos((i+1)*fi),radius_inside*sin(j*teta),(radius_outside + radius_inside*cos(j*teta))*sin((i+1)*fi));
+
+			glColor3f(0,0,0);
+			glVertex3f((radius_outside + radius_inside*cos((j+1)*teta))*cos(i*fi),radius_inside*sin((j+1)*teta),(radius_outside + radius_inside*cos((j+1)*teta))*sin(i*fi));
+			glVertex3f((radius_outside + radius_inside*cos((j+1)*teta))*cos((i+1)*fi),radius_inside*sin((j+1)*teta),(radius_outside + radius_inside*cos((j+1)*teta))*sin((i+1)*fi));
+			glVertex3f((radius_outside + radius_inside*cos(j*teta))*cos((i+1)*fi),radius_inside*sin(j*teta),(radius_outside + radius_inside*cos(j*teta))*sin((i+1)*fi));
+
+		}
+	}
+	glEnd();
+
+}
+
 
 void renderScene(void) {
 
@@ -242,16 +240,17 @@ void renderScene(void) {
 
 	glRotatef(ay,0,0,1);
 
-	glPolygonMode(GL_FRONT,GL_LINE);
+	//glPolygonMode(GL_FRONT,GL_LINE);
 	//sdraw_xyz(3);
 	//draw_shpere(3,10,10);
 	//draw_plane();
 	//draw_box(1,1,1);
 	//draw_cone(1,2,10,1);
-	glColor3f(0,0,0);
-	Figure f;
-	f.shpere_vertex(1,10,10);
-	f.draw();
+	//glColor3f(0,0,0);
+	//Figure f;
+	//f.torus_vertex(1,1,20,20);
+	//f.draw();
+	//draw_anel(1,1,20,20);
 
 	//glutWireSphere(1,9,9);
 	//glutWireCone(1,2,5,3);
