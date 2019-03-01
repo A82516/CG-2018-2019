@@ -30,8 +30,8 @@ void write_file(string file_name,vector<Point*> vertices){
 
 int main(int argc, char **argv){
 
-    vector<Point*> v;
-    Figure f(v);
+    Figure f;
+
 
     if (argc == 3 && strcmp(argv[1],"plane")){
 
