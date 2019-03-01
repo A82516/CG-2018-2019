@@ -11,8 +11,8 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
-#include "headers/Point.h"
-#include "headers/Figure.h"
+#include "../headers/Point.h"
+#include "../headers/Figure.h"
 
 
 float ay = 0;

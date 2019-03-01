@@ -24,15 +24,16 @@ class Figure {
         Figure();
         void shpere_vertex(float radius,int slices,int stacks);
         void cone_vertex(float radius,float height,int slices,int stacks);
-        void plane_vertex();
+        void plane_vertex(float size);
         void torus_vertex(float radius_outside,float radius_inside,int slices,int stacks);
         void box_vertex(float x,float y,float z,int partitions);
         vector<Point*>* getPontos();
         void draw();
+        virtual ~Figure();
 
 };
 
 void cleanVector(vector<Point*> * limpar);
 
 
-#endif //CG_TRABALHO_FIGURES_H
+#endif
