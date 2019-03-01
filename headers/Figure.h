@@ -26,6 +26,7 @@ class Figure {
         void cone_vertex(float radius,float height,int slices,int stacks);
         void plane_vertex();
         void torus_vertex(float radius_outside,float radius_inside,int slices,int stacks);
+        void box_vertex(float x,float y,float z,int partitions);
         vector<Point*>* getPontos();
         void draw();
 

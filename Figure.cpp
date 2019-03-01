@@ -179,6 +179,78 @@ void Figure::torus_vertex(float radius_outside,float radius_inside,int slices,in
     }
 }
 
+void Figure::box_vertex(float x,float y,float z,int partitions){
+    float dx,dy,dz,sX,sY,sZ;
+
+    dx = x / partitions;
+    dy = y / partitions;
+    dz = z / partitions;
+
+    sX = -x/2;
+    sY = -y/2;
+    sZ = -z/2;
+
+    int i,j;
+    for(i = 0; i < partitions; i++){
+        for(j = 0; j < partitions; j++){
+            //Face Frente
+            pontos->push_back(new Point(x/2,i*dy + sY,j*dz + sZ));
+            pontos->push_back(new Point(x/2,(i+1)*dy + sY,j*dz + sZ));
+            pontos->push_back(new Point(x/2,i*dy + sY,(j+1)*dz + sZ));
+
+            pontos->push_back(new Point(x/2,(i+1)*dy + sY,j*dz + sZ));
+            pontos->push_back(new Point(x/2,(i+1)*dy + sY,(j+1)*dz + sZ));
+            pontos->push_back(new Point(x/2,i*dy + sY,(j+1)*dz + sZ));
+
+            //Face trás
+            pontos->push_back(new Point(-x/2,i*dy + sY,j*dz + sZ));
+            pontos->push_back(new Point(-x/2,i*dy + sY,(j+1)*dz + sZ));
+            pontos->push_back(new Point(-x/2,(i+1)*dy + sY,j*dz + sZ));
+
+            pontos->push_back(new Point(-x/2,i*dy + sY,(j+1)*dz + sZ));
+            pontos->push_back(new Point(-x/2,(i+1)*dy + sY,(j+1)*dz + sZ));
+            pontos->push_back(new Point(-x/2,(i+1)*dy + sY,j*dz + sZ));
+
+            //Face lateral frente
+            pontos->push_back(new Point(j*dx + sX,i*dy + sY,z/2));
+            pontos->push_back(new Point((j+1)*dx + sX,i*dy + sY,z/2));
+            pontos->push_back(new Point(j*dx + sX,(i+1)*dy + sY,z/2));
+
+            pontos->push_back(new Point((j+1)*dx + sX,i*dy + sY,z/2));
+            pontos->push_back(new Point((j+1)*dx + sX,(i+1)*dy + sY,z/2));
+            pontos->push_back(new Point(j*dx + sX,(i+1)*dy + sY,z/2));
+
+            //Face lateral trás
+            pontos->push_back(new Point((j+1)*dx + sX,i*dy + sY,-z/2));
+            pontos->push_back(new Point(j*dx + sX,i*dy + sY,-z/2));
+            pontos->push_back(new Point(j*dx + sX,(i+1)*dy + sY,-z/2));
+
+            pontos->push_back(new Point(j*dx + sX,(i+1)*dy + sY,-z/2));
+            pontos->push_back(new Point((j+1)*dx + sX,(i+1)*dy + sY,-z/2));
+            pontos->push_back(new Point((j+1)*dx + sX,i*dy + sY,-z/2));
+
+            //Face cima
+            pontos->push_back(new Point(j*dx + sX,y/2,i*dz + sZ));
+            pontos->push_back(new Point(j*dx + sX,y/2,(i+1)*dz + sZ));
+            pontos->push_back(new Point((j+1)*dx + sX,y/2,(i+1)*dz + sZ));
+
+            pontos->push_back(new Point((j+1)*dx + sX,y/2,i*dz + sZ));
+            pontos->push_back(new Point(j*dx + sX,y/2,i*dz + sZ));
+            pontos->push_back(new Point((j+1)*dx + sX,y/2,(i+1)*dz + sZ));
+
+            //Face baixo
+            pontos->push_back(new Point((j+1)*dx + sX,-y/2,(i+1)*dz + sZ));
+            pontos->push_back(new Point(j*dx + sX,-y/2,(i+1)*dz + sZ));
+            pontos->push_back(new Point(j*dx + sX,-y/2,i*dz + sZ));
+
+            pontos->push_back(new Point(j*dx + sX,-y/2,i*dz + sZ));
+            pontos->push_back(new Point((j+1)*dx + sX,-y/2,i*dz + sZ));
+            pontos->push_back(new Point((j+1)*dx + sX,-y/2,(i+1)*dz + sZ));
+        }
+    }
+}
+
+
 void cleanVector(vector<Point*> * limpar){
     vector<Point*>::iterator it;
     for(it = limpar->begin(); it != limpar->end(); it++){
