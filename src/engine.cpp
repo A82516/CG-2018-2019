@@ -128,12 +128,10 @@ void parseXML(string  f_path){
 
     if (!(xmlDoc.LoadFile(f_path.c_str()))) {
 
-        element = xmlDoc.FirstChildElement(); //ROOT ELEMENT (<scene>)
-        for (element = element->FirstChildElement(); element; element = element->NextSiblingElement()) { // Iterates between Elements
-            string file = element->Attribute("file"); // Gets file information, on each Model Attribute
-						string file2 = "../files/" + file;
-
-						build_figure(file2);
+        element = xmlDoc.FirstChildElement();
+        for (element = element->FirstChildElement(); element; element = element->NextSiblingElement()) {
+            string file = element->Attribute("file");
+			build_figure(file);
         }
     }
     else {
@@ -159,12 +157,13 @@ int main(int argc, char **argv) {
 
 
 
-		if(argc < 2){
-	        cout << "Input not given!" << endl;
-	        return 0;
-	    }
+	if(argc < 2){
+	     cout << "Input not given!" << endl;
+	     return 0;
+	}
 
-		else parseXML(argv[1]); // Read XML File
+	else parseXML("/Users/Ambrosiny/Desktop/Universidade/3ano/CG/trabalho/files/data.xml"); // Read XML File
+
 // Required callback registry
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
