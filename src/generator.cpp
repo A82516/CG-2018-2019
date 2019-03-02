@@ -120,6 +120,17 @@ int main(int argc, char **argv){
 			flag = 1;
 		}else print_error("Erro no input");
 	}
+	else if(argc == 7 && strcmp(argv[1],"cylinder")==0){
+		radius = atof(argv[2]);
+		height = atof(argv[3]);
+		slices = atoi(argv[4]);
+		stacks = atoi(argv[5]);
+
+		if (radius != 0 && slices != 0 && stacks != 0 && height != 0){
+			f.cylinder_vertex(radius,height,slices,stacks);
+			flag = 1;
+		}else print_error("Erro no input");
+	}
 	else{
 		printHelp();
 	}
