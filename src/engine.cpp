@@ -14,6 +14,12 @@
 #include <vector>
 #include "../headers/Point.h"
 #include "../headers/Figure.h"
+#include "../headers/tinyxml2.h"
+
+
+using namespace tinyxml2;
+using namespace std;
+
 
 vector<Figure*> figs;
 
@@ -116,6 +122,24 @@ void processSpecialKeys(int key, int xx, int yy) {
 
 }
 
+void parseXML(string  f_path){
+    XMLDocument xmlDoc;
+    XMLElement *element;
+
+    if (!(xmlDoc.LoadFile(f_path.c_str()))) {
+
+        element = xmlDoc.FirstChildElement(); //ROOT ELEMENT (<scene>)
+        for (element = element->FirstChildElement(); element; element = element->NextSiblingElement()) { // Iterates between Elements
+            string file = element->Attribute("file"); // Gets file information, on each Model Attribute
+						string file2 = "../files/" + file;
+
+						build_figure(file2);
+        }
+    }
+    else {
+        cout << "Could not find file! " << endl;
+    }
+}
 
 int main(int argc, char **argv) {
 
@@ -126,9 +150,21 @@ int main(int argc, char **argv) {
 	glutInitWindowSize(800,800);
 	glutCreateWindow("CG@DI-UM");
 
+
+
+
 	glClearColor(1,1,1,1) ;
 	glClear(GL_COLOR_BUFFER_BIT);
 
+
+
+
+		if(argc < 2){
+	        cout << "Input not given!" << endl;
+	        return 0;
+	    }
+
+		else parseXML(argv[1]); // Read XML File
 // Required callback registry
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
