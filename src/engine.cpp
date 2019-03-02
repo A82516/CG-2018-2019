@@ -14,7 +14,6 @@
 #include "../headers/Point.h"
 #include "../headers/Figure.h"
 
-
 float ay = 0;
 
 void changeSize(int w, int h) {
@@ -48,9 +47,6 @@ void draw_xyz(float size){
 	glBegin(GL_LINES);
     	glVertex3f(0,0,0);
     	glVertex3f(size,0,0);
-
-	glVertex3f(0,0,0);
-	glVertex3f(-size,0,0);
 	glEnd();
 	//y
 	glBegin(GL_LINES);
@@ -117,15 +113,11 @@ void draw_plane(){
 }
 
 void draw_box(float x,float y,float z,int partitions){
-	float dx,dy,dz,sX,sY,sZ;
+	float dx,dy,dz;
 
 	dx = x / partitions;
 	dy = y / partitions;
 	dz = z / partitions;
-
-	sX = -x/2;
-	sY = -y/2;
-	sZ = -z/2;
 
 	glBegin(GL_TRIANGLES);
 
@@ -133,70 +125,29 @@ void draw_box(float x,float y,float z,int partitions){
 		//Face Frente
 
 
-		int i,j;
+		int i = 0;
 		for(i = 0; i < partitions; i++){
-			for(j = 0; j < partitions; j++){
-				glColor3f(0.792,0.321,0.423);
-				//Face Frente
-				glVertex3f(x/2,i*dy + sY,j*dz + sZ);
-				glVertex3f(x/2,(i+1)*dy + sY,j*dz + sZ);
-				glVertex3f(x/2,i*dy + sY,(j+1)*dz + sZ);
-
-				glVertex3f(x/2,(i+1)*dy + sY,j*dz + sZ);
-				glVertex3f(x/2,(i+1)*dy + sY,(j+1)*dz + sZ);
-				glVertex3f(x/2,i*dy + sY,(j+1)*dz + sZ);
-
-				glColor3f(0.423,0.321,0.792);
-				//Face trás
-				glVertex3f(-x/2,i*dy + sY,j*dz + sZ);
-				glVertex3f(-x/2,i*dy + sY,(j+1)*dz + sZ);
-				glVertex3f(-x/2,(i+1)*dy + sY,j*dz + sZ);
-
-				glVertex3f(-x/2,i*dy + sY,(j+1)*dz + sZ);
-				glVertex3f(-x/2,(i+1)*dy + sY,(j+1)*dz + sZ);
-				glVertex3f(-x/2,(i+1)*dy + sY,j*dz + sZ);
-
-				glColor3f(0.6,0.2,0.1);
-				//Face lateral frente
-				glVertex3f(j*dx + sX,i*dy + sY,z/2);
-				glVertex3f((j+1)*dx + sX,i*dy + sY,z/2);
-				glVertex3f(j*dx + sX,(i+1)*dy + sY,z/2);
-
-				glVertex3f((j+1)*dx + sX,i*dy + sY,z/2);
-				glVertex3f((j+1)*dx + sX,(i+1)*dy + sY,z/2);
-				glVertex3f(j*dx + sX,(i+1)*dy + sY,z/2);
-
-				glColor3f(0.2,0.3,0.792);
-				//Face lateral trás
-				glVertex3f((j+1)*dx + sX,i*dy + sY,-z/2);
-				glVertex3f(j*dx + sX,i*dy + sY,-z/2);
-				glVertex3f(j*dx + sX,(i+1)*dy + sY,-z/2);
-
-				glVertex3f(j*dx + sX,(i+1)*dy + sY,-z/2);
-				glVertex3f((j+1)*dx + sX,(i+1)*dy + sY,-z/2);
-				glVertex3f((j+1)*dx + sX,i*dy + sY,-z/2);
-
-				glColor3f(0.4,0.1,0.792);
-				//Face cima
-				glVertex3f(j*dx + sX,y/2,i*dz + sZ);
-				glVertex3f(j*dx + sX,y/2,(i+1)*dz + sZ);
-				glVertex3f((j+1)*dx + sX,y/2,(i+1)*dz + sZ);
-
-				glVertex3f((j+1)*dx + sX,y/2,i*dz + sZ);
-				glVertex3f(j*dx + sX,y/2,i*dz + sZ);
-				glVertex3f((j+1)*dx + sX,y/2,(i+1)*dz + sZ);
-
-				glColor3f(0.5,0.5,0.792);
-				//Face baixo
-				glVertex3f((j+1)*dx + sX,-y/2,(i+1)*dz + sZ);
-				glVertex3f(j*dx + sX,-y/2,(i+1)*dz + sZ);
-				glVertex3f(j*dx + sX,-y/2,i*dz + sZ);
-
-				glVertex3f(j*dx + sX,-y/2,i*dz + sZ);
-				glVertex3f((j+1)*dx + sX,-y/2,i*dz + sZ);
-				glVertex3f((j+1)*dx + sX,-y/2,(i+1)*dz + sZ);
-			}
 		}
+
+
+		glColor3f(0.423,0.321,0.792);
+		//Face trás
+
+
+		glColor3f(0.6,0.2,0.1);
+		//Face lateral frente
+
+
+		glColor3f(0.2,0.3,0.792);
+		//Face lateral trás
+
+		glColor3f(0.4,0.1,0.792);
+
+		//Face cima
+
+
+		glColor3f(0.5,0.5,0.792);
+		//Face baixo
 
 
 	glEnd();
