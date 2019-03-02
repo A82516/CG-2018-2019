@@ -111,7 +111,7 @@ void renderScene(void) {
 					0.0,0.0,0.0,
 				0.0f,1.0f,0.0f);
 	// End of frame
-	//glPolygonMode(GL_FRONT,GL_LINE);
+	glPolygonMode(GL_FRONT,GL_LINE);
 	glColor3f(0,0,0);
 	//build_figure("../files/torus1.3d");
 	draw_figures();
