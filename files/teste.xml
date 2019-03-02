@@ -1,0 +1,4 @@
+<scene>
+	<model file='box1.3d' />
+	<model file='torus1.3d' />
+</scene>

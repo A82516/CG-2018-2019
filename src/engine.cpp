@@ -21,6 +21,8 @@ using namespace tinyxml2;
 using namespace std;
 
 
+
+
 vector<Figure*> figs;
 
 
@@ -107,6 +109,7 @@ void renderScene(void) {
 	// End of frame
 	glPolygonMode(GL_FRONT,GL_LINE);
 	glColor3f(0,0,0);
+	//build_figure("../files/torus1.3d");
 	draw_figures();
 
 	glutSwapBuffers();
@@ -122,17 +125,43 @@ void processSpecialKeys(int key, int xx, int yy) {
 
 }
 
-void parseXML(string  f_path){
+
+string mergePath(string path, string prog){
+
+
+
+	int i ;
+	int flag = 0;
+	for( i = path.length() - 1 ; i>=0 && !flag; i-- )
+		if(path[i] == '/') flag = 1;
+
+	std::string pathFull = path.substr (0,i+2);     // "think"
+
+	string pathProg = pathFull + prog;
+	cout << pathProg << endl;
+
+	return pathProg;
+
+
+}
+
+void readXML(string  f_path){
     XMLDocument xmlDoc;
     XMLElement *element;
 
     if (!(xmlDoc.LoadFile(f_path.c_str()))) {
 
-        element = xmlDoc.FirstChildElement();
-        for (element = element->FirstChildElement(); element; element = element->NextSiblingElement()) {
-            string file = element->Attribute("file");
-			build_figure(file);
+        element = xmlDoc.FirstChildElement(); //ROOT ELEMENT (<scene>)
+        for (element = element->FirstChildElement(); element; element = element->NextSiblingElement()) { // Iterates between Elements
+            string file = element->Attribute("file"); // Gets file information, on each Model Attribute
+
+						cout << (file) <<endl; // Gets model's vertexes
+
+						string file2 = mergePath(f_path,file);
+
+						build_figure(file2);
         }
+
     }
     else {
         cout << "Could not find file! " << endl;
@@ -162,8 +191,7 @@ int main(int argc, char **argv) {
 	     return 0;
 	}
 
-	else parseXML("/Users/Ambrosiny/Desktop/Universidade/3ano/CG/trabalho/files/data.xml"); // Read XML File
-
+	else readXML(argv[1]); // Read XML File
 // Required callback registry
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
