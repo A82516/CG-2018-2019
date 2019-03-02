@@ -67,11 +67,13 @@ int main(int argc, char **argv){
 	float radius,height,radius2;
 	float x,y,z;
 
-    if (argc == 3 && strcmp(argv[1],"plane")){
+
+
+    if (argc == 3 && strcmp(argv[1],"plane") == 0){
 		f.plane_vertex(2);
 		flag = 1;
     }
-    else if (argc == 6 && strcmp(argv[1],"sphere")){
+    else if (argc == 6 && strcmp(argv[1],"sphere") == 0){
 		radius = atof(argv[2]);
 		slices = atoi(argv[3]);
 		stacks = atoi(argv[4]);
@@ -92,7 +94,7 @@ int main(int argc, char **argv){
 			flag = 1;
 		}else print_error("Erro no input");
     }
-	else if ((argc == 7 || argc == 6) && strcmp(argv[1],"box")){
+	else if ((argc == 7 || argc == 6) && strcmp(argv[1],"box") == 0){
 		x = atof(argv[2]);
 		y = atof(argv[3]);
 		z = atof(argv[4]);
@@ -107,7 +109,7 @@ int main(int argc, char **argv){
 			flag = 1;
 		}else print_error("Erro no input");
 	}
-	else if (argc == 7 && strcmp(argv[1],"torus")){
+	else if (argc == 7 && strcmp(argv[1],"torus") == 0){
 		radius = atof(argv[2]);
 		radius2 = atof(argv[3]);
 		slices = atoi(argv[4]);

@@ -294,11 +294,11 @@ void renderScene(void) {
 	//draw_shpere(3,10,10);
 	//draw_plane();
 	//draw_box(2,2,2,3);
-	//draw_cone(1,2,10,1);
+	draw_cone(2,3,5,10);
 	//glColor3f(0,0,0);
-	Figure f;
-	f.box_vertex(2,2,2,3);
-	f.draw();
+	//Figure f;
+	//f.box_vertex(2,2,2,3);
+	//f.draw();
 	//draw_anel(1,1,20,20);
 
 	//glutWireSphere(1,9,9);
