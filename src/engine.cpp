@@ -22,6 +22,10 @@ using namespace std;
 
 
 
+//variaveis globais
+float angleA = 0;
+float angleB = 0;
+float radius = 5;
 
 vector<Figure*> figs;
 
@@ -103,11 +107,11 @@ void renderScene(void) {
 
 	// set the camera
 	glLoadIdentity();
-	gluLookAt(5,5,5,
-		      0.0,0.0,0.0,
-			  0.0f,1.0f,0.0f);
+	gluLookAt(radius * cos(angleB) * cos(angleA), radius * sin(angleB),radius * cos(angleB) * sin(angleA),
+					0.0,0.0,0.0,
+				0.0f,1.0f,0.0f);
 	// End of frame
-	glPolygonMode(GL_FRONT,GL_LINE);
+	//glPolygonMode(GL_FRONT,GL_LINE);
 	glColor3f(0,0,0);
 	//build_figure("../files/torus1.3d");
 	draw_figures();
@@ -117,6 +121,54 @@ void renderScene(void) {
 
 
 void processKeys(unsigned char c, int xx, int yy) {
+
+	switch (c) {
+			case 'w':
+					angleB += M_PI / 6;
+					glutPostRedisplay();
+					break;
+			case 's':
+				angleB -= M_PI / 6;
+			glutPostRedisplay();
+			case 'a':
+					angleA -= M_PI / 6;
+					glutPostRedisplay();
+					break;
+			case 'd':
+				angleA += M_PI / 6;
+			glutPostRedisplay();
+			break;
+			case 'q':
+					angleB += M_PI / 6;
+					angleA -= M_PI / 6;
+					glutPostRedisplay();
+					break;
+			case 'e':
+				angleB += M_PI / 6;
+				angleA += M_PI / 6;
+			glutPostRedisplay();
+			break;
+			case 'z':
+				angleB -= M_PI / 6;
+				angleA -= M_PI / 6;
+			glutPostRedisplay();
+			break;
+			case 'x':
+				angleB -= M_PI / 6;
+				angleA += M_PI / 6;
+			glutPostRedisplay();
+			break;
+			case '1':
+				radius -= 1;
+			glutPostRedisplay();
+			break;
+			case '2':
+				radius += 1;
+			glutPostRedisplay();
+			break;
+			default:
+					break;
+	}
 
 }
 
