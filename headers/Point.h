@@ -19,6 +19,7 @@ class Point{
 		float getY();
 		float getZ();
 		string to_String();
+		virtual ~Point();
 };
 
 #endif

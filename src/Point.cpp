@@ -1,4 +1,4 @@
-#include "headers/Point.h"
+#include "../headers/Point.h"
 
 Point::Point(float a,float b, float c){
 	x = a;
@@ -25,3 +25,5 @@ string Point::to_String(){
 
 	return ss.str();
 }
+
+Point::~Point(){}

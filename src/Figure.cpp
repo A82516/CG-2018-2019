@@ -2,8 +2,7 @@
 // Created by Diogo Sobral on 2019-02-26.
 //
 
-#include "headers/Figure.h"
-#include "Point.cpp"
+#include "../headers/Figure.h"
 
 void Figure::shpere_vertex(float radius,int slices,int stacks){
     int i=0;
@@ -103,37 +102,21 @@ void Figure::cone_vertex(float radius,float height,int slices,int stacks){
     }
 }
 
-void Figure::plane_vertex() {
+void Figure::plane_vertex(float size) {
     Point *p1,*p2,*p3;
 
-    p1 = new Point(2,0,2);
-    p2 = new Point(2,0,-2);
-    p3 = new Point(-2,0,-2);
+    p1 = new Point(size,0,size);
+    p2 = new Point(size,0,-size);
+    p3 = new Point(-size,0,-size);
 
     pontos->push_back(p1);
     pontos->push_back(p2);
     pontos->push_back(p3);
 
 
-    p1 = new Point(2,0,2);
-    p2 = new Point(-2,0,-2);
-    p3 = new Point(-2,0,2);
-
-    pontos->push_back(p1);
-    pontos->push_back(p2);
-    pontos->push_back(p3);
-
-    p1 = new Point(2,0,2);
-    p2 = new Point(-2,0,-2);
-    p3 = new Point(2,0,-2);
-
-    pontos->push_back(p1);
-    pontos->push_back(p2);
-    pontos->push_back(p3);
-
-    p1 = new Point(2,0,2);
-    p2 = new Point(-2,0,2);
-    p3 = new Point(-2,0,-2);
+    p1 = new Point(size,0,size);
+    p2 = new Point(-size,0,-size);
+    p3 = new Point(-size,0,size);
 
     pontos->push_back(p1);
     pontos->push_back(p2);
@@ -251,6 +234,14 @@ void Figure::box_vertex(float x,float y,float z,int partitions){
     }
 }
 
+Figure::~Figure(){
+	vector<Point*>::iterator it;
+	for(it = pontos->begin(); it != pontos->end(); it++){
+		delete((*it));
+	}
+	delete(pontos);
+}
+
 
 void cleanVector(vector<Point*> * limpar){
     vector<Point*>::iterator it;
@@ -259,4 +250,3 @@ void cleanVector(vector<Point*> * limpar){
     }
     delete(limpar);
 }
-
