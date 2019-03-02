@@ -240,20 +240,20 @@ void Figure::cylinder_vertex(float radius, float height,int slices,int stacks){
 
 	int i,j;
 
-	for(j = 0; j < stacks; j++){
+	for(j = 0; j <= stacks; j++){
 		beta = (j * (height / stacks)) - height/2;
 		for(i = 0; i < slices; i++){
 			alpha = i * (2*M_PI) / slices;
 
-			if (j == stacks - 1){
+			if (j == stacks){
 				pontos->push_back(new Point(radius*cos(alpha),height/2,radius*sin(alpha)));
 				pontos->push_back(new Point(0,height/2,0));
 				pontos->push_back(new Point(radius*cos(alpha + (2*M_PI) / slices),height/2,radius*sin(alpha + (2*M_PI) / slices)));
 			}
 			else {
 				if (j == 0){
-					pontos->push_back(new Point(radius*cos(alpha),-height/2,radius*sin(alpha)));
 					pontos->push_back(new Point(0,-height/2,0));
+					pontos->push_back(new Point(radius*cos(alpha),-height/2,radius*sin(alpha)));
 					pontos->push_back(new Point(radius*cos(alpha + (2*M_PI) / slices),-height/2,radius*sin(alpha + (2*M_PI) / slices)));
 				}
 
