@@ -234,6 +234,41 @@ void Figure::box_vertex(float x,float y,float z,int partitions){
     }
 }
 
+void Figure::cylinder_vertex(float radius, float height,int slices,int stacks){
+	float alpha,beta;
+
+
+	int i,j;
+
+	for(j = 0; j < stacks; j++){
+		beta = (j * (height / stacks)) - height/2;
+		for(i = 0; i < slices; i++){
+			alpha = i * (2*M_PI) / slices;
+
+			if (j == stacks - 1){
+				pontos->push_back(new Point(radius*cos(alpha),height/2,radius*sin(alpha)));
+				pontos->push_back(new Point(0,height/2,0));
+				pontos->push_back(new Point(radius*cos(alpha + (2*M_PI) / slices),height/2,radius*sin(alpha + (2*M_PI) / slices)));
+			}
+			else {
+				if (j == 0){
+					pontos->push_back(new Point(radius*cos(alpha),-height/2,radius*sin(alpha)));
+					pontos->push_back(new Point(0,-height/2,0));
+					pontos->push_back(new Point(radius*cos(alpha + (2*M_PI) / slices),-height/2,radius*sin(alpha + (2*M_PI) / slices)));
+				}
+
+				pontos->push_back(new Point(radius*cos(alpha),beta,radius*sin(alpha)));
+				pontos->push_back(new Point(radius*cos(alpha),beta + (height / stacks),radius*sin(alpha)));
+				pontos->push_back(new Point(radius*cos(alpha + (2*M_PI) / slices),beta,radius*sin(alpha + (2*M_PI) / slices)));
+
+				pontos->push_back(new Point(radius*cos(alpha),beta + (height / stacks),radius*sin(alpha)));
+				pontos->push_back(new Point(radius*cos(alpha + (2*M_PI) / slices),beta + (height / stacks),radius*sin(alpha + (2*M_PI) / slices)));
+				pontos->push_back(new Point(radius*cos(alpha + (2*M_PI) / slices),beta,radius*sin(alpha + (2*M_PI) / slices)));
+			}
+		}
+	}
+}
+
 Figure::Figure(vector<Point*> * v){
 	pontos = v;
 }
