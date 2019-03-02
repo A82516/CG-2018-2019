@@ -10,11 +10,13 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include "../headers/Point.h"
 #include "../headers/Figure.h"
 
-float ay = 0;
+vector<Figure*> figs;
+
 
 void changeSize(int w, int h) {
 
@@ -41,193 +43,53 @@ void changeSize(int w, int h) {
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void draw_xyz(float size){
-	glColor3f(0,0,0);
-	//x
-	glBegin(GL_LINES);
-    	glVertex3f(0,0,0);
-    	glVertex3f(size,0,0);
-	glEnd();
-	//y
-	glBegin(GL_LINES);
-		glVertex3f(0,0,0);
-		glVertex3f(0,size,0);
-	glEnd();
-	//z
-	glBegin(GL_LINES);
-		glVertex3f(0,0,0);
-		glVertex3f(0,0,size);
-	glEnd();
+void build_figure(string path){
+
+  string line;
+  string delimiter = " ";
+  float x,y,z;
+  ifstream myfile(path);
+  Figure * f;
+  if (myfile.is_open())
+  {
+	vector<Point*> * v = new vector<Point*>();
+
+    while (getline(myfile,line)){
+		size_t pos = 0;
+  		string token;
+
+		pos = line.find(delimiter);
+		token = line.substr(0, pos);
+		x = atof(token.c_str());
+		line.erase(0, pos + delimiter.length());
+
+		pos = line.find(delimiter);
+		token = line.substr(0, pos);
+		y = atof(token.c_str());
+		line.erase(0, pos + delimiter.length());
+
+		pos = line.find(delimiter);
+		token = line.substr(0, pos);
+		z = atof(token.c_str());
+		line.erase(0, pos + delimiter.length());
+
+		v->push_back(new Point(x,y,z));
+    }
+	f = new Figure(v);
+	figs.push_back(f);
+    myfile.close();
+  }
+  else cout << "error" << endl;
 }
 
-void draw_shpere(float radius,int slices,int stacks){
-	int i=0;
-	float alpha = 2*M_PI / slices;
-	float beta = M_PI / stacks;
-
-	int k = -(stacks / 2);
-
-	glBegin(GL_TRIANGLES);
-
-	for(; k < (stacks / 2); k++){
-
-		for(i=0; i < slices;i++){
-			alpha = 2*M_PI / slices;
-			beta = M_PI / stacks;
-
-			glColor3f(0.423,0.321,0.792);
-			glVertex3f(radius*cos(i*alpha)*cos(k*beta) ,radius*sin(k*beta) ,radius*sin(i*alpha)*cos(k*beta));
-			glVertex3f(radius*cos(i*alpha)*cos((k+1)*beta),radius*sin((k+1)*beta),radius*sin(i*alpha)*cos((k+1)*beta));
-			glVertex3f(radius*cos((i+1)*alpha)*cos(k*beta) ,radius*sin(k*beta) ,radius*sin((i+1)*alpha)*cos(k*beta));
-
-
-			glColor3f(0.423,0.321,0.792);
-			glVertex3f(radius*cos(i*alpha)*cos((k+1)*beta),radius*sin((k+1)*beta),radius*sin(i*alpha)*cos((k+1)*beta));
-			glVertex3f(radius*cos((i+1)*alpha)*cos((k+1)*beta) ,radius*sin((k+1)*beta) ,radius*sin((i+1)*alpha)*cos((k+1)*beta));
-			glVertex3f(radius*cos((i+1)*alpha)*cos(k*beta) ,radius*sin(k*beta) ,radius*sin((i+1)*alpha)*cos(k*beta));
-		}
+void draw_figures(){
+	vector<Figure*>::iterator it;
+	for(it = figs.begin(); it != figs.end(); it++){
+		(*it)->draw();
 	}
-	glEnd();
 }
-
-void draw_plane(){
-	glColor3f(0.792,0.321,0.423);
-	glBegin(GL_TRIANGLES);
-		glVertex3f(2,0,2);
-		glVertex3f(2,0,-2);
-		glVertex3f(-2,0,-2);
-
-
-		glVertex3f(2,0,2);
-		glVertex3f(-2,0,-2);
-		glVertex3f(-2,0,2);
-
-        glVertex3f(2,0,2);
-        glVertex3f(-2,0,-2);
-        glVertex3f(2,0,-2);
-
-        glVertex3f(2,0,2);
-        glVertex3f(-2,0,2);
-        glVertex3f(-2,0,-2);
-	glEnd();
-}
-
-void draw_box(float x,float y,float z,int partitions){
-	float dx,dy,dz;
-
-	dx = x / partitions;
-	dy = y / partitions;
-	dz = z / partitions;
-
-	glBegin(GL_TRIANGLES);
-
-		glColor3f(0.792,0.321,0.423);
-		//Face Frente
-
-
-		int i = 0;
-		for(i = 0; i < partitions; i++){
-		}
-
-
-		glColor3f(0.423,0.321,0.792);
-		//Face trás
-
-
-		glColor3f(0.6,0.2,0.1);
-		//Face lateral frente
-
-
-		glColor3f(0.2,0.3,0.792);
-		//Face lateral trás
-
-		glColor3f(0.4,0.1,0.792);
-
-		//Face cima
-
-
-		glColor3f(0.5,0.5,0.792);
-		//Face baixo
-
-
-	glEnd();
-
-}
-
-void draw_cone(float radius,float height,int slices,int stacks){
-		float angle, height_act = 0, height_next = 0, radius_act = 0, radius_next = 0;
-		glColor3f(0.4,0.1,0.792);
-		glBegin(GL_TRIANGLES);
-		int k = 0,i;
-
-		//base
-		for(i = 0; i < slices; i++){
-			angle = i * ((2*M_PI) / slices);
-			glVertex3f(radius*cos(angle + ((2*M_PI) / slices)),0,radius*sin(angle + ((2*M_PI) / slices)));
-			glVertex3f(0,0,0);
-			glVertex3f(radius*cos(angle),0,radius*sin(angle));
-		}
-
-		for(i = 0; i < slices; i++){
-			for(k = 0; k < stacks - 1; k++){
-				height_act = k * (height / stacks);
-				height_next = (k+1) * (height / stacks);
-				radius_act = (radius * (height - height_act)) / height;
-				radius_next = (radius * (height - height_next)) / height;
-				angle = i * ((2*M_PI) / slices);
-
-				glVertex3f(radius_act*cos(angle + ((2*M_PI) / slices)),height_act,radius_act*sin(angle + ((2*M_PI) / slices)));
-				glVertex3f(radius_act*cos(angle),height_act,radius_act*sin(angle));
-				glVertex3f(radius_next*cos(angle),height_next,radius_next*sin(angle));
-
-				glVertex3f(radius_next*cos(angle),height_next,radius_next*sin(angle));
-				glVertex3f(radius_next*cos(angle + ((2*M_PI) / slices)),height_next,radius_next*sin(angle + ((2*M_PI) / slices)));
-				glVertex3f(radius_act*cos(angle + ((2*M_PI) / slices)),height_act,radius_act*sin(angle + ((2*M_PI) / slices)));
-			}
-		}
-
-		for(i = 0; i < slices; i++){
-			height_act = k * (height / stacks);
-			radius_act = (radius * (height - height_act)) / height;
-			angle = i * ((2*M_PI) / slices);
-
-			glVertex3f(0,height,0);
-			glVertex3f(radius_act*cos(angle + ((2*M_PI) / slices)),height_act,radius_act*sin(angle + ((2*M_PI) / slices)));
-			glVertex3f(radius_act*cos(angle),height_act,radius_act*sin(angle));
-		}
-
-		glEnd();
-
-}
-
-void draw_anel(float radius_outside,float radius_inside,int slices,int stacks){
-	float teta, fi;
-
-	glBegin(GL_TRIANGLES);
-	for(int i = 0; i < stacks ; i++){
-		for(int j = 0; j < slices ; j++){
-			teta = (2 * M_PI) / slices;
-			fi = (2 * M_PI) / stacks;
-
-			glColor3f(0.4,0.1,0.792);
-			glVertex3f((radius_outside + radius_inside*cos(j*teta))*cos(i*fi),radius_inside*sin(j*teta),(radius_outside + radius_inside*cos(j*teta))*sin(i*fi));
-			glVertex3f((radius_outside + radius_inside*cos((j+1)*teta))*cos(i*fi),radius_inside*sin((j+1)*teta),(radius_outside + radius_inside*cos((j+1)*teta))*sin(i*fi));
-			glVertex3f((radius_outside + radius_inside*cos(j*teta))*cos((i+1)*fi),radius_inside*sin(j*teta),(radius_outside + radius_inside*cos(j*teta))*sin((i+1)*fi));
-
-			glColor3f(0,0,0);
-			glVertex3f((radius_outside + radius_inside*cos((j+1)*teta))*cos(i*fi),radius_inside*sin((j+1)*teta),(radius_outside + radius_inside*cos((j+1)*teta))*sin(i*fi));
-			glVertex3f((radius_outside + radius_inside*cos((j+1)*teta))*cos((i+1)*fi),radius_inside*sin((j+1)*teta),(radius_outside + radius_inside*cos((j+1)*teta))*sin((i+1)*fi));
-			glVertex3f((radius_outside + radius_inside*cos(j*teta))*cos((i+1)*fi),radius_inside*sin(j*teta),(radius_outside + radius_inside*cos(j*teta))*sin((i+1)*fi));
-
-		}
-	}
-	glEnd();
-
-}
-
 
 void renderScene(void) {
-
 	// clear buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -236,49 +98,22 @@ void renderScene(void) {
 	gluLookAt(5,5,5,
 		      0.0,0.0,0.0,
 			  0.0f,1.0f,0.0f);
-
-	glRotatef(ay,0,0,1);
-
+	// End of frame
 	glPolygonMode(GL_FRONT,GL_LINE);
 	glColor3f(0,0,0);
-	draw_xyz(3);
-	//draw_shpere(3,10,10);
-	//draw_plane();
-	//draw_box(2,2,2,3);
-	draw_cone(2,3,5,10);
-	//glColor3f(0,0,0);
-	//Figure f;
-	//f.box_vertex(2,2,2,3);
-	//f.draw();
-	//draw_anel(1,1,20,20);
+	draw_figures();
 
-	//glutWireSphere(1,9,9);
-	//glutWireCone(1,2,5,3);
-
-	// End of frame
 	glutSwapBuffers();
 }
 
 
 void processKeys(unsigned char c, int xx, int yy) {
-	switch (c) {
-          case 'q':
-             ay += 45;
-             glutPostRedisplay();
-             break;
-		  case 'w':
-		  	 ay -= 45;
-		  	 glutPostRedisplay();
-		 	 break;
-		  default:
-		  	 break;
-	}
+
 }
 
 
 void processSpecialKeys(int key, int xx, int yy) {
 
-// put code to process special keys in here
 }
 
 

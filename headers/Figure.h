@@ -22,6 +22,7 @@ class Figure {
 
     public:
         Figure();
+        Figure(vector<Point*> * v);
         void shpere_vertex(float radius,int slices,int stacks);
         void cone_vertex(float radius,float height,int slices,int stacks);
         void plane_vertex(float size);

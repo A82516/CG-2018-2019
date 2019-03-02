@@ -83,7 +83,7 @@ int main(int argc, char **argv){
 			flag = 1;
 		}else print_error("Erro no input");
     }
-    else if (argc == 7 && strcmp(argv[1],"cone")){
+    else if (argc == 7 && strcmp(argv[1],"cone") == 0){
 		radius = atof(argv[2]);
 		height = atof(argv[3]);
 		slices = atoi(argv[4]);

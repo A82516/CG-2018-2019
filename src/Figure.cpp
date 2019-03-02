@@ -234,6 +234,10 @@ void Figure::box_vertex(float x,float y,float z,int partitions){
     }
 }
 
+Figure::Figure(vector<Point*> * v){
+	pontos = v;
+}
+
 Figure::~Figure(){
 	vector<Point*>::iterator it;
 	for(it = pontos->begin(); it != pontos->end(); it++){
