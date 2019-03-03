@@ -33,6 +33,8 @@ int Y_POS = WINDOW_Y/2;
 float angleA = 0;
 float angleB = 0;
 float radius = 5;
+GLenum viewMode = GL_LINE;
+
 
 vector<Figure*> figs;
 
@@ -118,9 +120,10 @@ void renderScene(void) {
 					0.0,0.0,0.0,
 				0.0f,1.0f,0.0f);
 	// End of frame
-	glPolygonMode(GL_FRONT,GL_LINE);
-	glColor3f(0,0,0);
-	//build_figure("../files/torus1.3d");
+
+	glPolygonMode(GL_FRONT,viewMode);
+	glColor3f(1,1,1);
+
 	draw_figures();
 
 	glutSwapBuffers();
@@ -173,6 +176,18 @@ void processKeys(unsigned char c, int xx, int yy) {
 				radius += 1;
 			glutPostRedisplay();
 			break;
+			case 'j':
+				viewMode = GL_LINE;
+			glutPostRedisplay();
+			break;
+			case 'k':
+				viewMode = GL_POINT;
+			glutPostRedisplay();
+			break;
+			case 'l':
+					viewMode = GL_FILL;
+					glutPostRedisplay();
+					break;
 			default:
 					break;
 	}
@@ -234,26 +249,26 @@ string mergePath(string path, string prog){
 
 }
 
-void readXML(string  f_path){
+void parseXML(string  f_path){
     XMLDocument xmlDoc;
     XMLElement *element;
 
     if (!(xmlDoc.LoadFile(f_path.c_str()))) {
 
-        element = xmlDoc.FirstChildElement(); //ROOT ELEMENT (<scene>)
-        for (element = element->FirstChildElement(); element; element = element->NextSiblingElement()) { // Iterates between Elements
-            string file = element->Attribute("file"); // Gets file information, on each Model Attribute
+        element = xmlDoc.FirstChildElement();
+        for (element = element->FirstChildElement(); element; element = element->NextSiblingElement()) {
+            string figura = element->Attribute("file");
 
-						cout << (file) <<endl; // Gets model's vertexes
+						cout << (figura) <<endl; // Gets model's vertexes
 
-						string file2 = mergePath(f_path,file);
+						string file2 = mergePath(f_path,figura);
 
 						build_figure(file2);
         }
 
     }
     else {
-        cout << "Could not find file! " << endl;
+        cout << "Ficheiro não encontrado! " << endl;
     }
 }
 
@@ -269,7 +284,7 @@ int main(int argc, char **argv) {
 
 
 
-	glClearColor(1,1,1,1) ;
+	glClearColor(0,0,0,1) ;
 	glClear(GL_COLOR_BUFFER_BIT);
 
 
@@ -280,7 +295,7 @@ int main(int argc, char **argv) {
 	     return 0;
 	}
 
-	else readXML(argv[1]); // Read XML File
+	else parseXML(argv[1]); // Read XML File
 // Required callback registry
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
