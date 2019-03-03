@@ -20,9 +20,16 @@
 using namespace tinyxml2;
 using namespace std;
 
-
+#define 	GLUT_WHEEL_UP 		3
+#define 	GLUT_WHEEL_DOWN 	4
 
 //variaveis globais
+int WINDOW_X = 800;
+int WINDOW_Y = 800;
+int X_POS = WINDOW_X/2;
+int Y_POS = WINDOW_Y/2;
+
+
 float angleA = 0;
 float angleB = 0;
 float radius = 5;
@@ -177,6 +184,36 @@ void processSpecialKeys(int key, int xx, int yy) {
 
 }
 
+void regPos(int x, int y){
+	X_POS = x;
+	Y_POS = y;
+}
+
+
+
+void mouse(int button, int state, int x, int y)
+{
+	// Used for wheels, has to be up
+	if (state == GLUT_UP )	{
+
+		if ( button == GLUT_WHEEL_UP ){
+			radius *= 0.95;
+		}
+		else if( button == GLUT_WHEEL_DOWN ){
+			radius *= 1.05;
+		}
+		glutPostRedisplay();
+	}
+}
+
+
+
+void activeMotion(int x, int y){
+	angleA += ((float)(x - X_POS)/WINDOW_X)*M_PI;
+	angleB += ((float)(y - Y_POS)/WINDOW_Y)*M_PI;
+	regPos(x,y);
+	glutPostRedisplay();
+}
 
 string mergePath(string path, string prog){
 
@@ -226,7 +263,7 @@ int main(int argc, char **argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
 	glutInitWindowPosition(100,100);
-	glutInitWindowSize(800,800);
+	glutInitWindowSize(WINDOW_X,WINDOW_Y);
 	glutCreateWindow("CG@DI-UM");
 
 
@@ -251,7 +288,9 @@ int main(int argc, char **argv) {
 // Callback registration for keyboard processing
 	glutKeyboardFunc(processKeys);
 	glutSpecialFunc(processSpecialKeys);
-
+	glutPassiveMotionFunc(regPos);
+	glutMotionFunc(activeMotion);
+	glutMouseFunc(mouse);
 
 //  OpenGL settings
 	glEnable(GL_DEPTH_TEST);
