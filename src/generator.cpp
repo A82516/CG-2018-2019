@@ -52,7 +52,11 @@ void printHelp(){
 	cout << "|                                                                |" << endl;
 	cout << "| - torus [OUTER RADIUS] [INNER RADIUS] [RINGS DIVISIONS] [RINGS]|" << endl;
 	cout << "|      Cria um torus com as dimensões pretendidas                |" << endl;
-	cout << "|                                                                |" << endl;
+  cout << "|                                                                |" << endl;
+  cout << "| - cylinder [RADIUS] [HEIGHT] [SLICE] [STACK]                   |" << endl;
+	cout << "|      Cria um cilindro com o raio, altura, slices e stacks      |" << endl;
+	cout << "|      pretendidas.                                              |" << endl;
+  cout << "|                                                                |" << endl;
 	cout << "|   OUTPUT FILE:                                                 |" << endl;
 	cout << "| In the file section you can specify any file in which you wish |" << endl;
 	cout << "| to save the coordinates generated with the previous commands.  |" << endl;
