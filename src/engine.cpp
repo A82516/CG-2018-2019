@@ -26,6 +26,8 @@ using namespace std;
 float angleA = 0;
 float angleB = 0;
 float radius = 5;
+GLenum viewMode = GL_LINE;
+
 
 vector<Figure*> figs;
 
@@ -111,9 +113,10 @@ void renderScene(void) {
 					0.0,0.0,0.0,
 				0.0f,1.0f,0.0f);
 	// End of frame
-	glPolygonMode(GL_FRONT,GL_LINE);
-	glColor3f(0,0,0);
-	//build_figure("../files/torus1.3d");
+
+	glPolygonMode(GL_FRONT,viewMode);
+	glColor3f(1,1,1);
+
 	draw_figures();
 
 	glutSwapBuffers();
@@ -166,6 +169,18 @@ void processKeys(unsigned char c, int xx, int yy) {
 				radius += 1;
 			glutPostRedisplay();
 			break;
+			case 'j':
+				viewMode = GL_LINE;
+			glutPostRedisplay();
+			break;
+			case 'k':
+				viewMode = GL_POINT;
+			glutPostRedisplay();
+			break;
+			case 'l':
+					viewMode = GL_FILL;
+					glutPostRedisplay();
+					break;
 			default:
 					break;
 	}
@@ -232,7 +247,7 @@ int main(int argc, char **argv) {
 
 
 
-	glClearColor(1,1,1,1) ;
+	glClearColor(0,0,0,1) ;
 	glClear(GL_COLOR_BUFFER_BIT);
 
 
