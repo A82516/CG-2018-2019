@@ -212,26 +212,26 @@ string mergePath(string path, string prog){
 
 }
 
-void readXML(string  f_path){
+void parseXML(string  f_path){
     XMLDocument xmlDoc;
     XMLElement *element;
 
     if (!(xmlDoc.LoadFile(f_path.c_str()))) {
 
-        element = xmlDoc.FirstChildElement(); //ROOT ELEMENT (<scene>)
-        for (element = element->FirstChildElement(); element; element = element->NextSiblingElement()) { // Iterates between Elements
-            string file = element->Attribute("file"); // Gets file information, on each Model Attribute
+        element = xmlDoc.FirstChildElement();
+        for (element = element->FirstChildElement(); element; element = element->NextSiblingElement()) {
+            string figura = element->Attribute("file");
 
-						cout << (file) <<endl; // Gets model's vertexes
+						cout << (figura) <<endl; // Gets model's vertexes
 
-						string file2 = mergePath(f_path,file);
+						string file2 = mergePath(f_path,figura);
 
 						build_figure(file2);
         }
 
     }
     else {
-        cout << "Could not find file! " << endl;
+        cout << "Ficheiro não encontrado! " << endl;
     }
 }
 
@@ -258,7 +258,7 @@ int main(int argc, char **argv) {
 	     return 0;
 	}
 
-	else readXML(argv[1]); // Read XML File
+	else parseXML(argv[1]); // Read XML File
 // Required callback registry
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
