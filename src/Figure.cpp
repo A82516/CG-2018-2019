@@ -6,26 +6,28 @@
 
 void Figure::shpere_vertex(float radius,int slices,int stacks){
     int i=0;
-    float alpha;
-    float beta;
+    float alpha,d_alpha;
+    float beta,d_beta;
     Point *p1,*p2,*p3;
 
     for(int k = 0; k < stacks ; k++){
         for(i=0; i < slices;i++){
-            alpha = 2*M_PI / slices;
-            beta = M_PI / stacks;
+            alpha = i*(2*M_PI / slices);
+            beta = k*(M_PI / stacks) - (M_PI / 2);
+			d_alpha =(2*M_PI / slices);
+			d_beta = (M_PI / stacks);
 
-            p1 = new Point(radius*cos(i*alpha)*cos(k*beta - (M_PI / 2)),radius*sin(k*beta - (M_PI / 2)),radius*sin(i*alpha)*cos(k*beta- (M_PI / 2)));
-            p2 = new Point(radius*cos(i*alpha)*cos((k+1)*beta- (M_PI / 2)),radius*sin((k+1)*beta- (M_PI / 2)),radius*sin(i*alpha)*cos((k+1)*beta- (M_PI / 2)));
-            p3 = new Point(radius*cos((i+1)*alpha)*cos(k*beta- (M_PI / 2)) ,radius*sin(k*beta- (M_PI / 2)) ,radius*sin((i+1)*alpha)*cos(k*beta- (M_PI / 2)));
+            p1 = new Point(radius*cos(alpha)*cos(beta ),radius*sin(beta ),radius*sin(alpha)*cos(beta));
+            p2 = new Point(radius*cos(alpha)*cos(beta + d_beta),radius*sin(beta + d_beta),radius*sin(alpha)*cos(beta + d_beta));
+            p3 = new Point(radius*cos(alpha + d_alpha)*cos(beta) ,radius*sin(beta) ,radius*sin(alpha + d_alpha)*cos(beta));
 
             pontos->push_back(p1);
             pontos->push_back(p2);
             pontos->push_back(p3);
 
-            p1 = new Point(radius*cos(i*alpha)*cos((k+1)*beta- (M_PI / 2)),radius*sin((k+1)*beta- (M_PI / 2)),radius*sin(i*alpha)*cos((k+1)*beta- (M_PI / 2)));
-            p2 = new Point(radius*cos((i+1)*alpha)*cos((k+1)*beta- (M_PI / 2)) ,radius*sin((k+1)*beta- (M_PI / 2)) ,radius*sin((i+1)*alpha)*cos((k+1)*beta- (M_PI / 2)));
-            p3 = new Point(radius*cos((i+1)*alpha)*cos(k*beta- (M_PI / 2)) ,radius*sin(k*beta- (M_PI / 2)) ,radius*sin((i+1)*alpha)*cos(k*beta- (M_PI / 2)));
+            p1 = new Point(radius*cos(alpha)*cos(beta + d_beta),radius*sin(beta + d_beta),radius*sin(alpha)*cos(beta + d_beta));
+            p2 = new Point(radius*cos(alpha + d_alpha)*cos(beta + d_beta) ,radius*sin(beta + d_beta) ,radius*sin(alpha + d_alpha)*cos(beta + d_beta));
+            p3 = new Point(radius*cos(alpha + d_alpha)*cos(beta) ,radius*sin(beta) ,radius*sin(alpha + d_alpha)*cos(beta));
 
             pontos->push_back(p1);
             pontos->push_back(p2);
