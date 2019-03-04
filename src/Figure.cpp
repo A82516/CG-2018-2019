@@ -46,7 +46,7 @@ Figure::Figure(){
 }
 
 void Figure::cone_vertex(float radius,float height,int slices,int stacks){
-    float angle, height_act = 0, height_next = 0, radius_act = 0, radius_next = 0;
+    float angle, height_act = 0, height_next = 0, radius_act = 0, radius_next = 0,d_alpha;
     int k = 0,i;
 
     Point *p1,*p2,*p3;
@@ -137,26 +137,28 @@ void Figure::draw() {
 }
 
 void Figure::torus_vertex(float radius_outside,float radius_inside,int slices,int stacks){
-    float teta, fi;
+    float teta, fi,d_teta,d_fi;
     Point *p1,*p2,*p3;
 
     for(int i = 0; i < stacks ; i++){
         for(int j = 0; j < slices ; j++){
-            teta = (2 * M_PI) / slices;
-            fi = (2 * M_PI) / stacks;
+            teta = j * (2 * M_PI) / slices;
+            fi = i * (2 * M_PI) / stacks;
+			d_teta = (2 * M_PI) / slices;
+			d_fi = (2 * M_PI) / stacks;
 
 
-            p1 = new Point((radius_outside + radius_inside*cos(j*teta))*cos(i*fi),radius_inside*sin(j*teta),(radius_outside + radius_inside*cos(j*teta))*sin(i*fi));
-            p2 = new Point((radius_outside + radius_inside*cos((j+1)*teta))*cos(i*fi),radius_inside*sin((j+1)*teta),(radius_outside + radius_inside*cos((j+1)*teta))*sin(i*fi));
-            p3 = new Point((radius_outside + radius_inside*cos(j*teta))*cos((i+1)*fi),radius_inside*sin(j*teta),(radius_outside + radius_inside*cos(j*teta))*sin((i+1)*fi));
+            p1 = new Point((radius_outside + radius_inside*cos(teta))*cos(fi),radius_inside*sin(teta),(radius_outside + radius_inside*cos(teta))*sin(fi));
+            p2 = new Point((radius_outside + radius_inside*cos(teta + d_teta))*cos(fi),radius_inside*sin(teta + d_teta),(radius_outside + radius_inside*cos(teta + d_teta))*sin(fi));
+            p3 = new Point((radius_outside + radius_inside*cos(teta))*cos(fi + d_fi),radius_inside*sin(teta),(radius_outside + radius_inside*cos(teta))*sin(fi + d_fi));
 
             pontos->push_back(p1);
             pontos->push_back(p2);
             pontos->push_back(p3);
 
-            p1 = new Point((radius_outside + radius_inside*cos((j+1)*teta))*cos(i*fi),radius_inside*sin((j+1)*teta),(radius_outside + radius_inside*cos((j+1)*teta))*sin(i*fi));
-            p2 = new Point((radius_outside + radius_inside*cos((j+1)*teta))*cos((i+1)*fi),radius_inside*sin((j+1)*teta),(radius_outside + radius_inside*cos((j+1)*teta))*sin((i+1)*fi));
-            p3 = new Point((radius_outside + radius_inside*cos(j*teta))*cos((i+1)*fi),radius_inside*sin(j*teta),(radius_outside + radius_inside*cos(j*teta))*sin((i+1)*fi));
+            p1 = new Point((radius_outside + radius_inside*cos(teta + d_teta))*cos(fi),radius_inside*sin(teta + d_teta),(radius_outside + radius_inside*cos(teta + d_teta))*sin(fi));
+            p2 = new Point((radius_outside + radius_inside*cos(teta + d_teta))*cos(fi + d_fi),radius_inside*sin(teta + d_teta),(radius_outside + radius_inside*cos(teta + d_teta))*sin(fi + d_fi));
+            p3 = new Point((radius_outside + radius_inside*cos(teta))*cos(fi + d_fi),radius_inside*sin(teta),(radius_outside + radius_inside*cos(teta))*sin(fi + d_fi));
 
             pontos->push_back(p1);
             pontos->push_back(p2);
