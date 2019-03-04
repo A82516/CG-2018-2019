@@ -6,18 +6,23 @@
 
 void Figure::shpere_vertex(float radius,int slices,int stacks){
     int i=0;
-    float alpha;
-    float beta;
+    float alpha = 2*M_PI / slices;
+    float beta = M_PI / stacks;
     Point *p1,*p2,*p3;
+    float cur_a, nxt_a, cur_b, nxt_b;
 
     for(int k = 0; k < stacks ; k++){
         for(i=0; i < slices;i++){
-            alpha = 2*M_PI / slices;
-            beta = M_PI / stacks;
 
-            p1 = new Point(radius*cos(i*alpha)*cos(k*beta - (M_PI / 2)),radius*sin(k*beta - (M_PI / 2)),radius*sin(i*alpha)*cos(k*beta- (M_PI / 2)));
-            p2 = new Point(radius*cos(i*alpha)*cos((k+1)*beta- (M_PI / 2)),radius*sin((k+1)*beta- (M_PI / 2)),radius*sin(i*alpha)*cos((k+1)*beta- (M_PI / 2)));
-            p3 = new Point(radius*cos((i+1)*alpha)*cos(k*beta- (M_PI / 2)) ,radius*sin(k*beta- (M_PI / 2)) ,radius*sin((i+1)*alpha)*cos(k*beta- (M_PI / 2)));
+            cur_a = i*alpha;
+            cur_b = k*beta;
+            nxt_a = (i + 1)*alpha;
+            nxt_b = (k + 1)*beta;
+
+
+            p1 = new Point(radius*cos(cur_a)*cos(k*beta - (M_PI / 2)),radius*sin(k*beta - (M_PI / 2)),radius*sin(cur_a)*cos(k*beta- (M_PI / 2)));
+            p2 = new Point(radius*cos(cur_a)*cos((k+1)*beta- (M_PI / 2)),radius*sin((k+1)*beta- (M_PI / 2)),radius*sin(cur_a)*cos((k+1)*beta- (M_PI / 2)));
+            p3 = new Point(radius*cos(nxt_a)*cos(k*beta- (M_PI / 2)) ,radius*sin(k*beta- (M_PI / 2)) ,radius*sin((i+1)*alpha)*cos(k*beta- (M_PI / 2)));
 
             pontos->push_back(p1);
             pontos->push_back(p2);
@@ -123,13 +128,17 @@ void Figure::plane_vertex(float size) {
     pontos->push_back(p3);
 }
 
-void Figure::draw() {
+void Figure::draw(long * building) {
     glBegin(GL_TRIANGLES);
+    long l = *building;
 
     vector<Point*>::iterator it;
     for(it = pontos->begin(); it != pontos->end(); it++){
-        Point * p = (*it);
-        glVertex3f(p->getX(),p->getY(),p->getZ());
+        if(l > 0) {
+            Point *p = (*it);
+            glVertex3f(p->getX(), p->getY(), p->getZ());
+            l--;
+        }
     }
     glEnd();
 }

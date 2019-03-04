@@ -28,6 +28,7 @@ int WINDOW_X = 800;
 int WINDOW_Y = 800;
 int X_POS = WINDOW_X/2;
 int Y_POS = WINDOW_Y/2;
+long building = 0;
 
 
 float angleA = 0;
@@ -106,7 +107,7 @@ void build_figure(string path){
 void draw_figures(){
 	vector<Figure*>::iterator it;
 	for(it = figs.begin(); it != figs.end(); it++){
-		(*it)->draw();
+		(*it)->draw(&building);
 	}
 }
 
@@ -134,62 +135,66 @@ void processKeys(unsigned char c, int xx, int yy) {
 
 	switch (c) {
 			case 'w':
-					angleB += M_PI / 6;
-					glutPostRedisplay();
-					break;
+			    angleB += M_PI / 6;
+				glutPostRedisplay();
+				break;
 			case 's':
 				angleB -= M_PI / 6;
-			glutPostRedisplay();
+			    glutPostRedisplay();
 			case 'a':
-					angleA -= M_PI / 6;
-					glutPostRedisplay();
-					break;
+			    angleA -= M_PI / 6;
+				glutPostRedisplay();
+				break;
 			case 'd':
 				angleA += M_PI / 6;
-			glutPostRedisplay();
+			    glutPostRedisplay();
 			break;
 			case 'q':
-					angleB += M_PI / 6;
-					angleA -= M_PI / 6;
-					glutPostRedisplay();
-					break;
+			    angleB += M_PI / 6;
+				angleA -= M_PI / 6;
+				glutPostRedisplay();
+				break;
 			case 'e':
 				angleB += M_PI / 6;
 				angleA += M_PI / 6;
-			glutPostRedisplay();
+			    glutPostRedisplay();
 			break;
 			case 'z':
 				angleB -= M_PI / 6;
 				angleA -= M_PI / 6;
-			glutPostRedisplay();
+			    glutPostRedisplay();
 			break;
 			case 'x':
 				angleB -= M_PI / 6;
 				angleA += M_PI / 6;
-			glutPostRedisplay();
+			    glutPostRedisplay();
 			break;
 			case '1':
 				radius -= 1;
-			glutPostRedisplay();
+			    glutPostRedisplay();
 			break;
 			case '2':
 				radius += 1;
-			glutPostRedisplay();
+			    glutPostRedisplay();
 			break;
 			case 'j':
 				viewMode = GL_LINE;
-			glutPostRedisplay();
+			    glutPostRedisplay();
 			break;
 			case 'k':
 				viewMode = GL_POINT;
-			glutPostRedisplay();
+			    glutPostRedisplay();
 			break;
 			case 'l':
-					viewMode = GL_FILL;
-					glutPostRedisplay();
-					break;
+			    viewMode = GL_FILL;
+				glutPostRedisplay();
+				break;
+	        case 'm':
+	            building += 18;
+	            glutPostRedisplay();
+	            break;
 			default:
-					break;
+			    break;
 	}
 
 }
