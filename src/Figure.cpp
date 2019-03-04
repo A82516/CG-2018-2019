@@ -129,8 +129,15 @@ void Figure::draw() {
     glBegin(GL_TRIANGLES);
 
     vector<Point*>::iterator it;
+	int i = 0;
     for(it = pontos->begin(); it != pontos->end(); it++){
         Point * p = (*it);
+		if ((i % 3) == 0){
+			float r1 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+			float r2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+			float r3 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+			glColor3f(r1,r2,r3);
+		}
         glVertex3f(p->getX(),p->getY(),p->getZ());
     }
     glEnd();
