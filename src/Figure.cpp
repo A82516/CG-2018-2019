@@ -139,6 +139,7 @@ void Figure::draw() {
 			glColor3f(r1,r2,r3);
 		}
         glVertex3f(p->getX(),p->getY(),p->getZ());
+        i++;
     }
     glEnd();
 }
