@@ -1,0 +1,79 @@
+<scene>
+	<group>
+        <scale X="2" Y="2" Z="2" />
+        <models>
+            <model file='sun.3ds'/>
+        </models>
+	</group>
+    <group>
+        <rotate angle="180" axisX="0" axisY="1" axisZ="0" />
+        <translate X="4" Y="0" Z="0" />
+        <scale X="0.20" Y="0.20" Z="0.20" />
+        <models>
+            <model file='sun.3ds'/>
+        </models>
+    </group>
+    <group>
+        <rotate angle="60" axisX="0" axisY="1" axisZ="0" />
+        <translate X="5" Y="0" Z="0" />
+        <scale X="0.25" Y="0.25" Z="0.25" />
+        <models>
+            <model file='sun.3ds'/>
+        </models>
+    </group>
+    <group>
+        <rotate angle="30" axisX="0" axisY="1" axisZ="0" />
+        <translate X="7" Y="0" Z="0" />
+        <scale X="0.40" Y="0.40" Z="0.40" />
+        <models>
+            <model file='sun.3ds'/>
+        </models>
+    </group>
+    <group>
+        <translate X="13" Y="0" Z="0" />
+        <rotate angle="30" axisX="0" axisY="0" axisZ="1" />
+        <group>
+            <scale X="0.6" Y="0.6" Z="0.6" />
+            <models>
+                <model file='sun.3ds'/>
+            </models>
+        </group>
+        <group>
+            <scale X="0.6" Y="0.2" Z="0.6" />
+            <models>
+                <model file='anel.3ds'/>
+            </models>
+        </group>
+    </group>
+    <group>
+        <rotate angle="60" axisX="0" axisY="1" axisZ="0" />
+        <translate X="10" Y="0" Z="0" />
+        <models>
+            <model file='sun.3ds'/>
+        </models>
+    </group>
+    <group>
+        <rotate angle="-60" axisX="0" axisY="1" axisZ="0" />
+        <translate X="6" Y="0" Z="0" />
+        <scale X="0.30" Y="0.30" Z="0.30" />
+        <models>
+            <model file='sun.3ds'/>
+        </models>
+    </group>
+    <group>
+        <rotate angle="-120" axisX="0" axisY="1" axisZ="0" />
+        <translate X="15" Y="0" Z="0" />
+        <scale X="0.40" Y="0.40" Z="0.40" />
+        <models>
+            <model file='sun.3ds'/>
+        </models>
+    </group>
+    <group>
+        <rotate angle="-45" axisX="0" axisY="1" axisZ="0" />
+        <translate X="17" Y="0" Z="0" />
+        <scale X="0.40" Y="0.40" Z="0.40" />
+        <models>
+            <model file='sun.3ds'/>
+        </models>
+    </group>
+</scene>

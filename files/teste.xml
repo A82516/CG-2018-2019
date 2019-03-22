@@ -1,4 +1,11 @@
 <scene>
-	<model file='box1.3d' />
-	<model file='torus1.3d' />
+	<group>
+		<translate X=5 Y=0 Z=2 />
+		<rotate angle=45 axisX=0 axisY=1 axisZ=0 />
+		<scale X=1 Y=2 Z=3 />
+		<models>
+			<model file='box1.3d' />
+			<model file='cone1.3d' />
+		</models>
+	</group>
 </scene>

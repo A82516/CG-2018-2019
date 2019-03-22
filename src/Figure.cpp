@@ -4,6 +4,21 @@
 
 #include "../headers/Figure.h"
 
+static float cores_sun[6][3] = {{255,127,80},{255,99,71},{255,69,0},{255,215,0},{255,165,0},{255,140,0}};
+static float cores_terra[6][3] = {{32,178,170},{0,100,0},{128,128,0},{34,139,34},{0,139,139},{72,209,204}};
+static float cores_sat[6][3] = {{222,184,135},{210,180,140},{245,222,179},{255,228,196},{255,228,181},{139,69,19}};
+static float cores_mer[6][3] = {{105,105,105},{128,128,128},{0,191,255},{72,209,204},{211,211,211},{220,220,220}};
+static float cores_ven[6][3] = {{255,99,71},{255,69,0},{240,128,128},{238,232,170},{240,230,140},{255,255,240}};
+static float cores_jup[6][3] = {{255,255,240},{255,239,213},{244,164,96},{255,228,196},{184,134,11},{224,255,255}};
+static float cores_mar[6][3] = {{165,42,42},{128,0,0},{220,20,60},{178,34,34},{165,42,42},{139,0,0}};
+static float cores_ura[6][3] = {{72,209,204},{72,209,204},{72,209,204},{64,224,208},{64,224,208},{64,224,208}};
+static float cores_nep[6][3] = {{65,105,225},{65,105,225},{65,105,225},{0,0,205},{0,0,205},{0,0,205}};
+
+
+static int number_figures = 0;
+
+
+
 void Figure::shpere_vertex(float radius,int slices,int stacks){
     int i=0;
     float alpha,d_alpha;
@@ -126,22 +141,33 @@ void Figure::plane_vertex(float size) {
 }
 
 void Figure::draw() {
+    glPushMatrix();
+
+    vector<Transformation*>::iterator it1;
+    for(it1 = transformacoes->begin(); it1 != transformacoes->end(); it1++){
+        (*it1)->performe();
+    }
+
     glBegin(GL_TRIANGLES);
 
     vector<Point*>::iterator it;
+    vector<Point*>::iterator color_it;
 	int i = 0;
-    for(it = pontos->begin(); it != pontos->end(); it++){
-        Point * p = (*it);
+    for(it = pontos->begin(),color_it = cores->begin(); it != pontos->end() && color_it != cores->end(); it++,color_it++){
+        Point * p = (*it),* p2 = (*color_it);
+        /**
 		if ((i % 3) == 0){
 			float r1 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 			float r2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 			float r3 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 			glColor3f(r1,r2,r3);
-		}
+		}*/
+		glColor3f(p2->getX(),p2->getY(),p2->getZ());
         glVertex3f(p->getX(),p->getY(),p->getZ());
         i++;
     }
     glEnd();
+    glPopMatrix();
 }
 
 void Figure::torus_vertex(float radius_outside,float radius_inside,int slices,int stacks){
@@ -285,12 +311,54 @@ Figure::Figure(vector<Point*> * v){
 	pontos = v;
 }
 
+Figure::Figure(vector<Point*> * v,vector<Transformation*> &trans){
+	pontos = v;
+
+    transformacoes = new vector<Transformation*>();
+    vector<Transformation*>::iterator it;
+    for(it = trans.begin(); it != trans.end(); it++){
+        transformacoes->push_back((*it)->clone());
+    }
+
+
+    cores = new vector<Point*>();
+    float cor_aux[3];
+
+    for(int k = 0; k < pontos->size(); k++){
+        int r1 = (static_cast <int> (rand())) % (static_cast <int> (6));
+
+
+        switch (number_figures % 10){
+            case 0:{ rgbToDecimal(cores_sun,r1,cor_aux); break;}
+            case 1:{ rgbToDecimal(cores_mer,r1,cor_aux); break;}
+            case 2:{ rgbToDecimal(cores_ven,r1,cor_aux); break;}
+            case 3:{ rgbToDecimal(cores_terra,r1,cor_aux); break;}
+            case 4:{ rgbToDecimal(cores_mer,r1,cor_aux); break;}
+            case 5:{ rgbToDecimal(cores_sat,r1,cor_aux); break;}
+            case 6:{ rgbToDecimal(cores_jup,r1,cor_aux); break;}
+            case 7:{ rgbToDecimal(cores_mar,r1,cor_aux); break;}
+            case 8:{ rgbToDecimal(cores_ura,r1,cor_aux); break;}
+            case 9:{ rgbToDecimal(cores_nep,r1,cor_aux); break;}
+
+
+
+            }
+        cores->push_back(new Point(cor_aux[0],cor_aux[1],cor_aux[2]));
+    }
+    number_figures++;
+}
+
 Figure::~Figure(){
 	vector<Point*>::iterator it;
 	for(it = pontos->begin(); it != pontos->end(); it++){
 		delete((*it));
 	}
 	delete(pontos);
+    vector<Transformation*>::iterator it1;
+    for(it1 = transformacoes->begin(); it1 != transformacoes->end(); it1++){
+        delete((*it1));
+    }
+    delete(transformacoes);
 }
 
 
@@ -300,4 +368,9 @@ void cleanVector(vector<Point*> * limpar){
         delete((*it));
     }
     delete(limpar);
+}
+
+void rgbToDecimal(float v[6][3],int y,float dest[3]){
+    for(int i= 0; i < 3; i++)
+        dest[i] = v[y][i] / 255;
 }

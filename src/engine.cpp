@@ -15,6 +15,8 @@
 #include "../headers/Point.h"
 #include "../headers/Figure.h"
 #include "../headers/tinyxml2.h"
+#include "../headers/Matrix.h"
+#include "../headers/Transformation.h"
 
 
 using namespace tinyxml2;
@@ -30,14 +32,25 @@ int X_POS = WINDOW_X/2;
 int Y_POS = WINDOW_Y/2;
 
 
-float angleA = 0;
-float angleB = 0;
-float radius = 5;
-GLenum viewMode = GL_LINE;
+float angleA = M_PI/3.0;
+float angleB = M_PI/3.0;
+float radius = 40;
+GLenum viewMode = GL_POLYGON;
 
 
 vector<Figure*> figs;
 
+
+void teapot(){
+	glPushMatrix();
+	glTranslatef(5.0,0.0,2.0);
+
+	glutSolidTeapot(0.1);
+	glTranslatef(5.0,0.0,2.0);
+
+	glutSolidTeapot(0.1);
+	glPopMatrix();
+}
 
 void changeSize(int w, int h) {
 
@@ -64,7 +77,7 @@ void changeSize(int w, int h) {
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void build_figure(string path){
+void build_figure(string path,vector<Transformation*> &trans){
 
   string line;
   string delimiter = " ";
@@ -96,7 +109,7 @@ void build_figure(string path){
 
 		v->push_back(new Point(x,y,z));
     }
-	f = new Figure(v);
+	f = new Figure(v,trans);
 	figs.push_back(f);
     myfile.close();
   }
@@ -108,6 +121,25 @@ void draw_figures(){
 	for(it = figs.begin(); it != figs.end(); it++){
 		(*it)->draw();
 	}
+}
+
+void draw_xyz(float size){
+	glColor3f(1,1,1);
+	//x
+	glBegin(GL_LINES);
+	glVertex3f(0,0,0);
+	glVertex3f(size,0,0);
+	glEnd();
+	//y
+	glBegin(GL_LINES);
+	glVertex3f(0,0,0);
+	glVertex3f(0,size,0);
+	glEnd();
+	//z
+	glBegin(GL_LINES);
+	glVertex3f(0,0,0);
+	glVertex3f(0,0,size);
+	glEnd();
 }
 
 void renderScene(void) {
@@ -124,7 +156,9 @@ void renderScene(void) {
 	glPolygonMode(GL_FRONT,viewMode);
 	glColor3f(1,1,1);
 
+	//draw_xyz(100);
 	draw_figures();
+
 
 	glutSwapBuffers();
 }
@@ -223,6 +257,7 @@ void mouse(int button, int state, int x, int y)
 
 
 
+
 void activeMotion(int x, int y){
 	angleA += ((float)(x - X_POS)/WINDOW_X)*M_PI;
 	angleB += ((float)(y - Y_POS)/WINDOW_Y)*M_PI;
@@ -249,21 +284,81 @@ string mergePath(string path, string prog){
 
 }
 
+void parseModels(string f_path,vector<Transformation*> &trans,XMLElement * element){
+	for (element = element->FirstChildElement(); element; element = element->NextSiblingElement()) {
+		string figura = element->Attribute("file");
+
+		string file2 = mergePath(f_path,figura);
+
+		build_figure(file2,trans);
+	}
+
+}
+
+void parseGroup(string f_path,vector<Transformation*> &trans,XMLElement * element){
+	XMLElement * percorrer;
+
+	float v[3];
+	int v1[3];
+
+    vector<Transformation*> clone;
+
+	vector<Transformation*>::iterator it;
+	for(it = trans.begin(); it != trans.end(); it++){
+		clone.push_back((*it)->clone());
+	}
+
+	for(percorrer = element->FirstChildElement(); percorrer; percorrer = percorrer->NextSiblingElement()){
+		string name = percorrer->Name();
+		if (name.compare("translate") == 0 || name.compare("scale") == 0){
+			string a = percorrer->Attribute("X");
+			v[0] = a != "" ? strtof((a).c_str(),0) : 0.0;
+			a = percorrer->Attribute("Y");
+			v[1] = a != "" ? strtof((a).c_str(),0) : 0.0;
+			a = percorrer->Attribute("Z");
+			v[2] = a != "" ? strtof((a).c_str(),0) : 0.0;
+
+			int type;
+			if (name.compare("translate") == 0)
+				type = 0;
+			else type = 1;
+
+			clone.push_back(new Transformation(type,v));
+		}
+		else if (name.compare("rotate") == 0){
+
+			float angle;
+
+			string a = percorrer->Attribute("axisX");
+			v1[0] = a != "" ? stoi(a) : 0;
+			a = percorrer->Attribute("axisY");
+			v1[1] = a != "" ? stoi(a) : 0;
+			a = percorrer->Attribute("axisZ");
+			v1[2] = a != "" ? stoi(a) : 0;
+			a = percorrer->Attribute("angle");
+			angle = strtof((a).c_str(),0);
+
+			clone.push_back(new Transformation(2,v1,angle));
+		}
+		else if (name.compare("models") == 0){
+			parseModels(f_path,clone,percorrer);
+		}
+		else if (name.compare("group") == 0){}
+			parseGroup(f_path,clone,percorrer);
+	}
+}
+
 void parseXML(string  f_path){
     XMLDocument xmlDoc;
     XMLElement *element;
+
+    vector<Transformation*> transf;
 
     if (!(xmlDoc.LoadFile(f_path.c_str()))) {
 
         element = xmlDoc.FirstChildElement();
         for (element = element->FirstChildElement(); element; element = element->NextSiblingElement()) {
-            string figura = element->Attribute("file");
-
-						cout << (figura) <<endl; // Gets model's vertexes
-
-						string file2 = mergePath(f_path,figura);
-
-						build_figure(file2);
+            parseGroup(f_path,transf,element);
         }
 
     }

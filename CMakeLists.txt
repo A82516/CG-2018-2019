@@ -45,7 +45,7 @@ endif(WIN32)
 # Project Name
 project(engine)
 
-set(ENGINE_FILES ./src/engine.cpp ./src/tinyxml2.cpp ./src/Point.cpp ./src/Figure.cpp)
+set(ENGINE_FILES ./src/engine.cpp ./src/tinyxml2.cpp ./src/Point.cpp ./src/Figure.cpp ./src/Matrix.cpp src/Transformation.cpp)
 
 add_executable(engine ${ENGINE_FILES})
 
