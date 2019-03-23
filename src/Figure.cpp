@@ -13,6 +13,8 @@ static float cores_jup[6][3] = {{255,255,240},{255,239,213},{244,164,96},{255,22
 static float cores_mar[6][3] = {{165,42,42},{128,0,0},{220,20,60},{178,34,34},{165,42,42},{139,0,0}};
 static float cores_ura[6][3] = {{72,209,204},{72,209,204},{72,209,204},{64,224,208},{64,224,208},{64,224,208}};
 static float cores_nep[6][3] = {{65,105,225},{65,105,225},{65,105,225},{0,0,205},{0,0,205},{0,0,205}};
+static float cores_moon[6][3] = {{220,220,220},{119,136,153},{255,255,255},{255,239,213},{169,169,169},{128,128,128}};
+
 
 
 static int number_figures = 0;
@@ -328,17 +330,18 @@ Figure::Figure(vector<Point*> * v,vector<Transformation*> &trans){
         int r1 = (static_cast <int> (rand())) % (static_cast <int> (6));
 
 
-        switch (number_figures % 10){
+        switch (number_figures % 11){
             case 0:{ rgbToDecimal(cores_sun,r1,cor_aux); break;}
             case 1:{ rgbToDecimal(cores_mer,r1,cor_aux); break;}
             case 2:{ rgbToDecimal(cores_ven,r1,cor_aux); break;}
             case 3:{ rgbToDecimal(cores_terra,r1,cor_aux); break;}
-            case 4:{ rgbToDecimal(cores_mer,r1,cor_aux); break;}
-            case 5:{ rgbToDecimal(cores_sat,r1,cor_aux); break;}
-            case 6:{ rgbToDecimal(cores_jup,r1,cor_aux); break;}
-            case 7:{ rgbToDecimal(cores_mar,r1,cor_aux); break;}
-            case 8:{ rgbToDecimal(cores_ura,r1,cor_aux); break;}
-            case 9:{ rgbToDecimal(cores_nep,r1,cor_aux); break;}
+            case 4:{ rgbToDecimal(cores_moon,r1,cor_aux); break;}
+            case 5:{ rgbToDecimal(cores_mar,r1,cor_aux); break;}
+            case 6:{ rgbToDecimal(cores_sat,r1,cor_aux); break;}
+            case 7:{ rgbToDecimal(cores_jup,r1,cor_aux); break;}
+            case 8:{ rgbToDecimal(cores_sat,r1,cor_aux); break;}
+            case 9:{ rgbToDecimal(cores_ura,r1,cor_aux); break;}
+            case 10:{ rgbToDecimal(cores_nep,r1,cor_aux); break;}
 
 
 

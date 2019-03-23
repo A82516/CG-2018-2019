@@ -346,6 +346,10 @@ void parseGroup(string f_path,vector<Transformation*> &trans,XMLElement * elemen
 		else if (name.compare("group") == 0){}
 			parseGroup(f_path,clone,percorrer);
 	}
+
+    for(it = clone.begin(); it != clone.end(); it++){
+        delete (*it);
+    }
 }
 
 void parseXML(string  f_path){
