@@ -147,7 +147,7 @@ void Figure::draw() {
 
     vector<Transformation*>::iterator it1;
     for(it1 = transformacoes->begin(); it1 != transformacoes->end(); it1++){
-        (*it1)->performe();
+        (*it1)->perform();
     }
 
     glBegin(GL_TRIANGLES);

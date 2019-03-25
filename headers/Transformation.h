@@ -25,7 +25,7 @@ class Transformation {
         Transformation(Transformation *t);
         virtual ~Transformation();
         Transformation* clone();
-        void performe();
+        void perform();
 
 };
 

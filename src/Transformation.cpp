@@ -34,7 +34,7 @@ Transformation::Transformation(Transformation *t) {
     }
 }
 
-void Transformation::performe() {
+void Transformation::perform() {
     if (type == 0)
         glTranslatef(translate[0],translate[1],translate[2]);
     else if (type == 1)
