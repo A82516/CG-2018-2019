@@ -1,4 +1,5 @@
 <scene>
+    <group>
         <group>
             <! SUN />
             <scale X="3" Y="3" Z="3" />
@@ -99,4 +100,5 @@
                 <model file='sun.3ds' />
             </models>
         </group>
+    </group>
 </scene>
