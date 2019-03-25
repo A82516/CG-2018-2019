@@ -311,12 +311,10 @@ void parseGroup(string f_path,vector<Transformation*> &trans,XMLElement * elemen
 	for(percorrer = element->FirstChildElement(); percorrer; percorrer = percorrer->NextSiblingElement()){
 		string name = percorrer->Name();
 		if (name.compare("translate") == 0 || name.compare("scale") == 0){
-			string a = percorrer->Attribute("X");
-			v[0] = a != "" ? strtof((a).c_str(),0) : 0.0;
-			a = percorrer->Attribute("Y");
-			v[1] = a != "" ? strtof((a).c_str(),0) : 0.0;
-			a = percorrer->Attribute("Z");
-			v[2] = a != "" ? strtof((a).c_str(),0) : 0.0;
+			v[0] = 0.0; v[1] = 0.0; v[2] = 0.0;
+			percorrer->QueryFloatAttribute( "X", v );
+			percorrer->QueryFloatAttribute( "Y", v+1 );
+			percorrer->QueryFloatAttribute( "Z", v+2 );
 
 			int type;
 			if (name.compare("translate") == 0)
@@ -327,16 +325,12 @@ void parseGroup(string f_path,vector<Transformation*> &trans,XMLElement * elemen
 		}
 		else if (name.compare("rotate") == 0){
 
-			float angle;
-
-			string a = percorrer->Attribute("axisX");
-			v1[0] = a != "" ? stoi(a) : 0;
-			a = percorrer->Attribute("axisY");
-			v1[1] = a != "" ? stoi(a) : 0;
-			a = percorrer->Attribute("axisZ");
-			v1[2] = a != "" ? stoi(a) : 0;
-			a = percorrer->Attribute("angle");
-			angle = strtof((a).c_str(),0);
+			float angle = 0.0;
+            v1[0] = 0; v1[1] = 0; v1[2] = 0;
+            percorrer->QueryIntAttribute( "axisX", v1 );
+            percorrer->QueryIntAttribute( "axisY", v1+1 );
+            percorrer->QueryIntAttribute( "axisZ", v1+2 );
+            percorrer->QueryFloatAttribute( "angle", &angle);
 
 			clone.push_back(new Transformation(2,v1,angle));
 		}

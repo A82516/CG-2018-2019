@@ -9,7 +9,7 @@
         <group>
             <! Mercurio />
             <rotate angle="45" axisX="0" axisY="1" axisZ="0" />
-            <translate X="4" Y="0" Z="0" />
+            <translate X="4"  />
             <scale X="0.3" Y="0.3" Z="0.3" />
             <models>
                 <model file='sun.3ds' />
