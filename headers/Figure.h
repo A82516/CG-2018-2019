@@ -23,11 +23,11 @@
 
 
 class Figure {
-    vector<Point*> * pontos;
+    GLuint buffer[1]; // 0 é para pontos
+    int n_vertex;
 	vector<Transformation*> * transformacoes;
 
     public:
-        Figure();
         Figure(vector<Point*> * v,vector<Transformation*> &trans);
         void draw();
         virtual ~Figure();

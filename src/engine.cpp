@@ -157,9 +157,6 @@ void renderScene(void) {
 	// End of frame
 
 	glPolygonMode(GL_FRONT,viewMode);
-	glColor3f(1,1,1);
-
-	//draw_xyz(100);
 	draw_figures();
 
 
@@ -367,6 +364,17 @@ void parseXML(string  f_path){
     }
 }
 
+void initGL(){
+
+#ifndef __APPLE__
+	glewInit();
+#endif
+	//  OpenGL settings
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glEnableClientState(GL_VERTEX_ARRAY);
+}
+
 int main(int argc, char **argv) {
 
 // init GLUT and the window
@@ -393,6 +401,7 @@ int main(int argc, char **argv) {
 	else parseXML(argv[1]); // Read XML File
 // Required callback registry
 	glutDisplayFunc(renderScene);
+	glutIdleFunc(renderScene);
 	glutReshapeFunc(changeSize);
 
 // Callback registration for keyboard processing
@@ -402,10 +411,7 @@ int main(int argc, char **argv) {
 	glutMotionFunc(activeMotion);
 	glutMouseFunc(mouse);
 
-//  OpenGL settings
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-
+	initGL();
 // enter GLUT's main cycle
 	glutMainLoop();
 
