@@ -4,11 +4,79 @@
 
 #include "../headers/Point.h"
 #include "../headers/Polygon.h"
+#include "../headers/Patch.h"
 #include <math.h>
 #include <vector>
 #include <iostream>
 #include <fstream>
 #include <string.h>
+
+vector<Patch *>* parseBezierPatch(string file_name){
+
+	ifstream file(file_name);
+	string line;
+
+	if (file.fail()){
+		cout << "Error while opening the file" << endl;
+		return NULL;
+	}
+
+	getline(file,line);
+	int n_patches = stoi(line);
+	int patches_indexes [n_patches][16];
+
+	for(int i = 0; i < n_patches; i++){
+		getline(file,line);
+		for(int j = 0; j < 16; j++){
+			int split = line.find(",");
+			string n_string = line.substr(0,split);
+			patches_indexes[i][j] = stoi(n_string);
+			line.erase(0,split+1);
+		}
+	}
+
+	getline(file,line);
+	int n_points = stoi(line),j;
+	string token;
+	float coords[3];
+	vector<Point *> vertex_aux;
+
+	for(int i = 0; i < n_points; i++){
+		getline(file,line);
+		j = 0;
+		while(j < 3){
+			int split = line.find(",");
+			string n_string = line.substr(0,split);
+			coords[j++] = stof(n_string);
+			line.erase(0,split+1);
+		}
+
+		vertex_aux.push_back(new Point(coords[0],coords[1],coords[2]));
+	}
+
+	vector<Patch *> * patches = new vector<Patch*>();
+
+	for(int i = 0; i < n_patches; i++){
+		Patch * p = new Patch();
+		for(int k = 0; k < 16; k++){
+			Point * point_aux = vertex_aux.at(patches_indexes[i][k]);
+			p->addControlPoint(
+					new Point(
+					point_aux->getX(),
+					point_aux->getY(),
+					point_aux->getZ())
+					);
+		}
+		patches->push_back(p);
+	}
+
+	vector<Point*>::iterator it;
+	for(it = vertex_aux.begin(); it != vertex_aux.end(); it++){
+		delete((*it));
+	}
+
+	return patches;
+}
 
 
 void write_file(string file_name,vector<Point*> * vertices){
@@ -23,7 +91,6 @@ void write_file(string file_name,vector<Point*> * vertices){
     for(it = vertices->begin(); it != vertices->end(); it++){
         outputFile << (*(*it)).to_String() << endl;
     }
-	delete(vertices);
 
     outputFile.close();
 }
@@ -52,11 +119,11 @@ void printHelp(){
 	cout << "|                                                                |" << endl;
 	cout << "| - torus [OUTER RADIUS] [INNER RADIUS] [RINGS DIVISIONS] [RINGS]|" << endl;
 	cout << "|      Cria um torus com as dimensões pretendidas                |" << endl;
-  cout << "|                                                                |" << endl;
-  cout << "| - cylinder [RADIUS] [HEIGHT] [SLICE] [STACK]                   |" << endl;
+  	cout << "|                                                                |" << endl;
+  	cout << "| - cylinder [RADIUS] [HEIGHT] [SLICE] [STACK]                   |" << endl;
 	cout << "|      Cria um cilindro com o raio, altura, slices e stacks      |" << endl;
 	cout << "|      pretendidas.                                              |" << endl;
-  cout << "|                                                                |" << endl;
+  	cout << "|                                                                |" << endl;
 	cout << "|   OUTPUT FILE:                                                 |" << endl;
 	cout << "| In the file section you can specify any file in which you wish |" << endl;
 	cout << "| to save the coordinates generated with the previous commands.  |" << endl;
@@ -134,6 +201,15 @@ int main(int argc, char **argv){
 			f.cylinder_vertex(radius,height,slices,stacks);
 			flag = 1;
 		}else print_error("Erro no input");
+	}
+	else if(argc == 5 && strcmp(argv[1],"brezier")==0){
+		int tessellation = atoi(argv[3]);
+		if (tessellation >= 1) {
+			vector<Patch *> * n_array = parseBezierPatch(argv[2]);
+			f.brezierPoints(n_array, tessellation);
+			flag = 1;
+		}
+		else print_error("Erro no input");
 	}
 	else{
 		printHelp();

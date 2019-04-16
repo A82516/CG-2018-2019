@@ -266,9 +266,77 @@ Polygon::Polygon(vector<Point*> * v){
 }
 
 Polygon::~Polygon(){
-    vector<Point*>::iterator it;
-    for(it = pontos->begin(); it != pontos->end(); it++){
-        delete((*it));
-    }
     delete(pontos);
+}
+
+Point * Polygon::brezierValue(float u, Point * p0,Point * p1,Point * p2,Point * p3){
+    float b0 = (1.0 - u) * (1.0 - u) * (1.0 - u);
+    float b1 = 3.0 * u * (1.0 - u) * (1.0 - u);
+    float b2 = 3 * u * u * (1.0 - u);
+    float b3 = u * u * u;
+
+    float x = p0->getX()*b0 + p1->getX()*b1 + p2->getX()*b2 +  p3->getX()*b3;
+    float y = p0->getY()*b0 + p1->getY()*b1 + p2->getY()*b2 +  p3->getY()*b3;
+    float z = p0->getZ()*b0 + p1->getZ()*b1 + p2->getZ()*b2 +  p3->getZ()*b3;
+
+    return new Point(x,y,z);
+}
+
+Point * Polygon::brezierPatch(float u, float v,Patch * patch){
+    Point * u_points [4];
+    Point * v_points [4];
+
+    int j = 0, k = 0;
+
+    for(int i = 0; i < 16; i++){
+        Point * aux = patch->pointAt(i);
+        u_points[j] = aux;
+        j++;
+
+        if (j % 4 == 0){
+            v_points[k++] = brezierValue(u,u_points[0],u_points[1],u_points[2],u_points[3]);
+
+            j = 0;
+        }
+    }
+
+    Point * res = brezierValue(v,v_points[0],v_points[1],v_points[2],v_points[3]);
+
+    /**
+    for(int i= 0; i < 4; i++)
+        delete(v_points[i]);*/
+
+    return res;
+}
+
+void Polygon::brezierPoints(vector<Patch *> * patches, int tessellation){
+    float divisons = 1.0 / tessellation,u,u2,v,v2;
+
+    for(int k = 0; k < patches->size(); k++) {
+        Patch * p = patches->at(k);
+
+        for (int i = 0; i < tessellation; i++) {
+            for (int j = 0; j < tessellation; j++) {
+
+                u = j * divisons;
+                v = i * divisons;
+                u2 = (j+1) * divisons;
+                v2 = (i+1) * divisons;
+
+                Point * p1 = brezierPatch(u,v,p);
+                Point * p2 = brezierPatch(u2,v,p);
+                Point * p3 = brezierPatch(u,v2,p);
+                Point * p4 = brezierPatch(u2,v2,p);
+
+
+                pontos->push_back(p2);
+                pontos->push_back(p1);
+                pontos->push_back(p4);
+
+                pontos->push_back(p1);
+                pontos->push_back(p3);
+                pontos->push_back(p4);
+            }
+        }
+    }
 }

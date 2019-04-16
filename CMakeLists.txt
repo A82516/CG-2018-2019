@@ -45,14 +45,14 @@ endif(WIN32)
 # Project Name
 project(engine)
 
-set(ENGINE_FILES ./src/engine.cpp ./src/tinyxml2.cpp ./src/Point.cpp ./src/Figure.cpp ./src/Transformation.cpp src/Translate.cpp src/Rotation.cpp src/Scale.cpp src/Polygon.cpp headers/Polygon.h)
+set(ENGINE_FILES ./src/engine.cpp ./src/tinyxml2.cpp ./src/Point.cpp ./src/Figure.cpp ./src/Transformation.cpp src/Translate.cpp src/Rotation.cpp src/Scale.cpp)
 
 add_executable(engine ${ENGINE_FILES})
 
 target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} )
 
 project(generator)
-set(GENERATOR_FILES ./src/generator.cpp ./src/Point.cpp ./src/Polygon.cpp ./src/Transformation.cpp)
+set(GENERATOR_FILES ./src/generator.cpp ./src/Point.cpp ./src/Polygon.cpp ./src/Transformation.cpp ./src/Patch.cpp)
 
 add_executable(generator ${GENERATOR_FILES} )
 target_link_libraries(generator ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} )
