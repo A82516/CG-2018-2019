@@ -4,7 +4,9 @@
 
 #include "../headers/Transformation.h"
 
+Transformation::Transformation(){}
 
+/**
 Transformation::Transformation(int type, float v[3]) {
     this->type = type;
     for(int i = 0; i < 3; i++){
@@ -12,8 +14,8 @@ Transformation::Transformation(int type, float v[3]) {
             translate[i] = v[i];
         else if (type == 1) scale[i] = v[i];
     }
-}
-
+}*/
+/*
 Transformation::Transformation(int type, int *v, float angle) {
     this->type = type;
     this->angle = angle;
@@ -21,8 +23,8 @@ Transformation::Transformation(int type, int *v, float angle) {
         if (type == 2)
             rotate[i] = v[i];
     }
-}
-
+}*/
+/*
 Transformation::Transformation(Transformation *t) {
     this->type = t->type;
     this->angle = t->angle;
@@ -32,8 +34,12 @@ Transformation::Transformation(Transformation *t) {
         scale[i] = t->scale[i];
         rotate[i] = t->rotate[i];
     }
-}
+}*/
 
+/*
+Transformation::Transformation(Transformation *t) {
+}*/
+/*
 void Transformation::perform() {
     if (type == 0)
         glTranslatef(translate[0],translate[1],translate[2]);
@@ -42,9 +48,13 @@ void Transformation::perform() {
     else if (type == 2)
         glRotatef(angle,rotate[0],rotate[1],rotate[2]);
 }
-
+*/
 Transformation::~Transformation() {};
 
+
 Transformation* Transformation::clone() {
-    return new Transformation(this);
+    return new Transformation();
+}
+
+void Transformation::perform() {
 }

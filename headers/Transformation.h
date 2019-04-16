@@ -13,19 +13,15 @@
 
 
 class Transformation {
-    int type;
-    float angle;
-    float translate[3];
-    float scale[3];
-    int rotate[3];
 
     public:
-        Transformation(int type, float v[3]);
-        Transformation(int type, int v[3], float angle);
-        Transformation(Transformation *t);
+        Transformation();
+        //Transformation(int type, float v[3]);
+        //Transformation(int type, int v[3], float angle);
+        //Transformation(Transformation *t);
         virtual ~Transformation();
-        Transformation* clone();
-        void perform();
+        virtual Transformation* clone();
+        virtual void perform();
 
 };
 

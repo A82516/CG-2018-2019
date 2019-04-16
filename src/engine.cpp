@@ -16,7 +16,10 @@
 #include "../headers/Figure.h"
 #include "../headers/tinyxml2.h"
 #include "../headers/Matrix.h"
-#include "../headers/Transformation.h"
+#include "../headers/Scale.h"
+#include "../headers/Translate.h"
+#include "../headers/Rotation.h"
+
 
 
 using namespace tinyxml2;
@@ -318,10 +321,8 @@ void parseGroup(string f_path,vector<Transformation*> &trans,XMLElement * elemen
 
 			int type;
 			if (name.compare("translate") == 0)
-				type = 0;
-			else type = 1;
-
-			clone.push_back(new Transformation(type,v));
+				clone.push_back(new Translate(v));
+			else clone.push_back(new Scale(v));
 		}
 		else if (name.compare("rotate") == 0){
 
@@ -332,7 +333,7 @@ void parseGroup(string f_path,vector<Transformation*> &trans,XMLElement * elemen
             percorrer->QueryIntAttribute( "axisZ", v1+2 );
             percorrer->QueryFloatAttribute( "angle", &angle);
 
-			clone.push_back(new Transformation(2,v1,angle));
+			clone.push_back(new Rotation(v1,angle));
 		}
 		else if (name.compare("models") == 0){
 			parseModels(f_path,clone,percorrer);
