@@ -3,7 +3,7 @@
 //
 
 #include "../headers/Point.h"
-#include "../headers/Figure.h"
+#include "../headers/Polygon.h"
 #include <math.h>
 #include <vector>
 #include <iostream>
@@ -66,7 +66,7 @@ void printHelp(){
 
 int main(int argc, char **argv){
 
-    Figure f;
+	Polygon f;
 	int flag = 0,slices,stacks,opt;
 	float radius,height,radius2;
 	float x,y,z;
