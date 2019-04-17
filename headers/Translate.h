@@ -7,11 +7,14 @@
 
 
 #include "Transformation.h"
+#include "Point.h"
+#include <vector>
 
 class Translate : public Transformation {
-    float translate[3];
+    vector<Point *> * control_points;
 
-    public: Translate(float v[3]);
+    public: Translate();
+            void addPoint(Point * p);
             Translate(Translate * t);
             ~Translate();
             Transformation* clone();

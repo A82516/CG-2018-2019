@@ -4,15 +4,16 @@
 
 #include "../headers/Translate.h"
 
-Translate::Translate(float v[3]) : Transformation() {
-    for(int i = 0; i < 3; i++){
-        this->translate[i] = v[i];
-    }
+Translate::Translate() : Transformation() {
+    control_points = new vector<Point*>();
 }
 
 Translate::Translate(Translate * t) : Transformation() {
-    for(int i = 0; i < 3; i++){
-        translate[i] = t->translate[i];
+    control_points = new vector<Point*>();
+    vector<Point *>::iterator it1;
+    for(it1 = (t->control_points)->begin(); it1 != (t->control_points)->end(); it1++){
+        Point * p = (*it1);
+        control_points->push_back(new Point (p->getX(),p->getY(),p->getZ()));
     }
 }
 
@@ -22,7 +23,11 @@ Transformation* Translate::clone() {
     return new Translate(this);
 }
 
+void Translate::addPoint(Point *p) {
+    control_points->push_back(p);
+}
+
 
 void Translate::perform() {
-    glTranslatef(translate[0],translate[1],translate[2]);
+    // só tens que mexer aqui
 }
