@@ -275,6 +275,17 @@ void parseModels(string f_path,vector<Transformation*> &trans,XMLElement * eleme
 
 }
 
+void parseTranslate(Translate * t,XMLElement * element){
+	float v[3];
+	for (element = element->FirstChildElement(); element; element = element->NextSiblingElement()) {
+		element->QueryFloatAttribute( "X", v );
+		element->QueryFloatAttribute( "Y", v+1 );
+		element->QueryFloatAttribute( "Z", v+2 );
+
+		t->addPoint(new Point(v[0],v[1],v[2]));
+	}
+}
+
 void parseGroup(string f_path,vector<Transformation*> &trans,XMLElement * element){
 	XMLElement * percorrer;
 
@@ -297,8 +308,11 @@ void parseGroup(string f_path,vector<Transformation*> &trans,XMLElement * elemen
 			percorrer->QueryFloatAttribute( "Z", v+2 );
 
 			int type;
-			if (name.compare("translate") == 0)
-				clone.push_back(new Translate(v));
+			if (name.compare("translate") == 0) {
+				Translate * t = new Translate();
+				parseTranslate(t,percorrer);
+				clone.push_back(t);
+			}
 			else clone.push_back(new Scale(v));
 		}
 		else if (name.compare("rotate") == 0){
