@@ -303,14 +303,19 @@ void parseGroup(string f_path,vector<Transformation*> &trans,XMLElement * elemen
 		string name = percorrer->Name();
 		if (name.compare("translate") == 0 || name.compare("scale") == 0){
 			v[0] = 0.0; v[1] = 0.0; v[2] = 0.0;
+			int time = 0.0;
+			percorrer->QueryIntAttribute( "Time", &time);
 			percorrer->QueryFloatAttribute( "X", v );
 			percorrer->QueryFloatAttribute( "Y", v+1 );
 			percorrer->QueryFloatAttribute( "Z", v+2 );
 
 			int type;
 			if (name.compare("translate") == 0) {
-				Translate * t = new Translate();
-				parseTranslate(t,percorrer);
+				Translate * t = new Translate(5.0);
+				if (time != 0.0){
+					parseTranslate(t,percorrer);
+				}
+				else {t->addPoint(new Point (v[0],v[1],v[2]));}
 				clone.push_back(t);
 			}
 			else clone.push_back(new Scale(v));

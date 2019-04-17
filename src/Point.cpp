@@ -29,6 +29,12 @@ void Point::setZ(float s) {
 	z = s;
 }
 
+void Point::get(float * s){
+    s[0] = x;
+    s[1] = y;
+    s[2] = z;
+}
+
 string Point::to_String(){
 	stringstream ss;
 
