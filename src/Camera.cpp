@@ -20,7 +20,7 @@ Camera::Camera() {
     alpha = 0.0;
     beta = 0.0;
     radius = 40;
-    speed = 0.05;
+    speed = 0.01;
 }
 
 Point * Camera::getPosition() {
