@@ -9,7 +9,7 @@
         </group>
         <group>
             <! Mercurio />
-            <translate Time="320.0" >
+            <translate Time="3.0" >
                 <point X="4" Y="0" Z="0" />
                 <point X="2.828" Y="0" Z="2.828" />
                 <point X="0" Y="0" Z="4" />
@@ -27,7 +27,7 @@
         </group>
         <group>
             <! Venus />
-            <translate Time="320.0" >
+            <translate Time="6.0" >
                 <point X="6" Y="0" Z="0" />
                 <point X="4.24" Y="0" Z="4.24" />
                 <point X="0" Y="0" Z="6" />
@@ -45,7 +45,7 @@
         </group>
         <group>
             <! Terra />
-            <translate Time="320.0" >
+            <translate Time="9.0" >
                 <point X="9" Y="0" Z="0" />
                 <point X="6.36" Y="0" Z="6.36" />
                 <point X="0" Y="0" Z="9" />
@@ -65,7 +65,7 @@
             </group>
             <group>
                 <! Lua />
-                <translate Time="320.0" >
+                <translate Time="9.0" >
                     <point X="1" Y="1" Z="0" />
                     <point X="0.7" Y="0.5" Z="0.7" />
                     <point X="0" Y="0" Z="1" />
@@ -85,7 +85,7 @@
         </group>
         <group>
             <! Marte />
-            <translate Time="320.0" >
+            <translate Time="11.0" >
                 <point X="12" Y="0" Z="0" />
                 <point X="8.45" Y="0" Z="8.45" />
                 <point X="0" Y="0" Z="12" />
@@ -103,7 +103,7 @@
         </group>
         <group>
             <! Jupiter />
-            <translate Time="320.0" >
+            <translate Time="13.0" >
                 <point X="16" Y="0" Z="0" />
                 <point X="11.31" Y="0" Z="11.31" />
                 <point X="0" Y="0" Z="16" />
@@ -121,7 +121,7 @@
         </group>
         <group>
             <! Saturno />
-            <translate Time="320.0" >
+            <translate Time="15.0" >
                 <point X="20" Y="0" Z="0" />
                 <point X="14.14" Y="0" Z="14.14" />
                 <point X="0" Y="0" Z="20" />
@@ -148,7 +148,7 @@
         </group>
         <group>
             <! Neptuno />
-            <translate Time="320.0" >
+            <translate Time="18.0" >
                 <point X="23" Y="0" Z="0" />
                 <point X="16.26" Y="0" Z="16.26" />
                 <point X="0" Y="0" Z="23" />
@@ -166,7 +166,7 @@
         </group>
         <group>
             <! Urano />
-            <translate Time="320.0" >
+            <translate Time="21.0" >
                 <point X="27" Y="4" Z="0" />
                 <point X="19.09" Y="2" Z="19.09" />
                 <point X="0" Y="0" Z="27" />
