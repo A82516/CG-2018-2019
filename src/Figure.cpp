@@ -12,7 +12,7 @@ void Figure::draw() {
         (*it1)->perform();
     }
 
-    glColor3f(1,0,0);
+    glColor3f(rgb[0],rgb[1],rgb[2]);
     glBindBuffer(GL_ARRAY_BUFFER,buffer[0]);
     glVertexPointer(3,GL_FLOAT,0,0);
     glDrawArrays(GL_TRIANGLES, 0, n_vertex * 3);
@@ -22,6 +22,9 @@ void Figure::draw() {
 
 
 Figure::Figure(vector<Point*> * v,vector<Transformation*> &trans){
+    for(int i = 0; i < 3; i++)
+        rgb[i] = ((float) rand() / (RAND_MAX));
+
     transformacoes = new vector<Transformation*>();
     vector<Transformation*>::iterator it;
     for(it = trans.begin(); it != trans.end(); it++){
@@ -65,9 +68,4 @@ void cleanVector(vector<Point*> * limpar){
         delete((*it));
     }
     delete(limpar);
-}
-
-void rgbToDecimal(float v[6][3],int y,float dest[3]){
-    for(int i= 0; i < 3; i++)
-        dest[i] = v[y][i] / 255;
 }

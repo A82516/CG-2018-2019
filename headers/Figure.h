@@ -25,6 +25,7 @@
 class Figure {
     GLuint buffer[1]; // 0 é para pontos
     int n_vertex;
+    float rgb[3];
 	vector<Transformation*> * transformacoes;
 
     public:
@@ -34,7 +35,6 @@ class Figure {
 };
 
 void cleanVector(vector<Point*> * limpar);
-void rgbToDecimal(float v[6][3],int y,float dest[3]);
 
 
 #endif
