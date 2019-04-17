@@ -6,6 +6,7 @@
             <point X="-5" Y="0" Z="0" />
             <point X="0" Y="0" Z="-5" />
         </translate>
+		<rotate Time="1" axisX="0" axisY="1" axisZ="0"/>
 		<scale X="0.25" Y="0.25" Z="0.25" />
 		<models>
 			<model file="tea.3d" />
