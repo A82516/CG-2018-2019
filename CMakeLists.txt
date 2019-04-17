@@ -45,7 +45,7 @@ endif(WIN32)
 # Project Name
 project(engine)
 
-set(ENGINE_FILES ./src/engine.cpp ./src/tinyxml2.cpp ./src/Point.cpp ./src/Figure.cpp ./src/Transformation.cpp src/Translate.cpp src/Rotation.cpp src/Scale.cpp)
+set(ENGINE_FILES ./src/engine.cpp ./src/tinyxml2.cpp ./src/Point.cpp ./src/Figure.cpp ./src/Transformation.cpp src/Translate.cpp src/Rotation.cpp src/Scale.cpp src/Camera.cpp headers/Camera.h)
 
 add_executable(engine ${ENGINE_FILES})
 

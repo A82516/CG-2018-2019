@@ -18,6 +18,17 @@ float Point::getZ(){
 	return z;
 }
 
+void Point::setX(float s) {
+	x = s;
+}
+
+void Point::setY(float s) {
+	y = s;
+}
+void Point::setZ(float s) {
+	z = s;
+}
+
 string Point::to_String(){
 	stringstream ss;
 

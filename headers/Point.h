@@ -18,6 +18,9 @@ class Point{
 		float getX();
 		float getY();
 		float getZ();
+		void setX(float s);
+		void setY(float s);
+		void setZ(float s);
 		string to_String();
 		virtual ~Point();
 };

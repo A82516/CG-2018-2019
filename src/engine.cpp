@@ -19,6 +19,7 @@
 #include "../headers/Scale.h"
 #include "../headers/Translate.h"
 #include "../headers/Rotation.h"
+#include "../headers/Camera.h"
 
 
 
@@ -39,6 +40,8 @@ float angleA = M_PI/3.0;
 float angleB = M_PI/3.0;
 float radius = 40;
 GLenum viewMode = GL_POLYGON;
+
+Camera * cam;
 
 
 vector<Figure*> figs;
@@ -151,9 +154,12 @@ void renderScene(void) {
 
 	// set the camera
 	glLoadIdentity();
-	gluLookAt(radius * cos(angleB) * cos(angleA), radius * sin(angleB),radius * cos(angleB) * sin(angleA),
-					0.0,0.0,0.0,
-				0.0f,1.0f,0.0f);
+	Point * pos = cam->getPosition();
+	Point * look = cam->getLookup();
+	Point * up = cam->getUp();
+	gluLookAt(pos->getX(), pos->getY(),pos->getZ(),
+					look->getX(),look->getY(),look->getZ(),
+				up->getX(),up->getY(),up->getZ());
 	// End of frame
 
 	glPolygonMode(GL_FRONT,viewMode);
@@ -168,56 +174,29 @@ void processKeys(unsigned char c, int xx, int yy) {
 
 	switch (c) {
 			case 'w':
-					angleB += M_PI / 6;
+					cam->move(c,xx,yy);
 					glutPostRedisplay();
 					break;
 			case 's':
-				angleB -= M_PI / 6;
-			glutPostRedisplay();
+					cam->move(c,xx,yy);
+					glutPostRedisplay();
+					break;
 			case 'a':
-					angleA -= M_PI / 6;
+					cam->move(c,xx,yy);
 					glutPostRedisplay();
 					break;
 			case 'd':
-				angleA += M_PI / 6;
-			glutPostRedisplay();
-			break;
-			case 'q':
-					angleB += M_PI / 6;
-					angleA -= M_PI / 6;
+					cam->move(c,xx,yy);
 					glutPostRedisplay();
 					break;
-			case 'e':
-				angleB += M_PI / 6;
-				angleA += M_PI / 6;
-			glutPostRedisplay();
-			break;
-			case 'z':
-				angleB -= M_PI / 6;
-				angleA -= M_PI / 6;
-			glutPostRedisplay();
-			break;
-			case 'x':
-				angleB -= M_PI / 6;
-				angleA += M_PI / 6;
-			glutPostRedisplay();
-			break;
-			case '1':
-				radius -= 1;
-			glutPostRedisplay();
-			break;
-			case '2':
-				radius += 1;
-			glutPostRedisplay();
-			break;
 			case 'j':
-				viewMode = GL_LINE;
-			glutPostRedisplay();
-			break;
+					viewMode = GL_LINE;
+					glutPostRedisplay();
+					break;
 			case 'k':
-				viewMode = GL_POINT;
-			glutPostRedisplay();
-			break;
+					viewMode = GL_POINT;
+					glutPostRedisplay();
+					break;
 			case 'l':
 					viewMode = GL_FILL;
 					glutPostRedisplay();
@@ -259,9 +238,10 @@ void mouse(int button, int state, int x, int y)
 
 
 void activeMotion(int x, int y){
-	angleA += ((float)(x - X_POS)/WINDOW_X)*M_PI;
-	angleB += ((float)(y - Y_POS)/WINDOW_Y)*M_PI;
+	float alpha = ((float)(x - X_POS)/WINDOW_X)*M_PI;
+	float beta = ((float)(y - Y_POS)/WINDOW_Y)*M_PI;
 	regPos(x,y);
+	cam->updateCamera(alpha,beta);
 	glutPostRedisplay();
 }
 
@@ -412,6 +392,8 @@ int main(int argc, char **argv) {
 	glutMouseFunc(mouse);
 
 	initGL();
+	cam = new Camera();
+
 // enter GLUT's main cycle
 	glutMainLoop();
 
