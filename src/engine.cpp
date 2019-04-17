@@ -1,6 +1,7 @@
 #ifdef __APPLE__
 #include <GLUT/glut.h>
 #else
+#include <GL/glew.h>
 #include <GL/glut.h>
 #endif
 
@@ -383,7 +384,7 @@ int main(int argc, char **argv) {
 	glutInitWindowSize(WINDOW_X,WINDOW_Y);
 	glutCreateWindow("CG@DI-UM");
 
-
+    initGL();
 
 
 	glClearColor(0,0,0,1) ;
@@ -410,7 +411,7 @@ int main(int argc, char **argv) {
 	glutMotionFunc(activeMotion);
 	glutMouseFunc(mouse);
 
-	initGL();
+
 	cam = new Camera();
 
 // enter GLUT's main cycle

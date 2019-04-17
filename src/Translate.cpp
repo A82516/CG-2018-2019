@@ -168,9 +168,8 @@ void Translate::renderCatmullRomCurve() {
 
     glColor3f(1,1,1);
     glBegin(GL_LINE_LOOP);
-    for(float i = 0; i<1; i+=0.01){
-        getGlobalCatmullRomPoint(i, pos, deriv);
-        //printf("%f\n", i);
+    for(int i = 0; i < 100; i++){
+        getGlobalCatmullRomPoint((float) i/100, pos, deriv);
         glVertex3f(pos[0], pos[1], pos[2]);
     }
     glEnd();
