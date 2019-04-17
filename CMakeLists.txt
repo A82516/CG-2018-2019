@@ -49,7 +49,14 @@ set(ENGINE_FILES ./src/engine.cpp ./src/tinyxml2.cpp ./src/Point.cpp ./src/Figur
 
 add_executable(engine ${ENGINE_FILES})
 
-target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} )
+if (NOT APPLE)
+	find_package(GLEW REQUIRED)
+	include_directories(${GLEW_INCLUDE_DIRS})
+	link_libraries(${GLEW_LIBRARIES})
+	target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${GLEW_LIBRARY})
+else (NOT APPLE)
+	target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} )
+endif(NOT APPLE)
 
 project(generator)
 set(GENERATOR_FILES ./src/generator.cpp ./src/Point.cpp ./src/Polygon.cpp ./src/Transformation.cpp ./src/Patch.cpp)
