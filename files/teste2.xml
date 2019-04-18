@@ -10,14 +10,14 @@
         <group>
             <! Mercurio />
             <translate Time="3.0" >
-                <point X="4" Y="0" Z="0" />
-                <point X="2.828" Y="0" Z="2.828" />
-                <point X="0" Y="0" Z="4" />
-                <point X="-2.828" Y="0" Z="2.828" />
-                <point X="-4" Y="0" Z="0" />
-                <point X="-2.828" Y="0" Z="-2.828" />
-                <point X="0" Y="0" Z="-4" />
-                <point X="2.828" Y="0" Z="-2.828" />
+                <point X="4" Y="0" Z="-3" />
+                <point X="4" Y="0" Z="3" />
+                <point X="1.5" Y="0" Z="8" />
+                <point X="-1.5" Y="0" Z="8" />
+                <point X="-4" Y="0" Z="3" />
+                <point X="-4" Y="0" Z="-3" />
+                <point X="-1.5" Y="0" Z="-8" />
+                <point X="1.5" Y="0" Z="-8" />
             </translate>
             <rotate Time="1" axisX="0" axisY="1" axisZ="0"/>
             <scale X="0.3" Y="0.3" Z="0.3" />
@@ -28,14 +28,14 @@
         <group>
             <! Venus />
             <translate Time="6.0" >
-                <point X="6" Y="0" Z="0" />
-                <point X="4.24" Y="0" Z="4.24" />
-                <point X="0" Y="0" Z="6" />
-                <point X="-4.24" Y="0" Z="4.24" />
-                <point X="-6" Y="0" Z="0" />
-                <point X="-4.24" Y="0" Z="-4.24" />
-                <point X="0" Y="0" Z="-6" />
-                <point X="4.24" Y="0" Z="-4.24" />
+                <point X="6" Y="0" Z="-3" />
+                <point X="6" Y="0" Z="3" />
+                <point X="1.5" Y="0" Z="8" />
+                <point X="-1.5" Y="0" Z="8" />
+                <point X="-4" Y="0" Z="3" />
+                <point X="-4" Y="0" Z="-3" />
+                <point X="-1.5" Y="0" Z="-8" />
+                <point X="1.5" Y="0" Z="-8" />
             </translate>
             <rotate Time="1" axisX="0" axisY="1" axisZ="0"/>
             <scale X="0.4" Y="0.4" Z="0.4" />
@@ -55,9 +55,9 @@
                 <point X="0" Y="0" Z="-9" />
                 <point X="6.36" Y="0" Z="-6.36" />
             </translate>
-            <rotate Time="1" axisX="0" axisY="1" axisZ="0"/>
             <group>
                 <! Terra />
+                <rotate Time="1" axisX="0" axisY="1" axisZ="0"/>
                 <scale X="0.45" Y="0.45" Z="0.45" />
                 <models>
                     <model file='sun.3ds' />
@@ -66,14 +66,14 @@
             <group>
                 <! Lua />
                 <translate Time="9.0" >
-                    <point X="1" Y="1" Z="0" />
-                    <point X="0.7" Y="0.5" Z="0.7" />
-                    <point X="0" Y="0" Z="1" />
-                    <point X="-0.7" Y="-0.5" Z="0.7" />
-                    <point X="-1" Y="-1" Z="0" />
-                    <point X="-0.7" Y="-0.5" Z="-0.7" />
-                    <point X="0" Y="0" Z="-1" />
-                    <point X="0.7" Y="0.5" Z="-0.7" />
+                    <point X="1" Y="-0.4" Z="0" />
+                    <point X="0.7" Y="-0.2" Z="0.7" />
+                    <point X="0" Y="-0" Z="1" />
+                    <point X="-0.7" Y="0.2" Z="0.7" />
+                    <point X="-1" Y="0.3" Z="0" />
+                    <point X="-0.7" Y="0.4" Z="-0.7" />
+                    <point X="0" Y="0.2" Z="-1" />
+                    <point X="0.7" Y="0.1" Z="-0.7" />
                 </translate>
                 <rotate Time="1" axisX="0" axisY="1" axisZ="0"/>
                 <scale X="0.1" Y="0.1" Z="0.1" />
@@ -149,9 +149,9 @@
         <group>
             <! Neptuno />
             <translate Time="18.0" >
-                <point X="23" Y="0" Z="0" />
-                <point X="16.26" Y="0" Z="16.26" />
-                <point X="0" Y="0" Z="23" />
+                <point X="23" Y="-0" Z="0" />
+                <point X="16.26" Y="-0" Z="16.26" />
+                <point X="0" Y="-0" Z="23" />
                 <point X="-16.26" Y="0" Z="16.26" />
                 <point X="-23" Y="0" Z="0" />
                 <point X="-16.26" Y="0" Z="-16.26" />
@@ -167,14 +167,14 @@
         <group>
             <! Urano />
             <translate Time="21.0" >
-                <point X="27" Y="4" Z="0" />
-                <point X="19.09" Y="2" Z="19.09" />
+                <point X="27" Y="0" Z="0" />
+                <point X="19.09" Y="0" Z="19.09" />
                 <point X="0" Y="0" Z="27" />
-                <point X="-19.09" Y="-2" Z="19.09" />
-                <point X="-27" Y="-4" Z="0" />
-                <point X="-19.09" Y="-2" Z="-19.09" />
+                <point X="-19.09" Y="0" Z="19.09" />
+                <point X="-27" Y="0" Z="0" />
+                <point X="-19.09" Y="0" Z="-19.09" />
                 <point X="0" Y="0" Z="-27" />
-                <point X="19.09" Y="2" Z="-19.09" />
+                <point X="19.09" Y="0" Z="-19.09" />
             </translate>
             <rotate Time="1" axisX="0" axisY="1" axisZ="0"/>
             <scale X="0.6" Y="0.6" Z="0.6" />
