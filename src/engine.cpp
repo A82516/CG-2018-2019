@@ -19,7 +19,6 @@
 #include "../headers/Matrix.h"
 #include "../headers/Scale.h"
 #include "../headers/Translate.h"
-#include "../headers/Rotation.h"
 #include "../headers/Camera.h"
 #include "../headers/Rotate.h"
 
@@ -324,15 +323,16 @@ void parseGroup(string f_path,vector<Transformation*> &trans,XMLElement * elemen
 		}
 		else if (name.compare("rotate") == 0){
 
-			float time = 0.0;
+			float time = 0.0, angle = 0.0;
             v1[0] = 0; v1[1] = 0; v1[2] = 0;
 			percorrer->QueryFloatAttribute( "Time", &time);
+            percorrer->QueryFloatAttribute( "Angle", &angle);
             percorrer->QueryIntAttribute( "axisX", v1 );
             percorrer->QueryIntAttribute( "axisY", v1+1 );
             percorrer->QueryIntAttribute( "axisZ", v1+2 );
 
 
-			clone.push_back(new Rotate(time, v1));
+			clone.push_back(new Rotate(time, angle, v1));
 		}
 		else if (name.compare("models") == 0){
 			parseModels(f_path,clone,percorrer);
