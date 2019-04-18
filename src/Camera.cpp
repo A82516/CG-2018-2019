@@ -14,13 +14,15 @@ static void cross(float *a, float *b, float *res) {
 }
 
 Camera::Camera() {
-    position = new Point(40,0,0);
+    position = new Point(40,20,0);
     lookup = new Point(0,0,0);
     up = new Point(0,1,0);
     alpha = 0.0;
-    beta = 0.0;
+    beta = M_PI / 6;
     radius = 40;
     speed = 0.01;
+    updateUp();
+    updateLookup();
 }
 
 Point * Camera::getPosition() {
