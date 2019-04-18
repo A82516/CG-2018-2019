@@ -49,9 +49,11 @@ void multMatrixVector(float *m, float *v, float *res) {
 
 }
 
-Translate::Translate(int t) : Transformation() {
+Translate::Translate(float t) : Transformation() {
     control_points = new vector<Point*>();
     duration = t;
+
+    cout << duration << endl;
 }
 
 Translate::Translate(Translate * t) : Transformation() {
@@ -186,8 +188,8 @@ void Translate::perform() {
     renderCatmullRomCurve();
 
     int time = glutGet(GLUT_ELAPSED_TIME);
-    int k = time % (duration * 1000);
-    float position = k / (duration*1000.0);
+    float k = (time / 1000.0) / duration;
+    float position = k - floor(k);
 
     float res[3],dev[3];
     getGlobalCatmullRomPoint(position, res, dev);

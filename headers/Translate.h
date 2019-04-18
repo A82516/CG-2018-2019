@@ -13,9 +13,9 @@
 
 class Translate : public Transformation {
     vector<Point *> * control_points;
-    int duration;
+    float duration;
 
-    public: Translate(int time);
+    public: Translate(float time);
             void addPoint(Point * p);
             Translate(Translate * t);
             ~Translate();
