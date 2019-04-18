@@ -7,8 +7,9 @@
 class Rotate : public Transformation {
     int axis[3];
     float time;
+    float angle;
 
-public: Rotate(float time, int v[3]);
+public: Rotate(float time, float angle, int v[3]);
     Rotate(Rotate * t);
     ~Rotate();
     Transformation* clone();
