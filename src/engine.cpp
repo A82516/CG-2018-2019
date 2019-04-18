@@ -312,7 +312,7 @@ void parseGroup(string f_path,vector<Transformation*> &trans,XMLElement * elemen
 
 			int type;
 			if (name.compare("translate") == 0) {
-				Translate * t = new Translate(5.0);
+				Translate * t = new Translate(time);
 				if (time != 0.0){
 					parseTranslate(t,percorrer);
 				}
