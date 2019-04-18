@@ -52,8 +52,6 @@ void multMatrixVector(float *m, float *v, float *res) {
 Translate::Translate(float t) : Transformation() {
     control_points = new vector<Point*>();
     duration = t;
-
-    cout << duration << endl;
 }
 
 Translate::Translate(Translate * t) : Transformation() {
