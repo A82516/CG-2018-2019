@@ -124,6 +124,9 @@ void printHelp(){
 	cout << "|      Cria um cilindro com o raio, altura, slices e stacks      |" << endl;
 	cout << "|      pretendidas.                                              |" << endl;
   	cout << "|                                                                |" << endl;
+	cout << "| - bezier [file with bezier patches] [tessellation]             |" << endl;
+	cout << "|      Cria uma figura usando patches de bezier                  |" << endl;
+	cout << "|                                                                |" << endl;
 	cout << "|   OUTPUT FILE:                                                 |" << endl;
 	cout << "| In the file section you can specify any file in which you wish |" << endl;
 	cout << "| to save the coordinates generated with the previous commands.  |" << endl;
