@@ -20,7 +20,7 @@ Camera::Camera() {
     alpha = 0.0;
     beta = M_PI / 6;
     radius = 40;
-    speed = 0.01;
+    speed = 0.1;
     updateUp();
     updateLookup();
 }
