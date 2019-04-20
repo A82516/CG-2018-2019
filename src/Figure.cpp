@@ -1,6 +1,4 @@
-//
-// Created by Diogo Sobral on 2019-02-26.
-//
+
 
 #include "../headers/Figure.h"
 

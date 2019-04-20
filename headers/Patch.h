@@ -1,6 +1,3 @@
-//
-// Created by Diogo Sobral on 2019-04-16.
-//
 
 #ifndef _PATCH_H
 #define _PATCH_H

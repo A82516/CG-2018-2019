@@ -1,6 +1,4 @@
-//
-// Created by Diogo Sobral on 2019-04-15.
-//
+
 
 #ifndef TRANSLATE_H
 #define TRANSLATE_H

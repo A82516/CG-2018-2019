@@ -1,6 +1,4 @@
-//
-// Created by Diogo Sobral on 2019-04-16.
-//
+
 
 #include "../headers/Patch.h"
 

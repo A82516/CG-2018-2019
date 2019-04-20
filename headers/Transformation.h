@@ -1,6 +1,4 @@
-//
-// Created by Diogo Sobral on 2019-03-22.
-//
+
 #ifndef TRANSFORMATION_H
 #define TRANSFORMATION_H
 

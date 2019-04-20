@@ -1,6 +1,3 @@
-//
-// Created by Diogo Sobral on 2019-04-18.
-//
 
 #ifndef _PARSER_H
 #define _PARSER_H

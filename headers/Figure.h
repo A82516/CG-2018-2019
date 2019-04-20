@@ -1,6 +1,4 @@
-//
-// Created by Diogo Sobral on 2019-02-26.
-//
+
 
 #ifdef __APPLE__
 #include <GLUT/glut.h>

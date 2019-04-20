@@ -1,6 +1,4 @@
-//
-// Created by Diogo Sobral on 2019-04-17.
-//
+
 
 #ifndef _CAMERA_H
 #define _CAMERA_H

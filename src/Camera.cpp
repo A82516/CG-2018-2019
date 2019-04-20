@@ -1,6 +1,4 @@
-//
-// Created by Diogo Sobral on 2019-04-17.
-//
+
 
 #include <iostream>
 #include "../headers/Camera.h"

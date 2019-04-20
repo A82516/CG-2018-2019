@@ -1,6 +1,4 @@
-//
-// Created by Diogo Sobral on 2019-04-15.
-//
+
 
 #ifndef SCALE_H
 #define SCALE_H
