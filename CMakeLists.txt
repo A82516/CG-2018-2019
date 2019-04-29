@@ -59,7 +59,7 @@ else (NOT APPLE)
 endif(NOT APPLE)
 
 project(generator)
-set(GENERATOR_FILES ./src/generator.cpp ./src/Point.cpp ./src/Polygon.cpp ./src/Transformation.cpp ./src/Patch.cpp)
+set(GENERATOR_FILES ./src/generator.cpp ./src/Point.cpp ./src/Polygon.cpp ./src/Transformation.cpp ./src/Patch.cpp ./src/Translate.cpp)
 
 add_executable(generator ${GENERATOR_FILES} )
 target_link_libraries(generator ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} )

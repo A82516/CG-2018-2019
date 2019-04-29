@@ -38,7 +38,7 @@ void Point::get(float * s){
 string Point::to_String(){
 	stringstream ss;
 
-	ss << to_string(x) << " " << to_string(y) << " " << to_string(z);
+	ss << to_string(x) << " " << to_string(y) << " " << to_string(z) << " ";
 
 	return ss.str();
 }

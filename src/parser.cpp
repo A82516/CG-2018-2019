@@ -12,6 +12,7 @@ void build_figure(string path,vector<Transformation*> &trans,vector<Figure*> * f
     if (myfile.is_open())
     {
         vector<Point*> * v = new vector<Point*>();
+        vector<Point*> * normal =  new vector<Point*>();
 
         while (getline(myfile,line)){
             size_t pos = 0;
@@ -33,8 +34,25 @@ void build_figure(string path,vector<Transformation*> &trans,vector<Figure*> * f
             line.erase(0, pos + delimiter.length());
 
             v->push_back(new Point(x,y,z));
+
+            pos = line.find(delimiter);
+            token = line.substr(0, pos);
+            x = atof(token.c_str());
+            line.erase(0, pos + delimiter.length());
+
+            pos = line.find(delimiter);
+            token = line.substr(0, pos);
+            y = atof(token.c_str());
+            line.erase(0, pos + delimiter.length());
+
+            pos = line.find(delimiter);
+            token = line.substr(0, pos);
+            z = atof(token.c_str());
+            line.erase(0, pos + delimiter.length());
+
+            normal->push_back(new Point(x,y,z));
         }
-        f = new Figure(v,trans);
+        f = new Figure(v,trans,normal);
         figures->push_back(f);
         myfile.close();
     }

@@ -21,13 +21,13 @@
 
 
 class Figure {
-    GLuint buffer[1]; // 0 é para pontos
+    GLuint buffer[2]; // 0 é para pontos
     int n_vertex;
     float rgb[3];
 	vector<Transformation*> * transformacoes;
 
     public:
-        Figure(vector<Point*> * v,vector<Transformation*> &trans);
+        Figure(vector<Point*> * v,vector<Transformation*> &trans,vector<Point*>* normal);
         void draw();
         virtual ~Figure();
 };

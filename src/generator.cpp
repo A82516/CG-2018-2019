@@ -77,7 +77,7 @@ vector<Patch *>* parseBezierPatch(string file_name){
 }
 
 
-void write_file(string file_name,vector<Point*> * vertices){
+void write_file(string file_name,vector<Point*> * vertices,vector<Point*> * normais){
 
     system("mkdir -p ../files/ ");
     string path = "../files/" + file_name;
@@ -85,9 +85,17 @@ void write_file(string file_name,vector<Point*> * vertices){
     ofstream outputFile;
     outputFile.open(path);
 
-    vector<Point*>::iterator it;
-    for(it = vertices->begin(); it != vertices->end(); it++){
-        outputFile << (*(*it)).to_String() << endl;
+	vector<Point*>::iterator it,it2;
+    if (vertices->size() != normais->size()) {
+		cout << "Alguma coisa não está certa" << endl;
+		for(it = vertices->begin(); it != vertices->end(); it++){
+			outputFile << (*(*it)).to_String() << endl;
+		}
+	}
+    else{
+		for(it = vertices->begin(), it2 = normais->begin(); it != vertices->end() && it2 != normais->end(); it++,it2++){
+			outputFile << (*(*it)).to_String() << (*(*it2)).to_String() << endl;
+		}
     }
 
     outputFile.close();
@@ -203,7 +211,7 @@ int main(int argc, char **argv){
 			flag = 1;
 		}else print_error("Erro no input");
 	}
-	else if(argc == 5 && strcmp(argv[1],"brezier")==0){
+	else if(argc == 5 && strcmp(argv[1],"bezier")==0){
 		int tessellation = atoi(argv[3]);
 		if (tessellation >= 1) {
 			vector<Patch *> * n_array = parseBezierPatch(argv[2]);
@@ -217,6 +225,6 @@ int main(int argc, char **argv){
 	}
 
 	if (flag){
-		write_file(argv[argc-1],f.getPontos());
+		write_file(argv[argc-1],f.getPontos(),f.getNormais());
 	}
 }

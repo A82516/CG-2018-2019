@@ -210,6 +210,9 @@ void initGL(){
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
 }
 
 int main(int argc, char **argv) {
