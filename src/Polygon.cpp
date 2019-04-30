@@ -497,7 +497,7 @@ void Polygon::brezierPoints(vector<Patch *> * patches, int tessellation){
                 pontos->push_back(p2);
                 dUBezier(p,u2,v,res1);
                 dVBezier(p,u2,v,res2);
-                cross(res1,res2,res3);
+                cross(res2,res1,res3);
                 normalize(res3);
                 normal->push_back(new Point(res3[0],res3[1],res3[2]));
 
@@ -505,14 +505,14 @@ void Polygon::brezierPoints(vector<Patch *> * patches, int tessellation){
                 pontos->push_back(p1);
                 dUBezier(p,u,v,res1);
                 dVBezier(p,u,v,res2);
-                cross(res1,res2,res3);
+                cross(res2,res1,res3);
                 normalize(res3);
                 normal->push_back(new Point(res3[0],res3[1],res3[2]));
 
                 pontos->push_back(p4);
                 dUBezier(p,u2,v2,res1);
                 dVBezier(p,u2,v2,res2);
-                cross(res1,res2,res3);
+                cross(res2,res1,res3);
                 normalize(res3);
                 normal->push_back(new Point(res3[0],res3[1],res3[2]));
 
@@ -520,21 +520,21 @@ void Polygon::brezierPoints(vector<Patch *> * patches, int tessellation){
                 pontos->push_back(p1);
                 dUBezier(p,u,v,res1);
                 dVBezier(p,u,v,res2);
-                cross(res1,res2,res3);
+                cross(res2,res1,res3);
                 normalize(res3);
                 normal->push_back(new Point(res3[0],res3[1],res3[2]));
 
                 pontos->push_back(p3);
                 dUBezier(p,u,v2,res1);
                 dVBezier(p,u,v2,res2);
-                cross(res1,res2,res3);
+                cross(res2,res1,res3);
                 normalize(res3);
                 normal->push_back(new Point(res3[0],res3[1],res3[2]));
 
                 pontos->push_back(p4);
                 dUBezier(p,u2,v2,res1);
                 dVBezier(p,u2,v2,res2);
-                cross(res1,res2,res3);
+                cross(res2,res1,res3);
                 normalize(res3);
                 normal->push_back(new Point(res3[0],res3[1],res3[2]));
             }
