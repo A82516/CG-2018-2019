@@ -6,6 +6,9 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <cstring>
+#include <string>
+#include <string.h>
 #include "Point.h"
 #include "Figure.h"
 #include "tinyxml2.h"

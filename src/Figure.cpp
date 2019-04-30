@@ -10,7 +10,12 @@ void Figure::draw() {
         (*it1)->perform();
     }
 
-    glColor3f(rgb[0],rgb[1],rgb[2]);
+    vector<Material*>::iterator it2;
+    for(it2 = materials->begin(); it2 != materials->end(); it2++){
+        (*it2)->perform();
+    }
+
+
     glBindBuffer(GL_ARRAY_BUFFER,buffer[0]);
     glVertexPointer(3,GL_FLOAT,0,0);
 
@@ -23,9 +28,8 @@ void Figure::draw() {
 }
 
 
-Figure::Figure(vector<Point*> * v,vector<Transformation*> &trans,vector<Point*> * normal){
-    for(int i = 0; i < 3; i++)
-        rgb[i] = ((float) rand() / (RAND_MAX));
+Figure::Figure(vector<Point*> * v,vector<Transformation*> &trans,vector<Point*> * normal,vector<Material*> *  mat){
+    materials = mat;
 
     transformacoes = new vector<Transformation*>();
     vector<Transformation*>::iterator it;

@@ -17,17 +17,18 @@
 #include <stdlib.h>
 #include <time.h>
 #include "Transformation.h"
+#include "Material.h"
 
 
 
 class Figure {
     GLuint buffer[2]; // 0 é para pontos
     int n_vertex;
-    float rgb[3];
 	vector<Transformation*> * transformacoes;
+	vector<Material*> * materials;
 
     public:
-        Figure(vector<Point*> * v,vector<Transformation*> &trans,vector<Point*>* normal);
+        Figure(vector<Point*> * v,vector<Transformation*> &trans,vector<Point*>* normal,vector<Material*> *  mat );
         void draw();
         virtual ~Figure();
 };

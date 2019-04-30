@@ -1,8 +1,12 @@
 
 
 #import "../headers/parser.h"
+#include "../headers/Ambient.h"
+#include "../headers/Diffuse.h"
+#include "../headers/Emissive.h"
+#include "../headers/Specular.h"
 
-void build_figure(string path,vector<Transformation*> &trans,vector<Figure*> * figures){
+void build_figure(string path,vector<Transformation*> &trans,vector<Figure*> * figures,vector<Material*> *  materials ){
 
     string line;
     string delimiter = " ";
@@ -52,7 +56,7 @@ void build_figure(string path,vector<Transformation*> &trans,vector<Figure*> * f
 
             normal->push_back(new Point(x,y,z));
         }
-        f = new Figure(v,trans,normal);
+        f = new Figure(v,trans,normal,materials);
         figures->push_back(f);
         myfile.close();
     }
@@ -76,13 +80,43 @@ string mergePath(string path, string prog){
 
 }
 
+
+vector<Material*> * parse_Objects_Materials(XMLElement * element){
+    vector<Material*> *  materials = new vector<Material*>();
+    for(element = element->FirstChildElement(); element; element = element->NextSiblingElement()){
+        const char * type = element->Attribute("type");
+        float colors[3] = {0.0,0.0,0.0};
+
+        element->QueryFloatAttribute( "X", colors );
+        element->QueryFloatAttribute( "Y", colors+1 );
+        element->QueryFloatAttribute( "Z", colors+2 );
+
+        if (strcmp(type,"Ambient") == 0)
+            materials->push_back(new Ambient(colors));
+        else if (strcmp(type,"Diffuse") == 0)
+            materials->push_back(new Diffuse(colors));
+        else if (strcmp(type,"Emissive") == 0)
+            materials->push_back(new Emissive(colors));
+        else if (strcmp(type,"Specular") == 0){
+            float shinny = 0.0;
+            element->QueryFloatAttribute( "Shinny", &shinny);
+            materials->push_back(new Specular(colors,shinny));
+        }
+    }
+
+    return materials;
+}
+
+
 void parseModels(string f_path,vector<Transformation*> &trans,XMLElement * element,vector<Figure*> * figures){
     for (element = element->FirstChildElement(); element; element = element->NextSiblingElement()) {
         string figura = element->Attribute("file");
 
         string file2 = mergePath(f_path,figura);
 
-        build_figure(file2,trans,figures);
+        vector<Material*> *  materials = parse_Objects_Materials(element);
+
+        build_figure(file2,trans,figures,materials);
     }
 
 }
