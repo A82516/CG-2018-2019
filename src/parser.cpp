@@ -1,6 +1,6 @@
 
 
-#import "../headers/parser.h"
+#include "../headers/parser.h"
 #include "../headers/Ambient.h"
 #include "../headers/Diffuse.h"
 #include "../headers/Emissive.h"
@@ -60,7 +60,7 @@ void build_figure(string path,vector<Transformation*> &trans,vector<Figure*> * f
         figures->push_back(f);
         myfile.close();
     }
-    else cout << "error" << endl;
+    else cout << "error2" << endl;
 }
 
 string mergePath(string path, string prog){
@@ -73,6 +73,7 @@ string mergePath(string path, string prog){
     std::string pathFull = path.substr (0,i+2);     // "think"
 
     string pathProg = pathFull + prog;
+
     cout << pathProg << endl;
 
     return pathProg;

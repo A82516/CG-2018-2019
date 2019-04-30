@@ -2,7 +2,8 @@
 
 #ifndef _CAMERA_H
 #define _CAMERA_H
-
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include "Point.h"
 
 class Camera {

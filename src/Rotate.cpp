@@ -1,4 +1,6 @@
 #include "../headers/Rotate.h"
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include <math.h>
 #include <cstdio>
 
@@ -27,7 +29,7 @@ Transformation* Rotate::clone() {
 
 void Rotate::perform() {
     if (this->time != 0) {
-        float i, angle = 360 * modf((glutGet(GLUT_ELAPSED_TIME) / (double) (time * 1000)), &i);
+        float i, angle = 360 * modff((glutGet(GLUT_ELAPSED_TIME) / (double) (time * 1000)), &i); // modf not working on windowns
         glRotatef(angle, axis[0], axis[1], axis[2]);
     }
     else if (this->angle != 0){
