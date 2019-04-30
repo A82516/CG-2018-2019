@@ -1,13 +1,30 @@
 <scene>
+    <lights>
+        <light type="POINT" X="0.0" Y="0.0" Z="0.0" />
+    </lights>
+    <group>
+        <! SUN />
+        <scale X="3" Y="3" Z="3" />
+        <translate X="0" Y="0" Z="9" />
+        <models>
+            <model file='sunny.3ds'>
+                <material type='Ambient' X="1.0" Y="0.5" Z="0.31" />
+                <material type='Diffuse' X="1.0" Y="0.5" Z="0.31" />
+                <material type='Specular' X="0" Y="0" Z="0" Shinny="100.0" />
+                <material type='Emissive' X="0" Y="0" Z="0" />
+            </model>
+        </models>
+    </group>
     <group>
             <! SUN />
             <scale X="3" Y="3" Z="3" />
+            <translate X="0" Y="0" Z="-9" />
             <models>
                 <model file='sunny.3ds'>
-                    <material type='Emissive' X="1.0" Y="0.5" Z="0.31" />
                     <material type='Ambient' X="1.0" Y="0.5" Z="0.31" />
                     <material type='Diffuse' X="1.0" Y="0.5" Z="0.31" />
-                    <material type='Specular' X="0.5" Y="0.5" Z="0.5" Shinny="32.0"/>
+                    <material type='Specular' X="0.5" Y="0.5" Z="0.5" Shinny="100.0" />
+                    <material type='Emissive' X="0" Y="0" Z="0" />
                 </model>
             </models>
     </group>

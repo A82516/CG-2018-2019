@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 3.5)
 
+# Project Name
+
 project(engine)
 
-set(ENGINE_FILES ./src/engine.cpp ./src/tinyxml2.cpp ./src/Point.cpp ./src/Figure.cpp ./src/Transformation.cpp src/Translate.cpp src/Rotate.cpp src/Scale.cpp src/Camera.cpp headers/Camera.h src/parser.cpp headers/parser.h src/Materials/Material.cpp headers/Material.h src/Materials/Diffuse.cpp headers/Diffuse.h src/Materials/Ambient.cpp headers/Ambient.h src/Materials/Specular.cpp headers/Specular.h src/Materials/Emissive.cpp headers/Emissive.h)
+set(ENGINE_FILES ./src/engine.cpp ./src/tinyxml2.cpp ./src/Point.cpp ./src/Figure.cpp ./src/Transformation.cpp src/Translate.cpp src/Rotate.cpp src/Scale.cpp src/Camera.cpp headers/Camera.h src/parser.cpp headers/parser.h src/Materials/Material.cpp headers/Material.h src/Materials/Diffuse.cpp headers/Diffuse.h src/Materials/Ambient.cpp headers/Ambient.h src/Materials/Specular.cpp headers/Specular.h src/Materials/Emissive.cpp headers/Emissive.h src/Light.cpp headers/Light.h)
 
 add_executable(engine ${ENGINE_FILES})
 
@@ -68,8 +70,6 @@ else (WIN32) #Linux and Mac
 		message(ERROR " OPENGL not found!")
 	endif(NOT OPENGL_FOUND)
 endif(WIN32)
-
-# Project Name
 
 if (NOT APPLE)
 else (NOT APPLE)

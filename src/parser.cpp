@@ -122,7 +122,41 @@ void parseModels(string f_path,vector<Transformation*> &trans,XMLElement * eleme
 
 }
 
-vector<Figure*> * parseXML(string  f_path){
+void parseLights(XMLElement *element,vector<Light*> * luzes){
+    for (element = element->FirstChildElement(); element; element = element->NextSiblingElement()) {
+        const char * typestr = element->Attribute("type");
+
+        int type = -1;
+        float pos[3], dir[3], extra[2];
+
+        element->QueryFloatAttribute( "X", pos );
+        element->QueryFloatAttribute( "Y", pos+1 );
+        element->QueryFloatAttribute( "Z", pos+2 );
+
+        if (strcmp(typestr,"POINT") == 0){
+            type = 0;
+            luzes->push_back(new Light(type,pos));
+        }
+        else if (strcmp(typestr,"DIRECTIONAL") == 0) {
+            type = 1;
+            luzes->push_back(new Light(type,pos));
+        }
+        else if (strcmp(typestr,"SPOT") == 0) {
+            type = 2;
+            element->QueryFloatAttribute( "dirX", dir );
+            element->QueryFloatAttribute( "dirY", dir+1 );
+            element->QueryFloatAttribute( "dirZ", dir+2 );
+
+            element->QueryFloatAttribute( "Angle", extra );
+            element->QueryFloatAttribute( "EXPO", extra +1);
+
+            luzes->push_back(new Light(type,pos,dir,extra));
+        }
+    }
+
+};
+
+vector<Figure*> * parseXML(string  f_path,vector<Light*> * luzes){
     XMLDocument xmlDoc;
     XMLElement *element;
 
@@ -134,7 +168,11 @@ vector<Figure*> * parseXML(string  f_path){
 
         element = xmlDoc.FirstChildElement();
         for (element = element->FirstChildElement(); element; element = element->NextSiblingElement()) {
-            parseGroup(f_path,transf,element,figuras);
+            const char * name = element->Name();
+            if (strcmp(name,"group") == 0)
+                parseGroup(f_path,transf,element,figuras);
+            else if (strcmp(name,"lights") == 0)
+                parseLights(element,luzes);
         }
 
     }

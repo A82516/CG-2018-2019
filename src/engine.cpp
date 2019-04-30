@@ -16,7 +16,7 @@
 #include <vector>
 #include "../headers/parser.h"
 #include "../headers/Camera.h"
-
+#include "../headers/Light.h"
 
 
 using namespace tinyxml2;
@@ -31,28 +31,13 @@ int WINDOW_Y = 800;
 int X_POS = WINDOW_X/2;
 int Y_POS = WINDOW_Y/2;
 
-
-float angleA = M_PI/3.0;
-float angleB = M_PI/3.0;
 float radius = 40;
 GLenum viewMode = GL_POLYGON;
 
 Camera * cam;
 
-
 vector<Figure*> figs;
-
-
-void teapot(){
-	glPushMatrix();
-	glTranslatef(5.0,0.0,2.0);
-
-	glutSolidTeapot(0.1);
-	glTranslatef(5.0,0.0,2.0);
-
-	glutSolidTeapot(0.1);
-	glPopMatrix();
-}
+vector<Light*> lights;
 
 void changeSize(int w, int h) {
 
@@ -86,23 +71,12 @@ void draw_figures(){
 	}
 }
 
-void draw_xyz(float size){
-	glColor3f(1,1,1);
-	//x
-	glBegin(GL_LINES);
-	glVertex3f(0,0,0);
-	glVertex3f(size,0,0);
-	glEnd();
-	//y
-	glBegin(GL_LINES);
-	glVertex3f(0,0,0);
-	glVertex3f(0,size,0);
-	glEnd();
-	//z
-	glBegin(GL_LINES);
-	glVertex3f(0,0,0);
-	glVertex3f(0,0,size);
-	glEnd();
+
+void renderLights(){
+	vector<Light*>::iterator it;
+	for(it = lights.begin(); it != lights.end(); it++){
+		(*it)->draw();
+	}
 }
 
 void renderScene(void) {
@@ -111,6 +85,7 @@ void renderScene(void) {
 
 	// set the camera
 	glLoadIdentity();
+
 	Point * pos = cam->getPosition();
 	Point * look = cam->getLookup();
 	Point * up = cam->getUp();
@@ -118,6 +93,8 @@ void renderScene(void) {
 					look->getX(),look->getY(),look->getZ(),
 				up->getX(),up->getY(),up->getZ());
 	// End of frame
+
+	renderLights();
 
 	glPolygonMode(GL_FRONT,viewMode);
 	draw_figures();
@@ -212,6 +189,7 @@ void initGL(){
 	glEnable(GL_CULL_FACE);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
+
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 }
@@ -240,7 +218,7 @@ int main(int argc, char **argv) {
 	}
 
 	else {
-	    figs = * (parseXML(argv[1])); // Read XML File
+	    figs = * (parseXML(argv[1],&lights)); // Read XML File
 	}
 // Required callback registry
 	glutDisplayFunc(renderScene);

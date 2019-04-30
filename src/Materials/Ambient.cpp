@@ -12,5 +12,5 @@ Ambient::Ambient(float *cor) {
 Ambient::~Ambient() {}
 
 void Ambient::perform() {
-    glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,color);
+    glMaterialfv(GL_FRONT,GL_AMBIENT,color);
 }
