@@ -11,6 +11,10 @@ add_executable(engine ${ENGINE_FILES})
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 
+
+
+if  (WIN32)
+
 find_package(OpenGL REQUIRED)
 include_directories(${OpenGL_INCLUDE_DIRS})
 link_directories(${OpenGL_LIBRARY_DIRS})
@@ -19,9 +23,6 @@ add_definitions(${OpenGL_DEFINITIONS})
 if(NOT OPENGL_FOUND)
 	message(ERROR " OPENGL not found!")
 endif(NOT OPENGL_FOUND)
-
-
-if  (WIN32)
 
 	set(TOOLKITS_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/toolkit")
 	message(STATUS "Toolkits_DIR set to: " ${TOOLKITS_FOLDER})
@@ -55,8 +56,12 @@ if  (WIN32)
 	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
 
 else (WIN32) #Linux and Mac
+	
 
-
+	find_package(GLUT REQUIRED)
+	include_directories(${GLUT_INCLUDE_DIRS})
+	link_directories(${GLUT_LIBRARY_DIRS})
+	add_definitions(${GLUT_DEFINITIONS})
 
 	set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wno-deprecated")
 	set_source_files_properties(${sources} PROPERTIES COMPILE_FLAGS
