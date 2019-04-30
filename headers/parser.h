@@ -15,15 +15,17 @@
 #include "Scale.h"
 #include "Translate.h"
 #include "Rotate.h"
+#include "Light.h"
 
 using namespace tinyxml2;
 
-vector<Figure*> * parseXML(string  f_path);
+vector<Figure*> * parseXML(string  f_path,vector<Light*> * luzes);
+void parseLights(XMLElement *element,vector<Light*> * luzes);
 void parseGroup(string f_path,vector<Transformation*> &trans,XMLElement * element,vector<Figure*> * figures);
 void parseTranslate(Translate * t,XMLElement * element);
 void parseModels(string f_path,vector<Transformation*> &trans,XMLElement * element,vector<Figure*> * figures);
 string mergePath(string path, string prog);
-void build_figure(string path,vector<Transformation*> &trans,vector<Figure*> * figures);
+void build_figure(string path,vector<Transformation*> &trans,vector<Figure*> * figures,vector<Material*> *  materials );
 
 
 #endif //GENERATOR_PARSER_H

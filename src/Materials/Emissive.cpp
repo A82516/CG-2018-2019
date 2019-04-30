@@ -13,5 +13,5 @@ Emissive::Emissive(float *cor) {
 Emissive::~Emissive() {}
 
 void Emissive::perform() {
-    glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,color);
+    glMaterialfv(GL_FRONT,GL_EMISSION,color);
 }

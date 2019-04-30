@@ -16,6 +16,6 @@ Specular::Specular(float *cor,float shinny) {
 Specular::~Specular(){}
 
 void Specular::perform() {
-    glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,color);
-    glMaterialf(GL_FRONT_AND_BACK,GL_SHININESS,shininess);
+    glMaterialfv(GL_FRONT,GL_SPECULAR,color);
+    glMaterialf(GL_FRONT,GL_SHININESS,shininess);
 }

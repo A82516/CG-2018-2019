@@ -12,5 +12,5 @@ Diffuse::Diffuse(float *cor) {
 Diffuse::~Diffuse() {}
 
 void Diffuse::perform() {
-    glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,color);
+    glMaterialfv(GL_FRONT,GL_DIFFUSE,color);
 }
