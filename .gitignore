@@ -1,2 +1,5 @@
 .idea/*
+.vs/*
+build/*
 cmake-build-debug/*
+CMakeSettings.json

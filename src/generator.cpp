@@ -20,24 +20,35 @@ vector<Patch *>* parseBezierPatch(string file_name){
 	}
 
 	getline(file,line);
-	int n_patches = stoi(line);
-	int patches_indexes [n_patches][16];
+	int  n_patches = stoi(line);
+	vector<int> * patches_line =new vector<int>();
+    vector<vector<int>> * patches_total = new vector<vector<int>>();
+	for(int i = 0; i < n_patches; i++) {
+        getline(file, line);
+        vector<int> *patches_line = new vector<int>();
 
-	for(int i = 0; i < n_patches; i++){
-		getline(file,line);
-		for(int j = 0; j < 16; j++){
-			int split = line.find(",");
-			string n_string = line.substr(0,split);
-			patches_indexes[i][j] = stoi(n_string);
-			line.erase(0,split+1);
-		}
-	}
+        for (int j = 0; j < 16; j++) {
+            int split = line.find(",");
+            string n_string = line.substr(0, split);
+            patches_line->push_back(stoi(n_string));
+            line.erase(0, split + 1);
+        }
+        patches_total->push_back(*patches_line);
+        for (int j = 0; j < 16; j++) {
+            cout << "--";
+            cout << patches_line->at(j);
+        }
+        cout << "\n";
+
+    }
+    cout << "--";
 
 	getline(file,line);
 	int n_points = stoi(line),j;
 	string token;
 	float coords[3];
-	vector<Point *> vertex_aux;
+	vector<Point *> vertex_aux ;
+    cout << "--";
 
 	for(int i = 0; i < n_points; i++){
 		getline(file,line);
@@ -53,11 +64,13 @@ vector<Patch *>* parseBezierPatch(string file_name){
 	}
 
 	vector<Patch *> * patches = new vector<Patch*>();
+    vector<int> * patches_auxiliar =new vector<int>();
 
 	for(int i = 0; i < n_patches; i++){
 		Patch * p = new Patch();
 		for(int k = 0; k < 16; k++){
-			Point * point_aux = vertex_aux.at(patches_indexes[i][k]);
+            patches_auxiliar = &(patches_total->at(i));
+			Point * point_aux = vertex_aux.at(patches_auxiliar->at(k));
 			p->addControlPoint(
 					new Point(
 					point_aux->getX(),
