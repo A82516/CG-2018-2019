@@ -22,7 +22,7 @@ vector<Patch *>* parseBezierPatch(string file_name){
 	getline(file,line);
 	int  n_patches = stoi(line);
 	vector<int> * patches_line =new vector<int>();
-    vector<vector<int>> * patches_total = new vector<vector<int>>();
+    vector<vector<int> > * patches_total = new vector<vector<int> >();
 	for(int i = 0; i < n_patches; i++) {
         getline(file, line);
         vector<int> *patches_line = new vector<int>();
@@ -232,6 +232,16 @@ int main(int argc, char **argv){
 			flag = 1;
 		}
 		else print_error("Erro no input");
+	}
+	else if (argc == 6 && strcmp(argv[1],"rsphere") == 0){
+		radius = atof(argv[2]);
+		slices = atoi(argv[3]);
+		stacks = atoi(argv[4]);
+
+		if (radius != 0 && slices != 0 && stacks != 0){
+			f.reverse_shpere(radius,slices,stacks);
+			flag = 1;
+		}else print_error("Erro no input");
 	}
 	else{
 		printHelp();

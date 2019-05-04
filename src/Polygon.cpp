@@ -10,6 +10,56 @@ Point* Polygon::shpere_texture(float alpha,float beta) {
     return new Point(du,dy);
 }
 
+void Polygon::reverse_shpere(float radius,int slices,int stacks){
+    int i=0;
+    float alpha,d_alpha;
+    float beta,d_beta;
+    Point *p1,*p2,*p3;
+
+    for(int k = 0; k < stacks ; k++){
+        for(i=0; i < slices;i++){
+            alpha = i*(2*M_PI / slices);
+            beta = k*(M_PI / stacks) - (M_PI / 2);
+            d_alpha =(2*M_PI / slices);
+            d_beta = (M_PI / stacks);
+
+            p1 = new Point(radius*cos(alpha)*cos(beta ),radius*sin(beta ),radius*sin(alpha)*cos(beta));
+            p3 = new Point(radius*cos(alpha + d_alpha)*cos(beta) ,radius*sin(beta) ,radius*sin(alpha + d_alpha)*cos(beta));
+            p2 = new Point(radius*cos(alpha)*cos(beta + d_beta),radius*sin(beta + d_beta),radius*sin(alpha)*cos(beta + d_beta));
+
+            pontos->push_back(p1);
+            normal->push_back(new Point(-cos(alpha)*cos(beta),-sin(beta),-sin(alpha)*cos(beta)));
+            textures->push_back(shpere_texture(alpha,beta));
+
+            pontos->push_back(p3);
+            normal->push_back(new Point(-cos(alpha + d_alpha)*cos(beta),-sin(beta),-sin(alpha + d_alpha)*cos(beta)));
+            textures->push_back(shpere_texture(alpha + d_alpha,beta));
+
+            pontos->push_back(p2);
+            normal->push_back(new Point(-cos(alpha)*cos(beta + d_beta),-sin(beta + d_beta),-sin(alpha)*cos(beta + d_beta)));
+            textures->push_back(shpere_texture(alpha,beta + d_beta));
+
+            p1 = new Point(radius*cos(alpha)*cos(beta + d_beta),radius*sin(beta + d_beta),radius*sin(alpha)*cos(beta + d_beta));
+            p3 = new Point(radius*cos(alpha + d_alpha)*cos(beta) ,radius*sin(beta) ,radius*sin(alpha + d_alpha)*cos(beta));
+            p2 = new Point(radius*cos(alpha + d_alpha)*cos(beta + d_beta) ,radius*sin(beta + d_beta) ,radius*sin(alpha + d_alpha)*cos(beta + d_beta));
+
+
+            pontos->push_back(p1);
+            normal->push_back(new Point(-cos(alpha)*cos(beta + d_beta),-sin(beta + d_beta),-sin(alpha)*cos(beta + d_beta)));
+            textures->push_back(shpere_texture(alpha,beta + d_beta));
+
+            pontos->push_back(p3);
+            normal->push_back(new Point(-cos(alpha + d_alpha)*cos(beta),-sin(beta),-sin(alpha + d_alpha)*cos(beta)));
+            textures->push_back(shpere_texture(alpha + d_alpha,beta));
+
+            pontos->push_back(p2);
+            normal->push_back(new Point(-cos(alpha + d_alpha)*cos(beta + d_beta),-sin(beta + d_beta),-sin(alpha + d_alpha)*cos(beta + d_beta)));
+            textures->push_back(shpere_texture(alpha + d_alpha,beta + d_beta));
+            
+        }
+    }
+}
+
 void Polygon::shpere_vertex(float radius,int slices,int stacks){
     int i=0;
     float alpha,d_alpha;
@@ -263,6 +313,13 @@ void Polygon::torus_vertex(float radius_outside,float radius_inside,int slices,i
     }
 }
 
+Point * Polygon::box_textures(float a, float b, float max_a, float max_b){
+    float x = (a + max_a / 2.0) / max_a;
+    float y = (b + max_b / 2.0) / max_b;
+
+    return new Point(y,x);
+}
+
 void Polygon::box_vertex(float x,float y,float z,int partitions){
     float dx,dy,dz,sX,sY,sZ;
 
@@ -280,94 +337,196 @@ void Polygon::box_vertex(float x,float y,float z,int partitions){
             //Face Frente
             pontos->push_back(new Point(x/2,i*dy + sY,j*dz + sZ));
             normal->push_back(new Point(1,0,0));
-            pontos->push_back(new Point(x/2,(i+1)*dy + sY,j*dz + sZ));
-            normal->push_back(new Point(1,0,0));
-            pontos->push_back(new Point(x/2,i*dy + sY,(j+1)*dz + sZ));
-            normal->push_back(new Point(1,0,0));
+            textures->push_back(box_textures(i*dy + sY,j*dz + sZ,y,z));
 
             pontos->push_back(new Point(x/2,(i+1)*dy + sY,j*dz + sZ));
             normal->push_back(new Point(1,0,0));
-            pontos->push_back(new Point(x/2,(i+1)*dy + sY,(j+1)*dz + sZ));
-            normal->push_back(new Point(1,0,0));
+            textures->push_back(box_textures((i+1)*dy + sY,j*dz + sZ,y,z));
+
+
             pontos->push_back(new Point(x/2,i*dy + sY,(j+1)*dz + sZ));
             normal->push_back(new Point(1,0,0));
+            textures->push_back(box_textures(i*dy + sY,(j+1)*dz + sZ,y,z));
+
+
+            pontos->push_back(new Point(x/2,(i+1)*dy + sY,j*dz + sZ));
+            normal->push_back(new Point(1,0,0));
+            textures->push_back(box_textures((i+1)*dy + sY,j*dz + sZ,y,z));
+
+
+            pontos->push_back(new Point(x/2,(i+1)*dy + sY,(j+1)*dz + sZ));
+            normal->push_back(new Point(1,0,0));
+            textures->push_back(box_textures((i+1)*dy + sY,(j+1)*dz + sZ,y,z));
+
+
+            pontos->push_back(new Point(x/2,i*dy + sY,(j+1)*dz + sZ));
+            normal->push_back(new Point(1,0,0));
+            textures->push_back(box_textures(i*dy + sY,(j+1)*dz + sZ,y,z));
+
 
             //Face trás
             pontos->push_back(new Point(-x/2,i*dy + sY,j*dz + sZ));
             normal->push_back(new Point(-1,0,0));
-            pontos->push_back(new Point(-x/2,i*dy + sY,(j+1)*dz + sZ));
-            normal->push_back(new Point(-1,0,0));
-            pontos->push_back(new Point(-x/2,(i+1)*dy + sY,j*dz + sZ));
-            normal->push_back(new Point(-1,0,0));
+            textures->push_back(box_textures(i*dy + sY,j*dz + sZ,y,z));
+
 
             pontos->push_back(new Point(-x/2,i*dy + sY,(j+1)*dz + sZ));
             normal->push_back(new Point(-1,0,0));
-            pontos->push_back(new Point(-x/2,(i+1)*dy + sY,(j+1)*dz + sZ));
-            normal->push_back(new Point(-1,0,0));
+            textures->push_back(box_textures(i*dy + sY,(j+1)*dz + sZ,y,z));
+
+
             pontos->push_back(new Point(-x/2,(i+1)*dy + sY,j*dz + sZ));
             normal->push_back(new Point(-1,0,0));
+            textures->push_back(box_textures((i+1)*dy + sY,j*dz + sZ,y,z));
+
+
+            pontos->push_back(new Point(-x/2,i*dy + sY,(j+1)*dz + sZ));
+            normal->push_back(new Point(-1,0,0));
+            textures->push_back(box_textures(i*dy + sY,(j+1)*dz + sZ,y,z));
+
+
+            pontos->push_back(new Point(-x/2,(i+1)*dy + sY,(j+1)*dz + sZ));
+            normal->push_back(new Point(-1,0,0));
+            textures->push_back(box_textures((i+1)*dy + sY,(j+1)*dz + sZ,y,z));
+
+
+            pontos->push_back(new Point(-x/2,(i+1)*dy + sY,j*dz + sZ));
+            normal->push_back(new Point(-1,0,0));
+            textures->push_back(box_textures((i+1)*dy + sY,j*dz + sZ,y,z));
+
 
             //Face lateral frente
             pontos->push_back(new Point(j*dx + sX,i*dy + sY,z/2));
             normal->push_back(new Point(0,0,1));
-            pontos->push_back(new Point((j+1)*dx + sX,i*dy + sY,z/2));
-            normal->push_back(new Point(0,0,1));
-            pontos->push_back(new Point(j*dx + sX,(i+1)*dy + sY,z/2));
-            normal->push_back(new Point(0,0,1));
+            textures->push_back(box_textures(i*dy + sY,j*dx + sX,y,x));
+
 
             pontos->push_back(new Point((j+1)*dx + sX,i*dy + sY,z/2));
             normal->push_back(new Point(0,0,1));
-            pontos->push_back(new Point((j+1)*dx + sX,(i+1)*dy + sY,z/2));
-            normal->push_back(new Point(0,0,1));
+            textures->push_back(box_textures(i*dy + sY,(j+1)*dx + sX,y,x));
+
+
             pontos->push_back(new Point(j*dx + sX,(i+1)*dy + sY,z/2));
             normal->push_back(new Point(0,0,1));
+            textures->push_back(box_textures((i+1)*dy + sY,j*dx + sX,y,x));
+
+
+            pontos->push_back(new Point((j+1)*dx + sX,i*dy + sY,z/2));
+            normal->push_back(new Point(0,0,1));
+            textures->push_back(box_textures(i*dy + sY,(j+1)*dx + sX,y,x));
+
+
+            pontos->push_back(new Point((j+1)*dx + sX,(i+1)*dy + sY,z/2));
+            normal->push_back(new Point(0,0,1));
+            textures->push_back(box_textures((i+1)*dy + sY,(j+1)*dx + sX,y,x));
+
+
+            pontos->push_back(new Point(j*dx + sX,(i+1)*dy + sY,z/2));
+            normal->push_back(new Point(0,0,1));
+            textures->push_back(box_textures((i+1)*dy + sY,j*dx + sX,y,x));
+
 
             //Face lateral trás
             pontos->push_back(new Point((j+1)*dx + sX,i*dy + sY,-z/2));
             normal->push_back(new Point(0,0,-1));
+            textures->push_back(box_textures(i*dy + sY,(j+1)*dx + sX,y,x));
+
+
             pontos->push_back(new Point(j*dx + sX,i*dy + sY,-z/2));
             normal->push_back(new Point(0,0,-1));
-            pontos->push_back(new Point(j*dx + sX,(i+1)*dy + sY,-z/2));
-            normal->push_back(new Point(0,0,-1));
+            textures->push_back(box_textures(i*dy + sY,j*dx + sX,y,x));
+
 
             pontos->push_back(new Point(j*dx + sX,(i+1)*dy + sY,-z/2));
             normal->push_back(new Point(0,0,-1));
+            textures->push_back(box_textures((i+1)*dy + sY,j*dx + sX,y,x));
+
+
+            pontos->push_back(new Point(j*dx + sX,(i+1)*dy + sY,-z/2));
+            normal->push_back(new Point(0,0,-1));
+            textures->push_back(box_textures((i+1)*dy + sY,j*dx + sX,y,x));
+
+
             pontos->push_back(new Point((j+1)*dx + sX,(i+1)*dy + sY,-z/2));
             normal->push_back(new Point(0,0,-1));
+            textures->push_back(box_textures((i+1)*dy + sY,(j+1)*dx + sX,y,x));
+
+
             pontos->push_back(new Point((j+1)*dx + sX,i*dy + sY,-z/2));
             normal->push_back(new Point(0,0,-1));
+            textures->push_back(box_textures(i*dy + sY,(j+1)*dx + sX,y,x));
+
 
             //Face cima
             pontos->push_back(new Point(j*dx + sX,y/2,i*dz + sZ));
             normal->push_back(new Point(0,1,0));
+            textures->push_back(box_textures(i*dz + sZ,j*dx + sX,z,x));
+
+
             pontos->push_back(new Point(j*dx + sX,y/2,(i+1)*dz + sZ));
             normal->push_back(new Point(0,1,0));
+            textures->push_back(box_textures((i+1)*dz + sZ,j*dx + sX,z,x));
+
+
             pontos->push_back(new Point((j+1)*dx + sX,y/2,(i+1)*dz + sZ));
             normal->push_back(new Point(0,1,0));
+            textures->push_back(box_textures((i+1)*dz + sZ,(j+1)*dx + sX,z,x));
+
 
             pontos->push_back(new Point((j+1)*dx + sX,y/2,i*dz + sZ));
             normal->push_back(new Point(0,1,0));
+            textures->push_back(box_textures(i*dz + sZ,(j+1)*dx + sX,z,x));
+
+
             pontos->push_back(new Point(j*dx + sX,y/2,i*dz + sZ));
             normal->push_back(new Point(0,1,0));
+            textures->push_back(box_textures(i*dz + sZ,j*dx + sX,z,x));
+
+
             pontos->push_back(new Point((j+1)*dx + sX,y/2,(i+1)*dz + sZ));
             normal->push_back(new Point(0,1,0));
+            textures->push_back(box_textures((i+1)*dz + sZ,(j+1)*dx + sX,z,x));
+
 
             //Face baixo
             pontos->push_back(new Point((j+1)*dx + sX,-y/2,(i+1)*dz + sZ));
             normal->push_back(new Point(0,-1,0));
+            textures->push_back(box_textures((i+1)*dz + sZ,(j+1)*dx + sX,z,x));
+
+
             pontos->push_back(new Point(j*dx + sX,-y/2,(i+1)*dz + sZ));
             normal->push_back(new Point(0,-1,0));
-            pontos->push_back(new Point(j*dx + sX,-y/2,i*dz + sZ));
-            normal->push_back(new Point(0,-1,0));
+            textures->push_back(box_textures((i+1)*dz + sZ,j*dx + sX,z,x));
+
 
             pontos->push_back(new Point(j*dx + sX,-y/2,i*dz + sZ));
             normal->push_back(new Point(0,-1,0));
+            textures->push_back(box_textures(i*dz + sZ,j*dx + sX,z,x));
+
+
+            pontos->push_back(new Point(j*dx + sX,-y/2,i*dz + sZ));
+            normal->push_back(new Point(0,-1,0));
+            textures->push_back(box_textures(i*dz + sZ,j*dx + sX,z,x));
+
+
             pontos->push_back(new Point((j+1)*dx + sX,-y/2,i*dz + sZ));
             normal->push_back(new Point(0,-1,0));
+            textures->push_back(box_textures(i*dz + sZ,(j+1)*dx + sX,z,x));
+
+
             pontos->push_back(new Point((j+1)*dx + sX,-y/2,(i+1)*dz + sZ));
             normal->push_back(new Point(0,-1,0));
+            textures->push_back(box_textures((i+1)*dz + sZ,(j+1)*dx + sX,z,x));
+
         }
     }
+}
+
+Point * Polygon::cylinger_textures(float alpha, float height, float heightmax){
+    float x = (- 1.0 / (2.0 * M_PI)) * alpha + 1.0;
+    float y = (1.0 - 0.375) * ((height + heightmax / 2.0) / heightmax) + 0.375;
+
+    return new Point(x,y);
 }
 
 void Polygon::cylinder_vertex(float radius, float height,int slices,int stacks){
@@ -384,36 +543,63 @@ void Polygon::cylinder_vertex(float radius, float height,int slices,int stacks){
             if (j == stacks){
                 pontos->push_back(new Point(radius*cos(alpha),height/2,radius*sin(alpha)));
                 normal->push_back(new Point(0,1,0));
+                textures->push_back(new Point(0.4375 + 0.1875*cos(alpha),0.1875+ 0.1875*sin(alpha)));
+
                 pontos->push_back(new Point(0,height/2,0));
                 normal->push_back(new Point(0,1,0));
+                textures->push_back(new Point(0.4375,0.1875));
+
+
                 pontos->push_back(new Point(radius*cos(alpha + (2*M_PI) / slices),height/2,radius*sin(alpha + (2*M_PI) / slices)));
                 normal->push_back(new Point(0,1,0));
+                textures->push_back(new Point(0.4375 + 0.1875*cos(alpha + (2*M_PI) / slices),0.1875+ 0.1875*sin(alpha + (2*M_PI) / slices)));
+
             }
             else {
                 if (j == 0){
                     pontos->push_back(new Point(0,-height/2,0));
                     normal->push_back(new Point(0,-1,0));
+                    textures->push_back(new Point(0.8125,0.1875));
+
                     pontos->push_back(new Point(radius*cos(alpha),-height/2,radius*sin(alpha)));
                     normal->push_back(new Point(0,-1,0));
+                    textures->push_back(new Point(0.8125 + 0.1875*cos(alpha),0.1875+ 0.1875*sin(alpha)));
+
+
                     pontos->push_back(new Point(radius*cos(alpha + (2*M_PI) / slices),-height/2,radius*sin(alpha + (2*M_PI) / slices)));
                     normal->push_back(new Point(0,-1,0));
+                    textures->push_back(new Point(0.8125 + 0.1875*cos(alpha + (2*M_PI) / slices),0.1875+ 0.1875*sin(alpha + (2*M_PI) / slices)));
+
                 }
 
                 pontos->push_back(new Point(radius*cos(alpha),beta,radius*sin(alpha)));
                 normal->push_back(new Point(cos(alpha),0,sin(alpha)));
+                textures->push_back(cylinger_textures(alpha,beta,height));
+
                 pontos->push_back(new Point(radius*cos(alpha),beta + (height / stacks),radius*sin(alpha)));
                 normal->push_back(new Point(cos(alpha),0,sin(alpha)));
+                textures->push_back(cylinger_textures(alpha,beta  + (height / stacks) ,height));
+
+
                 pontos->push_back(new Point(radius*cos(alpha + (2*M_PI) / slices),beta,radius*sin(alpha + (2*M_PI) / slices)));
                 normal->push_back(new Point(cos(alpha + (2*M_PI) / slices),0,sin(alpha + (2*M_PI) / slices)));
+                textures->push_back(cylinger_textures(alpha + (2*M_PI) / slices,beta,height));
+
 
 
                 pontos->push_back(new Point(radius*cos(alpha),beta + (height / stacks),radius*sin(alpha)));
                 normal->push_back(new Point(cos(alpha),0,sin(alpha)));
+                textures->push_back(cylinger_textures(alpha,beta + (height / stacks),height));
+
+
                 pontos->push_back(new Point(radius*cos(alpha + (2*M_PI) / slices),beta + (height / stacks),radius*sin(alpha + (2*M_PI) / slices)));
                 normal->push_back(new Point(cos(alpha + (2*M_PI) / slices),0,sin(alpha + (2*M_PI) / slices)));
+                textures->push_back(cylinger_textures(alpha + (2*M_PI) / slices,beta + (height / stacks),height));
+
+
                 pontos->push_back(new Point(radius*cos(alpha + (2*M_PI) / slices),beta,radius*sin(alpha + (2*M_PI) / slices)));
                 normal->push_back(new Point(cos(alpha + (2*M_PI) / slices),0,sin(alpha + (2*M_PI) / slices)));
-
+                textures->push_back(cylinger_textures(alpha + (2*M_PI) / slices,beta,height));
             }
         }
     }
