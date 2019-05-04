@@ -7,6 +7,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
+#include <cmath>
 
 #ifndef GENERATOR_POLYGON_H
 #define GENERATOR_POLYGON_H

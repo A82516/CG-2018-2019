@@ -1,5 +1,6 @@
 
-
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include "../headers/Polygon.h"
 
 Point* Polygon::shpere_texture(float alpha,float beta) {
