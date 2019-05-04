@@ -19,19 +19,22 @@
 #include <time.h>
 #include "Transformation.h"
 #include "Material.h"
+#include "/usr/local/include/IL/il.h"
 
 
 
 class Figure {
-    GLuint buffer[2]; // 0 é para pontos
+    GLuint buffer[3]; // 0 é para pontos
     int n_vertex;
+	unsigned int texture;
 	vector<Transformation*> * transformacoes;
 	vector<Material*> * materials;
 
     public:
-        Figure(vector<Point*> * v,vector<Transformation*> &trans,vector<Point*>* normal,vector<Material*> *  mat );
+        Figure(vector<Point*> * v,vector<Transformation*> &trans,vector<Point*> * normal,vector<Material*> *  mat,vector<Point *> * texturepoint,const char * texturefile);
         void draw();
         virtual ~Figure();
+        void loadImage(const char * texturefile);
 };
 
 void cleanVector(vector<Point*> * limpar);

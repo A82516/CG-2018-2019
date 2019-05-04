@@ -2,6 +2,12 @@
 
 #include "../headers/Polygon.h"
 
+Point* Polygon::shpere_texture(float alpha,float beta) {
+    float du = (1.0 / (2.0*M_PI)) * (-alpha) + 1.0;
+    float dy = (1.0 / (M_PI)) * (beta + (M_PI / 2.0));
+
+    return new Point(du,dy);
+}
 
 void Polygon::shpere_vertex(float radius,int slices,int stacks){
     int i=0;
@@ -22,10 +28,19 @@ void Polygon::shpere_vertex(float radius,int slices,int stacks){
 
             pontos->push_back(p1);
             normal->push_back(new Point(cos(alpha)*cos(beta),sin(beta),sin(alpha)*cos(beta)));
+            textures->push_back(shpere_texture(alpha,beta));
+
             pontos->push_back(p2);
             normal->push_back(new Point(cos(alpha)*cos(beta + d_beta),sin(beta + d_beta),sin(alpha)*cos(beta + d_beta)));
+            textures->push_back(shpere_texture(alpha,beta + d_beta));
+
+
+
             pontos->push_back(p3);
             normal->push_back(new Point(cos(alpha + d_alpha)*cos(beta),sin(beta),sin(alpha + d_alpha)*cos(beta)));
+            textures->push_back(shpere_texture(alpha + d_alpha,beta));
+
+
 
             p1 = new Point(radius*cos(alpha)*cos(beta + d_beta),radius*sin(beta + d_beta),radius*sin(alpha)*cos(beta + d_beta));
             p2 = new Point(radius*cos(alpha + d_alpha)*cos(beta + d_beta) ,radius*sin(beta + d_beta) ,radius*sin(alpha + d_alpha)*cos(beta + d_beta));
@@ -33,10 +48,18 @@ void Polygon::shpere_vertex(float radius,int slices,int stacks){
 
             pontos->push_back(p1);
             normal->push_back(new Point(cos(alpha)*cos(beta + d_beta),sin(beta + d_beta),sin(alpha)*cos(beta + d_beta)));
+            textures->push_back(shpere_texture(alpha,beta + d_beta));
+
+
+
             pontos->push_back(p2);
             normal->push_back(new Point(cos(alpha + d_alpha)*cos(beta + d_beta),sin(beta + d_beta),sin(alpha + d_alpha)*cos(beta + d_beta)));
+            textures->push_back(shpere_texture(alpha + d_alpha,beta + d_beta));
+
+
             pontos->push_back(p3);
             normal->push_back(new Point(cos(alpha + d_alpha)*cos(beta),sin(beta),sin(alpha + d_alpha)*cos(beta)));
+            textures->push_back(shpere_texture(alpha + d_alpha,beta));
         }
     }
 }
@@ -44,6 +67,7 @@ void Polygon::shpere_vertex(float radius,int slices,int stacks){
 Polygon::Polygon(){
     pontos = new vector<Point*>();
     normal = new vector<Point*>();
+    textures = new vector<Point*>();
 }
 
 Point * Polygon::getNormalCone(float edge [3], Point * p, float tangAlpha){
@@ -148,10 +172,17 @@ void Polygon::plane_vertex(float size) {
 
     pontos->push_back(p1);
     normal->push_back(new Point(0,1,0));
+    textures->push_back(new Point(1,1));
+
     pontos->push_back(p2);
     normal->push_back(new Point(0,1,0));
+    textures->push_back(new Point(1,-1));
+
+
     pontos->push_back(p3);
     normal->push_back(new Point(0,1,0));
+    textures->push_back(new Point(-1,-1));
+
 
 
     p1 = new Point(size,0,size);
@@ -160,10 +191,24 @@ void Polygon::plane_vertex(float size) {
 
     pontos->push_back(p1);
     normal->push_back(new Point(0,1,0));
+    textures->push_back(new Point(1,1));
+
+
     pontos->push_back(p2);
     normal->push_back(new Point(0,1,0));
+    textures->push_back(new Point(-1,-1));
+
     pontos->push_back(p3);
     normal->push_back(new Point(0,1,0));
+    textures->push_back(new Point(-1,1));
+
+}
+
+Point * Polygon::torus_texture(int slices,int stacks,int i,int j){
+    float dx = 1.0 / stacks;
+    float dy = 1.0/  slices;
+
+    return new Point((-i*dx) + 1.0,j*dy);
 }
 
 void Polygon::torus_vertex(float radius_outside,float radius_inside,int slices,int stacks){
@@ -184,10 +229,17 @@ void Polygon::torus_vertex(float radius_outside,float radius_inside,int slices,i
 
             pontos->push_back(p1);
             normal->push_back(new Point(cos(teta)*cos(fi),sin(teta),cos(teta)*sin(fi)));
+            textures->push_back(torus_texture(slices,stacks,i,j));
+
             pontos->push_back(p2);
             normal->push_back(new Point(cos(teta + d_teta)*cos(fi),sin(teta + d_teta),cos(teta + d_teta)*sin(fi)));
+            textures->push_back(torus_texture(slices,stacks,i,j+1));
+
+
             pontos->push_back(p3);
             normal->push_back(new Point(cos(teta)*cos(fi + d_fi),sin(teta),cos(teta)*sin(fi + d_fi)));
+            textures->push_back(torus_texture(slices,stacks,i+1,j));
+
 
             p1 = new Point((radius_outside + radius_inside*cos(teta + d_teta))*cos(fi),radius_inside*sin(teta + d_teta),(radius_outside + radius_inside*cos(teta + d_teta))*sin(fi));
             p2 = new Point((radius_outside + radius_inside*cos(teta + d_teta))*cos(fi + d_fi),radius_inside*sin(teta + d_teta),(radius_outside + radius_inside*cos(teta + d_teta))*sin(fi + d_fi));
@@ -195,10 +247,17 @@ void Polygon::torus_vertex(float radius_outside,float radius_inside,int slices,i
 
             pontos->push_back(p1);
             normal->push_back(new Point(cos(teta + d_teta)*cos(fi),sin(teta + d_teta),cos(teta + d_teta)*sin(fi)));
+            textures->push_back(torus_texture(slices,stacks,i,j+1));
+
+
             pontos->push_back(p2);
             normal->push_back(new Point(cos(teta + d_teta)*cos(fi + d_fi),sin(teta + d_teta),cos(teta + d_teta)*sin(fi + d_fi)));
+            textures->push_back(torus_texture(slices,stacks,i+1,j+1));
+
             pontos->push_back(p3);
             normal->push_back(new Point(cos(teta)*cos(fi + d_fi),sin(teta),cos(teta)*sin(fi + d_fi)));
+            textures->push_back(torus_texture(slices,stacks,i+1,j));
+
         }
     }
 }
@@ -365,6 +424,10 @@ vector<Point*> * Polygon::getPontos(){
 
 vector<Point*> * Polygon::getNormais(){
     return normal;
+}
+
+vector<Point*> * Polygon::getTextures() {
+    return textures;
 }
 
 Polygon::Polygon(vector<Point*> * v){

@@ -16,19 +16,25 @@ void Figure::draw() {
     }
 
 
+    glBindTexture(GL_TEXTURE_2D, texture);
     glBindBuffer(GL_ARRAY_BUFFER,buffer[0]);
     glVertexPointer(3,GL_FLOAT,0,0);
 
     glBindBuffer(GL_ARRAY_BUFFER,buffer[1]);
     glNormalPointer(GL_FLOAT,0,0);
 
+    glBindBuffer(GL_ARRAY_BUFFER, buffer[2]);
+    glTexCoordPointer(2, GL_FLOAT, 0, 0);
+
     glDrawArrays(GL_TRIANGLES, 0, n_vertex * 3);
+
+    glBindTexture(GL_TEXTURE_2D, 0);
 
     glPopMatrix();
 }
 
 
-Figure::Figure(vector<Point*> * v,vector<Transformation*> &trans,vector<Point*> * normal,vector<Material*> *  mat){
+Figure::Figure(vector<Point*> * v,vector<Transformation*> &trans,vector<Point*> * normal,vector<Material*> *  mat,vector<Point *> * texturepoint,const char * texturefile){
     materials = mat;
 
     transformacoes = new vector<Transformation*>();
@@ -41,6 +47,7 @@ Figure::Figure(vector<Point*> * v,vector<Transformation*> &trans,vector<Point*> 
     n_vertex = v->size();
 	float * array_vertexs = (float *) malloc(sizeof(float) * 3 * n_vertex);
 	float * array_normal = (float *) malloc(sizeof(float) * 3 * n_vertex);
+	vector<float> textures;
 
     vector<Point*>::iterator point_it;
     int vertex = 0;
@@ -61,10 +68,21 @@ Figure::Figure(vector<Point*> * v,vector<Transformation*> &trans,vector<Point*> 
 
         vertex++;
     }
+    vertex = 0;
+    for(point_it = texturepoint->begin(); point_it != texturepoint->end(); point_it++){
+        Point * p = (*point_it);
+        textures.push_back(p->getX());
+        textures.push_back(p->getY());
+
+        vertex++;
+    }
+
+    cout << textures.size() << endl;
+
 
     cleanVector(v);
     cleanVector(normal);
-    glGenBuffers(2,buffer);
+    glGenBuffers(3,buffer);
 
     glBindBuffer(GL_ARRAY_BUFFER,buffer[0]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertex * 3,array_vertexs,GL_STATIC_DRAW);
@@ -72,8 +90,14 @@ Figure::Figure(vector<Point*> * v,vector<Transformation*> &trans,vector<Point*> 
     glBindBuffer(GL_ARRAY_BUFFER,buffer[1]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertex * 3,array_normal,GL_STATIC_DRAW);
 
+    glBindBuffer(GL_ARRAY_BUFFER,buffer[2]);
+    glBufferData(GL_ARRAY_BUFFER, textures.size() * sizeof(float), &(textures[0]), GL_STATIC_DRAW);
+
     free(array_vertexs);
     free(array_normal);
+    //free(array_texture);
+
+    loadImage(texturefile);
 }
 
 Figure::~Figure(){
@@ -82,6 +106,34 @@ Figure::~Figure(){
         delete((*it1));
     }
     delete(transformacoes);
+}
+
+void Figure::loadImage(const char * texturefile) {
+
+        unsigned int t, tw, th;
+        unsigned char *texData = NULL;
+
+    ilEnable(IL_ORIGIN_SET);
+    ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
+
+        ilGenImages(1, &t);
+        ilBindImage(t);
+        ilLoadImage((ILstring)texturefile);
+        tw = ilGetInteger(IL_IMAGE_WIDTH);
+        th = ilGetInteger(IL_IMAGE_HEIGHT);
+        ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+        texData = ilGetData();
+
+        glGenTextures(1, &texture);
+
+        glBindTexture(GL_TEXTURE_2D, texture);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tw, th, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
 }
 
 

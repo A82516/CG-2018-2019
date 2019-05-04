@@ -4,9 +4,16 @@ Point::Point(float a,float b, float c){
 	x = a;
 	y = b;
 	z = c;
+	type = 0;
 }
 
-float Point::getX(){
+Point::Point(float a, float b){
+	x = a;
+	y = b;
+	type = 1;
+}
+
+float Point::getX() {
 	return x;
 }
 
@@ -38,7 +45,9 @@ void Point::get(float * s){
 string Point::to_String(){
 	stringstream ss;
 
-	ss << to_string(x) << " " << to_string(y) << " " << to_string(z) << " ";
+	if (type == 0)
+		ss << to_string(x) << " " << to_string(y) << " " << to_string(z) << " ";
+	else ss << to_string(x) << " " << to_string(y) << " ";
 
 	return ss.str();
 }

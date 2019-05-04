@@ -6,7 +6,7 @@
 #include "../headers/Emissive.h"
 #include "../headers/Specular.h"
 
-void build_figure(string path,vector<Transformation*> &trans,vector<Figure*> * figures,vector<Material*> *  materials ){
+void build_figure(string path,vector<Transformation*> &trans,vector<Figure*> * figures,vector<Material*> *  materials,const char * texturefile ){
 
     string line;
     string delimiter = " ";
@@ -17,6 +17,7 @@ void build_figure(string path,vector<Transformation*> &trans,vector<Figure*> * f
     {
         vector<Point*> * v = new vector<Point*>();
         vector<Point*> * normal =  new vector<Point*>();
+        vector<Point*> * texture = new vector<Point*>();
 
         while (getline(myfile,line)){
             size_t pos = 0;
@@ -55,8 +56,20 @@ void build_figure(string path,vector<Transformation*> &trans,vector<Figure*> * f
             line.erase(0, pos + delimiter.length());
 
             normal->push_back(new Point(x,y,z));
+
+            pos = line.find(delimiter);
+            token = line.substr(0, pos);
+            x = atof(token.c_str());
+            line.erase(0, pos + delimiter.length());
+
+            pos = line.find(delimiter);
+            token = line.substr(0, pos);
+            y = atof(token.c_str());
+            line.erase(0, pos + delimiter.length());
+
+            texture->push_back(new Point(x,y));
         }
-        f = new Figure(v,trans,normal,materials);
+        f = new Figure(v,trans,normal,materials,texture,texturefile);
         figures->push_back(f);
         myfile.close();
     }
@@ -112,12 +125,16 @@ vector<Material*> * parse_Objects_Materials(XMLElement * element){
 void parseModels(string f_path,vector<Transformation*> &trans,XMLElement * element,vector<Figure*> * figures){
     for (element = element->FirstChildElement(); element; element = element->NextSiblingElement()) {
         string figura = element->Attribute("file");
+        const char * texturefile = element->Attribute("texture");
 
         string file2 = mergePath(f_path,figura);
+        string file3 = mergePath(f_path,texturefile);
+
+        cout << texturefile << endl;
 
         vector<Material*> *  materials = parse_Objects_Materials(element);
 
-        build_figure(file2,trans,figures,materials);
+        build_figure(file2,trans,figures,materials,(const char *) file3.c_str());
     }
 
 }

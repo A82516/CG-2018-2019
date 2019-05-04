@@ -1,10 +1,15 @@
 <scene>
+    <lights>
+        <light type="POINT" X="0.0" Y="0.0" Z="0.0" />
+    </lights>
     <group>
         <group>
             <! SUN />
             <scale X="3" Y="3" Z="3" />
             <models>
-                <model file='sun.3ds' />
+                <model file='sun.3ds'>
+                    <material type='Emissive' X="1" Y="1" Z="1" />
+                </model>
             </models>
         </group>
         <group>
@@ -24,7 +29,9 @@
                 <rotate Time="1" axisX="0" axisY="1" axisZ="0"/>
                 <scale X="0.3" Y="0.3" Z="0.3" />
                 <models>
-                    <model file='sun.3ds' />
+                    <model file='sun.3ds'>
+                        <material type='Emissive' X="0" Y="0" Z="0" />
+                    </model>
                 </models>
             </group>
         </group>
@@ -45,7 +52,9 @@
                 <rotate Time="1" axisX="0" axisY="1" axisZ="0"/>
                 <scale X="0.4" Y="0.4" Z="0.4" />
                 <models>
-                    <model file='sun.3ds' />
+                    <model file='sun.3ds'>
+                        <material type='Emissive' X="0" Y="0" Z="0" />
+                    </model>
                 </models>
             </group>
         </group>
@@ -67,7 +76,9 @@
                 <rotate Time="1" axisX="0" axisY="1" axisZ="0"/>
                 <scale X="0.45" Y="0.45" Z="0.45" />
                 <models>
-                    <model file='sun.3ds' />
+                    <model file='sun.3ds'>
+                        <material type='Emissive' X="0" Y="0" Z="0" />
+                    </model>
                 </models>
             </group>
             <group>
@@ -87,7 +98,9 @@
                     <rotate Time="10" axisX="0" axisY="1" axisZ="0"/>
                     <scale X="0.1" Y="0.1" Z="0.1" />
                     <models>
-                        <model file='sun.3ds' />
+                        <model file='sun.3ds'>
+                            <material type='Emissive' X="0" Y="0" Z="0" />
+                        </model>
                     </models>
                 </group>
             </group>
@@ -109,7 +122,9 @@
                 </translate>
                 <scale X="0.6" Y="0.6" Z="0.6" />
                 <models>
-                    <model file='tea.3d' />
+                    <model file='sun.3ds'>
+                        <material type='Emissive' X="0" Y="0" Z="0" />
+                    </model>
                 </models>
             </group>
         </group>
@@ -130,7 +145,9 @@
                 <rotate Time="1" axisX="0" axisY="1" axisZ="0"/>
                 <scale X="0.3" Y="0.3" Z="0.3" />
                 <models>
-                    <model file='sun.3ds' />
+                    <model file='sun.3ds'>
+                        <material type='Emissive' X="0" Y="0" Z="0" />
+                    </model>
                 </models>
             </group>
         </group>
@@ -151,7 +168,9 @@
                 <rotate Time="1" axisX="0" axisY="1" axisZ="0"/>
                 <scale X="1" Y="1" Z="1" />
                 <models>
-                    <model file='sun.3ds' />
+                    <model file='sun.3ds'>
+                        <material type='Emissive' X="0" Y="0" Z="0" />
+                    </model>
                 </models>
             </group>
         </group>
@@ -172,14 +191,18 @@
             <group>
                 <scale X="0.8" Y="0.8" Z="0.8" />
                 <models>
-                    <model file='sun.3ds' />
+                    <model file='sun.3ds'>
+                        <material type='Emissive' X="0" Y="0" Z="0" />
+                    </model>
                 </models>
             </group>
             <group>
                 <rotate angle="30" axisX="0" axisY="0" axisZ="1" />
                 <scale X="0.8" Y="0.1" Z="0.8" />
                 <models>
-                    <model file='anel.3ds' />
+                    <model file='sun.3ds'>
+                        <material type='Emissive' X="0" Y="0" Z="0" />
+                    </model>
                 </models>
             </group>
         </group>
@@ -200,7 +223,9 @@
                 <rotate Time="1" axisX="0" axisY="1" axisZ="0"/>
                 <scale X="0.6" Y="0.6" Z="0.6" />
                 <models>
-                    <model file='sun.3ds' />
+                    <model file='sun.3ds'>
+                        <material type='Emissive' X="0" Y="0" Z="0" />
+                    </model>
                 </models>
             </group>
         </group>
@@ -221,7 +246,9 @@
                 <rotate Time="1" axisX="0" axisY="1" axisZ="0"/>
                 <scale X="0.6" Y="0.6" Z="0.6" />
                 <models>
-                    <model file='sun.3ds' />
+                    <model file='sun.3ds'>
+                        <material type='Emissive' X="0" Y="0" Z="0" />
+                    </model>
                 </models>
             </group>
         </group>

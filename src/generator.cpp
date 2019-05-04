@@ -77,7 +77,7 @@ vector<Patch *>* parseBezierPatch(string file_name){
 }
 
 
-void write_file(string file_name,vector<Point*> * vertices,vector<Point*> * normais){
+void write_file(string file_name,vector<Point*> * vertices,vector<Point*> * normais,vector<Point *> * textures){
 
     system("mkdir -p ../files/ ");
     string path = "../files/" + file_name;
@@ -85,7 +85,7 @@ void write_file(string file_name,vector<Point*> * vertices,vector<Point*> * norm
     ofstream outputFile;
     outputFile.open(path);
 
-	vector<Point*>::iterator it,it2;
+	vector<Point*>::iterator it,it2,it3;
     if (vertices->size() != normais->size()) {
 		cout << "Alguma coisa não está certa" << endl;
 		for(it = vertices->begin(); it != vertices->end(); it++){
@@ -93,8 +93,8 @@ void write_file(string file_name,vector<Point*> * vertices,vector<Point*> * norm
 		}
 	}
     else{
-		for(it = vertices->begin(), it2 = normais->begin(); it != vertices->end() && it2 != normais->end(); it++,it2++){
-			outputFile << (*(*it)).to_String() << (*(*it2)).to_String() << endl;
+		for(it = vertices->begin(), it2 = normais->begin(), it3 = textures->begin(); it != vertices->end() && it2 != normais->end() && it3 != textures->end(); it++,it2++,it3++){
+			outputFile << (*(*it)).to_String() << (*(*it2)).to_String() << (*(*it3)).to_String()  << endl;
 		}
     }
 
@@ -225,6 +225,6 @@ int main(int argc, char **argv){
 	}
 
 	if (flag){
-		write_file(argv[argc-1],f.getPontos(),f.getNormais());
+		write_file(argv[argc-1],f.getPontos(),f.getNormais(),f.getTextures());
 	}
 }

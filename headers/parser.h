@@ -25,7 +25,7 @@ void parseGroup(string f_path,vector<Transformation*> &trans,XMLElement * elemen
 void parseTranslate(Translate * t,XMLElement * element);
 void parseModels(string f_path,vector<Transformation*> &trans,XMLElement * element,vector<Figure*> * figures);
 string mergePath(string path, string prog);
-void build_figure(string path,vector<Transformation*> &trans,vector<Figure*> * figures,vector<Material*> *  materials );
+void build_figure(string path,vector<Transformation*> &trans,vector<Figure*> * figures,vector<Material*> *  materials,const char * texturefile );
 
 
 #endif //GENERATOR_PARSER_H

@@ -12,9 +12,11 @@ class Point{
 	float x;
 	float y;
 	float z;
+	int type;
 
 	public:
 		Point(float x,float y,float z);
+		Point(float x,float y);
 		float getX();
 		float getY();
 		float getZ();
