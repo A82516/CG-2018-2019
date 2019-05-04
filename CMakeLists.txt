@@ -71,14 +71,15 @@ else (WIN32) #Linux and Mac
 	link_directories(${OpenGL_LIBRARY_DIRS})
 	add_definitions(${OpenGL_DEFINITIONS})
 
+	find_package(DevIL REQUIRED)
+	link_libraries(${IL_LIBRARIES} )
+	include_directories(${IL_INCLUDE_DIR})
+
 	if(NOT OPENGL_FOUND)
 		message(ERROR " OPENGL not found!")
 	endif(NOT OPENGL_FOUND)
 endif(WIN32)
 
-find_package(DevIL REQUIRED)
-link_libraries(${IL_LIBRARIES} )
-include_directories(${IL_INCLUDE_DIR})
 
 if (NOT APPLE)
 else (NOT APPLE)

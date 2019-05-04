@@ -19,7 +19,11 @@
 #include <time.h>
 #include "Transformation.h"
 #include "Material.h"
+#ifdef __APPLE__
 #include "/usr/local/include/IL/il.h"
+#else
+#include <IL/il.h>
+#endif
 
 
 
