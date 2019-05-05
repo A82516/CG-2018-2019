@@ -110,23 +110,23 @@
         </group>
         <group>
             <! Asteroide />
-            <translate X="-25" Y="-10" Z="20"/>
-            <rotate Angle="70" axisX="1" axisY="0" axisZ="1" />
+            <translate X="0" Y="-2" Z="0" />
+            <rotate Angle="40" axisX="1" axisY="0" axisZ="1" />
             <group>
                 <translate Time="6.0" >
-                    <point X="8" Y="0" Z="-6" />
-                    <point X="8" Y="0" Z="6" />
-                    <point X="3" Y="0" Z="16" />
-                    <point X="-3" Y="0" Z="16" />
-                    <point X="-8" Y="0" Z="6" />
-                    <point X="-8" Y="0" Z="-6" />
-                    <point X="-5" Y="0" Z="-16" />
-                    <point X="3" Y="0" Z="-6" />
+                    <point X="4" Y="0" Z="-6" />
+                    <point X="4" Y="0" Z="0" />
+                    <point X="1.5" Y="0" Z="5" />
+                    <point X="-1.5" Y="0" Z="5" />
+                    <point X="-4" Y="0" Z="0" />
+                    <point X="-4" Y="0" Z="-8" />
+                    <point X="-1.5" Y="0" Z="-11" />
+                    <point X="1.5" Y="0" Z="-11" />
                 </translate>
-                <scale X="0.6" Y="0.6" Z="0.6" />
+                <scale X="0.3" Y="0.3" Z="0.3" />
                 <models>
                     <model file='tea.3ds' texture='steel_texture.jpg'>
-                        <material type='Emissive' X="0" Y="0" Z="0" />
+                        <material type='Emissive' X="1" Y="1" Z="1" />
                     </model>
                 </models>
             </group>
