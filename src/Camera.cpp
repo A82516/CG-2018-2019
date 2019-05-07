@@ -46,6 +46,7 @@ void Camera::updateCamera(float a,float b){
 Camera::~Camera() {}
 
 void Camera::updateUp(){
+
     up->setX(1.0 * cos(beta + (M_PI / 2)) * cos(alpha));
     up->setY(1.0 * sin(beta + (M_PI / 2)));
     up->setZ(1.0 * cos(beta + (M_PI / 2)) * sin(alpha));
