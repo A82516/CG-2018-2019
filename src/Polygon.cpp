@@ -750,6 +750,8 @@ void Polygon::brezierPoints(vector<Patch *> * patches, int tessellation){
                 cross(res2,res1,res3);
                 normalize(res3);
                 normal->push_back(new Point(res3[0],res3[1],res3[2]));
+                textures->push_back(new Point(u2,v));
+
 
 
                 pontos->push_back(p1);
@@ -758,6 +760,7 @@ void Polygon::brezierPoints(vector<Patch *> * patches, int tessellation){
                 cross(res2,res1,res3);
                 normalize(res3);
                 normal->push_back(new Point(res3[0],res3[1],res3[2]));
+                textures->push_back(new Point(u,v));
 
                 pontos->push_back(p4);
                 dUBezier(p,u2,v2,res1);
@@ -765,6 +768,7 @@ void Polygon::brezierPoints(vector<Patch *> * patches, int tessellation){
                 cross(res2,res1,res3);
                 normalize(res3);
                 normal->push_back(new Point(res3[0],res3[1],res3[2]));
+                textures->push_back(new Point(u2,v2));
 
 
                 pontos->push_back(p1);
@@ -773,6 +777,7 @@ void Polygon::brezierPoints(vector<Patch *> * patches, int tessellation){
                 cross(res2,res1,res3);
                 normalize(res3);
                 normal->push_back(new Point(res3[0],res3[1],res3[2]));
+                textures->push_back(new Point(u,v));
 
                 pontos->push_back(p3);
                 dUBezier(p,u,v2,res1);
@@ -780,6 +785,7 @@ void Polygon::brezierPoints(vector<Patch *> * patches, int tessellation){
                 cross(res2,res1,res3);
                 normalize(res3);
                 normal->push_back(new Point(res3[0],res3[1],res3[2]));
+                textures->push_back(new Point(u,v2));
 
                 pontos->push_back(p4);
                 dUBezier(p,u2,v2,res1);
@@ -787,6 +793,7 @@ void Polygon::brezierPoints(vector<Patch *> * patches, int tessellation){
                 cross(res2,res1,res3);
                 normalize(res3);
                 normal->push_back(new Point(res3[0],res3[1],res3[2]));
+                textures->push_back(new Point(u2,v2));
             }
         }
     }

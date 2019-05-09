@@ -4,11 +4,10 @@
     </lights>
     <group>
         <! SUN />
-        <translate X='0' Y='0' Z='10' />
+        <translate X='0' Y='0' Z='3' />
         <models>
-            <model file='sun.3ds' texture='2k_earth_daymap.jpg'>
-                <material type='Emissive' X="0" Y="0" Z="0" />
-                <material type='Specular' X="1" Y="0" Z="0" Shinny="1" />
+            <model file='aux.3ds' texture='8k_sun.jpg'>
+                <material type='Emissive' X="1" Y="1" Z="1" />
             </model>
         </models>
     </group>
