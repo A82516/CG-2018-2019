@@ -33,6 +33,7 @@ class Figure {
 	unsigned int texture;
 	vector<Transformation*> * transformacoes;
 	vector<Material*> * materials;
+	int errors[3];
 
     public:
         Figure(vector<Point*> * v,vector<Transformation*> &trans,vector<Point*> * normal,vector<Material*> *  mat,vector<Point *> * texturepoint,const char * texturefile);
