@@ -56,7 +56,7 @@ endif(NOT OPENGL_FOUND)
 	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
 
 else (WIN32) #Linux and Mac
-	
+
 
 	find_package(GLUT REQUIRED)
 	include_directories(${GLUT_INCLUDE_DIRS})
@@ -71,9 +71,16 @@ else (WIN32) #Linux and Mac
 	link_directories(${OpenGL_LIBRARY_DIRS})
 	add_definitions(${OpenGL_DEFINITIONS})
 
+	find_package(GLEW REQUIRED)
+	include_directories(${GLEW_INCLUDE_DIRS})
+	link_libraries(${GLEW_LIBRARIES})
+
+
 	find_package(DevIL REQUIRED)
 	link_libraries(${IL_LIBRARIES} )
 	include_directories(${IL_INCLUDE_DIR})
+
+	target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${GLEW_LIBRARY} ${IL_LIBRARIES})
 
 	if(NOT OPENGL_FOUND)
 		message(ERROR " OPENGL not found!")
@@ -83,7 +90,7 @@ endif(WIN32)
 
 if (NOT APPLE)
 else (NOT APPLE)
-	target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${IL_LIBRARIES})
+	target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${IL_LIBRARIES} ${GLEW_LIBRARIES})
 endif(NOT APPLE)
 
 project(generator)

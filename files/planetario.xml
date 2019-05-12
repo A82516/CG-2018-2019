@@ -255,5 +255,29 @@
                 </models>
             </group>
         </group>
+        <group>
+            <! Shrek />
+            <rotate Angle="15" axisX="1" axisY="1" axisZ="1" />
+            <translate Time="21.0" >
+                <point X="39.766" Y="0" Z="-32.05225" />
+                <point X="39.766" Y="0" Z="32.05225" />
+                <point X="21.026125" Y="5" Z="68.806" />
+                <point X="-21.026125" Y="0" Z="68.806" />
+                <point X="-39.766" Y="0" Z="32.05225" />
+                <point X="-39.766" Y="5" Z="-32.05225" />
+                <point X="-21.026125" Y="0" Z="-68.806" />
+                <point X="21.026125" Y="-20" Z="-68.806" />
+            </translate>
+            <group>
+                <rotate Angle="270" axisX="1" axisY="0" axisZ="0" />
+                <rotate Time="5" axisX="1" axisY="1" axisZ="1"/>
+                <scale X="0.1" Y="0.1" Z="0.1" />
+                <models>
+                    <model file='shrek.3d' texture='8k_sun.jpg'>
+                        <material type='Emissive' X="0" Y="0" Z="0" />
+                    </model>
+                </models>
+            </group>
+        </group>
     </group>
 </scene>

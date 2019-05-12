@@ -107,6 +107,9 @@ Figure::~Figure(){
 
 void Figure::loadImage(const char * texturefile) {
 
+    if (!texturefile)
+        return;
+
         unsigned int t, tw, th;
         unsigned char *texData = NULL;
 

@@ -153,6 +153,19 @@ void printHelp(){
 	cout << "#________________________________________________________________#" << endl;
 }
 
+bool convertOBJ(string file_name){
+    vector <Point *>  *vertices = new vector<Point*>;
+    vector <Point *>  *normals  = new vector<Point*>;
+    vector <Point *>  *uvs = new vector<Point*>;
+
+    if (loadOBJ(file_name.c_str(), vertices,  uvs, normals)) {
+        write_file(file_name + ".3d", vertices, normals, uvs);
+        return true;
+    }
+    else
+        return false;
+}
+
 int main(int argc, char **argv){
 
 	Polygon f;
@@ -243,6 +256,12 @@ int main(int argc, char **argv){
 			flag = 1;
 		}else print_error("Erro no input");
 	}
+    else if(argc == 3 && strcmp(argv[1],"obj")==0){
+        string filepath = argv[2];
+        if (!convertOBJ(argv[2])) {
+            print_error("Erro ao processar ficheiro especificado, talvez o ficheiro não existe");
+        }
+    }
 	else{
 		printHelp();
 	}
@@ -251,3 +270,4 @@ int main(int argc, char **argv){
 		write_file(argv[argc-1],f.getPontos(),f.getNormais(),f.getTextures());
 	}
 }
+
