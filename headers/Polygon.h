@@ -43,7 +43,6 @@ public:
     Point * brezierPatch(float u, float v,Patch * patch);
     void brezierPoints(vector<Patch *> * patches, int tessellation);
     virtual ~Polygon();
-
 };
 
 void vector_between_normalized(float p1[3],float p2[3],float res[3]);
@@ -51,6 +50,7 @@ float quadratic_equation(float middle,float p[3]);
 float dist_2_P(float p1 [3],float p2 [3]);
 void sumMatrix(float matrix [4][3],float res [3]);
 void mulVect(float a,float res[3]);
+bool loadOBJ(const char * path,vector <Point *> * out_vertices, vector<Point *> * out_uvs, vector <Point *> * out_normals);
 
 
 #endif //GENERATOR_POLYGON_H
