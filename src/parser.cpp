@@ -5,7 +5,6 @@
 #include "../headers/Diffuse.h"
 #include "../headers/Emissive.h"
 #include "../headers/Specular.h"
-#include <glm/vec2.hpp>
 
 void build_figure(string path,vector<Transformation*> &trans,vector<Figure*> * figures,vector<Material*> *  materials,const char * texturefile ){
 

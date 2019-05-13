@@ -71,27 +71,28 @@ else (WIN32) #Linux and Mac
 	link_directories(${OpenGL_LIBRARY_DIRS})
 	add_definitions(${OpenGL_DEFINITIONS})
 
-	find_package(GLEW REQUIRED)
-	include_directories(${GLEW_INCLUDE_DIRS})
-	link_libraries(${GLEW_LIBRARIES})
 
 
 	find_package(DevIL REQUIRED)
 	link_libraries(${IL_LIBRARIES} )
 	include_directories(${IL_INCLUDE_DIR})
 
-	target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${GLEW_LIBRARY} ${IL_LIBRARIES})
+
+	if (NOT APPLE)
+		find_package(GLEW REQUIRED)
+		include_directories(${GLEW_INCLUDE_DIRS})
+		link_libraries(${GLEW_LIBRARIES})
+		target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${GLEW_LIBRARY} ${IL_LIBRARIES})
+	else (NOT APPLE)
+		target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${IL_LIBRARIES})
+	endif(NOT APPLE)
+
 
 	if(NOT OPENGL_FOUND)
 		message(ERROR " OPENGL not found!")
 	endif(NOT OPENGL_FOUND)
 endif(WIN32)
 
-
-if (NOT APPLE)
-else (NOT APPLE)
-	target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${IL_LIBRARIES} ${GLEW_LIBRARIES})
-endif(NOT APPLE)
 
 project(generator)
 set(GENERATOR_FILES ./src/generator.cpp ./src/Point.cpp ./src/Polygon.cpp ./src/Transformation.cpp ./src/Patch.cpp ./src/Translate.cpp)
