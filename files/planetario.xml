@@ -203,8 +203,8 @@
                 <rotate angle="30" axisX="0" axisY="0" axisZ="1" />
                 <scale X="0.8" Y="0.1" Z="0.8" />
                 <models>
-                    <model file='anel.3ds' texture='2k_saturn_ring_alpha.jpg'>
-                        <material type='Emissive' X="0" Y="0" Z="0" />
+                    <model file='anel.3ds' texture='2k_saturn_ring_alpha.png'>
+                        <material type='Emissive' X="1" Y="1" Z="1" />
                     </model>
                 </models>
             </group>
