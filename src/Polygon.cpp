@@ -1,6 +1,7 @@
 
 #define _USE_MATH_DEFINES
 #include <cmath>
+#include <cstring>
 #include "../headers/Polygon.h"
 
 Point* Polygon::shpere_texture(float alpha,float beta) {
@@ -855,4 +856,73 @@ void mulVect(float a,float res[3]){
     res[0] *= a;
     res[1] *= a;
     res[2] *= a;
+}
+
+bool loadOBJ(const char * path,vector <Point *> * out_vertices, vector<Point *> * out_uvs, vector <Point *> * out_normals){
+
+    vector< unsigned int > vertexIndices, uvIndices, normalIndices;
+    vector< Point *> * temp_vertices = new vector<Point*>();
+    vector< Point *> * temp_uvs = new vector<Point*>();
+    vector< Point *> * temp_normals = new vector<Point*>();
+
+    FILE * file = fopen( path, "r");
+    if(!file){
+        printf("Não consegui abrir o ficheiro\n");
+        return false;
+    }
+    float x, y ,z;
+    while(1) {
+        char line[128];
+        int res = fscanf(file, "%s", line);
+        if (res == EOF)
+            break;
+
+        if (!strcmp(line, "v")) {
+            fscanf(file, "%f %f %f\n", &x, &y, &z);
+            temp_vertices->push_back(new Point(x,y,z));
+        } else if (!strcmp(line, "vt")) {
+            fscanf(file, "%f %f\n", &x, &y);
+            temp_uvs->push_back(new Point(x, y, 0));
+        } else if (!strcmp(line, "vn")) {
+            fscanf(file, "%f %f %f\n", &x, &y, &z);
+            temp_normals->push_back(new Point(x,y,z));
+        } else if(!strcmp(line, "f")) {
+            std::string vertex1, vertex2, vertex3;
+            unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
+            int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2] );
+            if (matches != 9){
+                printf("%d\n", matches);
+                printf("Error parsing faces, different number of matches\n");
+                return false;
+            }
+            vertexIndices.push_back(vertexIndex[0]);
+            vertexIndices.push_back(vertexIndex[1]);
+            vertexIndices.push_back(vertexIndex[2]);
+            uvIndices    .push_back(uvIndex[0]);
+            uvIndices    .push_back(uvIndex[1]);
+            uvIndices    .push_back(uvIndex[2]);
+            normalIndices.push_back(normalIndex[0]);
+            normalIndices.push_back(normalIndex[1]);
+            normalIndices.push_back(normalIndex[2]);
+        }
+
+    }
+
+    for(unsigned int i = 0; i < vertexIndices.size(); i++){
+        unsigned int vertexIndex = vertexIndices[i];
+        out_vertices->push_back(new Point((*temp_vertices)[vertexIndex -1]->getX(), (*temp_vertices)[vertexIndex -1]->getY(), (*temp_vertices)[vertexIndex -1]->getZ()));
+    }
+
+
+    for(unsigned int i = 0; i < normalIndices.size(); i++){
+        unsigned int normalIndex = normalIndices[i];
+        out_normals->push_back(new Point((*temp_normals)[normalIndex -1]->getX(), (*temp_normals)[normalIndex -1]->getY(), (*temp_normals)[normalIndex -1]->getZ()));
+    }
+
+    for(unsigned int i = 0; i < uvIndices.size(); i++){
+        unsigned int uvIndex = uvIndices[i];
+        out_uvs->push_back(new Point((*temp_uvs)[uvIndex -1]->getX(), (*temp_uvs)[uvIndex -1]->getY(), (*temp_uvs)[uvIndex -1]->getZ()));
+    }
+
+    return true;
 }
