@@ -257,8 +257,7 @@
         </group>
         <group>
             <! Shrek />
-            <rotate Angle="15" axisX="1" axisY="1" axisZ="1" />
-            <translate Time="21.0" >
+            <translate Time="20" >
                 <point X="39.766" Y="0" Z="-32.05225" />
                 <point X="39.766" Y="0" Z="32.05225" />
                 <point X="21.026125" Y="5" Z="68.806" />
@@ -268,12 +267,12 @@
                 <point X="-21.026125" Y="0" Z="-68.806" />
                 <point X="21.026125" Y="-20" Z="-68.806" />
             </translate>
+            <rotate Time="-20" axisX="0" axisY="1" axisZ="0" />
             <group>
-                <rotate Angle="270" axisX="1" axisY="0" axisZ="0" />
-                <rotate Time="5" axisX="1" axisY="1" axisZ="1"/>
-                <scale X="0.1" Y="0.1" Z="0.1" />
+                <scale X="0.02" Y="0.02" Z="0.02" />
+                <rotate Angle="180" axisX="0" axisY="1" axisZ="0" />
                 <models>
-                    <model file='shrek.3d' texture='8k_sun.jpg'>
+                    <model file='ships/falcon2.obj.3d' texture='steel_texture.jpg'>
                         <material type='Emissive' X="0" Y="0" Z="0" />
                     </model>
                 </models>

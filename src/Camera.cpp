@@ -60,6 +60,9 @@ void Camera::updateCamera(float a,float b){
     if (beta >= (M_PI / 2.0))
         beta = (M_PI / 2.0);
 
+    if (beta <= -(M_PI / 2.0))
+        beta = -(M_PI / 2.0);
+
     updateLookup();
     updateUp();
 }
