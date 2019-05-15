@@ -1,0 +1,11 @@
+<scene>
+    <group>
+        <scale X="0.005" Y="0.005" Z="0.005" />
+        <rotate Angle="270" axisX="0" axisY="1" axisZ="0" />
+        <models>
+            <model file='shrek.3d' texture='8k_sun.jpg'>
+                <material type='Emissive' X="0" Y="0" Z="0" />
+            </model>
+        </models>
+    </group>
+</scene>

@@ -101,6 +101,7 @@ void renderScene(void) {
 
 	glPolygonMode(GL_FRONT,viewMode);
 	draw_figures();
+	cam->draw();
 
 
 	glutSwapBuffers();
@@ -137,6 +138,10 @@ void processKeys(unsigned char c, int xx, int yy) {
 			case 'l':
 					viewMode = GL_FILL;
 					glutPostRedisplay();
+					break;
+
+			case 'u':
+					cam->thirdperson();
 					break;
 			default:
 					break;
@@ -228,7 +233,13 @@ int main(int argc, char **argv) {
 	}
 
 	else {
+		cam = new Camera();
 	    figs = * (parseXML(argv[1],&lights)); // Read XML File
+	    if (argc == 3){
+			vector<Light * > aux1;
+	    	vector<Figure * > aux = * (parseXML(argv[2],&aux1));
+	    	cam->setFig(aux[0]);
+	    }
 	}
 // Required callback registry
 	glutDisplayFunc(renderScene);
@@ -242,8 +253,6 @@ int main(int argc, char **argv) {
 	glutMotionFunc(activeMotion);
 	glutMouseFunc(mouse);
 
-
-	cam = new Camera();
 
 // enter GLUT's main cycle
 	glutMainLoop();

@@ -23,16 +23,19 @@ void Figure::draw() {
     glBindBuffer(GL_ARRAY_BUFFER,buffer[1]);
     glNormalPointer(GL_FLOAT,0,0);
 
-    glBindBuffer(GL_ARRAY_BUFFER, buffer[2]);
-    glTexCoordPointer(2, GL_FLOAT, 0, 0);
+    if (errors[2] == 0) {
+        glBindBuffer(GL_ARRAY_BUFFER, buffer[2]);
+        glTexCoordPointer(2, GL_FLOAT, 0, 0);
+    }
 
     glDrawArrays(GL_TRIANGLES, 0, n_vertex * 3);
 
-    glBindTexture(GL_TEXTURE_2D, 0);
+    if (errors[2] == 0) {
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
 
     glPopMatrix();
 }
-
 
 Figure::Figure(vector<Point*> * v,vector<Transformation*> &trans,vector<Point*> * normal,vector<Material*> *  mat,vector<Point *> * texturepoint,const char * texturefile){
     materials = mat;
@@ -94,7 +97,14 @@ Figure::Figure(vector<Point*> * v,vector<Transformation*> &trans,vector<Point*> 
     free(array_normal);
     //free(array_texture);
 
-    loadImage(texturefile);
+    if (texturefile != NULL && texturefile[0] != '\0') {
+        loadImage(texturefile);
+        errors[2] = 0;
+    }
+    else{
+        errors[2] = 1;
+    }
+    cout << errors[2] << endl;
 }
 
 Figure::~Figure(){
@@ -113,12 +123,12 @@ void Figure::loadImage(const char * texturefile) {
         unsigned int t, tw, th;
         unsigned char *texData = NULL;
 
-    ilEnable(IL_ORIGIN_SET);
-    ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
+        ilEnable(IL_ORIGIN_SET);
+        ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
 
         ilGenImages(1, &t);
         ilBindImage(t);
-        ilLoadImage((ILstring)texturefile);
+        ILboolean a = ilLoadImage((ILstring)texturefile);
         tw = ilGetInteger(IL_IMAGE_WIDTH);
         th = ilGetInteger(IL_IMAGE_HEIGHT);
         ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);

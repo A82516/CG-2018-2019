@@ -5,7 +5,6 @@
 #include "../headers/Diffuse.h"
 #include "../headers/Emissive.h"
 #include "../headers/Specular.h"
-#include <glm/vec2.hpp>
 
 void build_figure(string path,vector<Transformation*> &trans,vector<Figure*> * figures,vector<Material*> *  materials,const char * texturefile ){
 
@@ -79,6 +78,8 @@ void build_figure(string path,vector<Transformation*> &trans,vector<Figure*> * f
 
 string mergePath(string path, string prog){
 
+    if (prog.compare("") == 0)
+        return prog;
     int i ;
     int flag = 0;
     for( i = path.length() - 1 ; i>=0 && !flag; i-- )

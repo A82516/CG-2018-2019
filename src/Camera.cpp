@@ -21,9 +21,27 @@ Camera::Camera() {
     speed = 0.1;
     updateUp();
     updateLookup();
+    fig = NULL;
 }
 
 Point * Camera::getPosition() {
+    if (third == 1){
+        float res[3];
+        this->position->get(res);
+
+        float alphaN = M_PI + alpha;
+        float betaN = - beta + M_PI / 3.0;
+
+        float x = -2.0 * cos(betaN) * cos(alphaN) + position->getX();
+        float y = 2.0 * sin(betaN) + position->getY();
+        float z = -2.0 * cos(betaN) * sin(alphaN) + position->getZ();
+
+        return new Point(x,y,z);
+    }
+    return position;
+}
+
+Point * Camera::getPositionOld(){
     return position;
 }
 
@@ -38,6 +56,9 @@ Point * Camera::getLookup() {
 void Camera::updateCamera(float a,float b){
     alpha += a;
     beta += b;
+
+    if (beta >= (M_PI / 2.0))
+        beta = (M_PI / 2.0);
 
     updateLookup();
     updateUp();
@@ -103,5 +124,28 @@ void Camera::move(unsigned char c, int xx, int yy){
 
     updateLookup();
     updateUp();
+}
+
+void Camera::thirdperson(){
+    this->third = this->third == 1 ? 0 : 1;
+}
+
+void Camera::draw(){
+    if (third){
+        glPushMatrix();
+        glTranslatef(position->getX(),position->getY(),position->getZ());
+
+        //glRotatef((alpha*360.0) / (2.0*M_PI),0,1,0);
+        //glRotatef((beta*360.0) / (2.0*M_PI),1,0,0);
+
+        if (fig == NULL)
+            glutSolidCube(1);
+        else fig->draw();
+        glPopMatrix();
+    }
+}
+
+void Camera::setFig(Figure * f){
+    fig = f;
 }
 
