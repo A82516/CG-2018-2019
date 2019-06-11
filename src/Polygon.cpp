@@ -653,6 +653,33 @@ Point * Polygon::dUBezier(Patch * patch, float u, float v, float res [3])
         vCurve[i] = brezierValue(v,P[0],P[1],P[2],P[3]);
     }
 
+    float b0 = -3 * powf((1-u),2);
+    float b1 = 3 * (3*powf(u,2) - 4*u + 1);
+    float b2 = 3*(2*u - 3*powf(u,2));
+    float b3 = 3 * u * u;
+
+    res[0] = vCurve[0]->getX()*b0 + vCurve[1]->getX()*b1 + vCurve[2]->getX()*b2 +  vCurve[3]->getX()*b3;
+    res[1] = vCurve[0]->getY()*b0 + vCurve[1]->getY()*b1 + vCurve[2]->getY()*b2 +  vCurve[3]->getY()*b3;
+    res[2] = vCurve[0]->getZ()*b0 + vCurve[1]->getZ()*b1 + vCurve[2]->getZ()*b2 +  vCurve[3]->getZ()*b3;
+
+
+
+    return new Point(res[0],res[1],res[2]);
+}
+
+/*
+Point * Polygon::dUBezier(Patch * patch, float u, float v, float res [3])
+{
+    Point * P[4];
+    Point * vCurve[4];
+    for (int i = 0; i < 4; ++i) {
+        P[0] = patch->pointAt(i);
+        P[1] = patch->pointAt(4+i);
+        P[2] = patch->pointAt(8+i);
+        P[3] = patch->pointAt(12+i);
+        vCurve[i] = brezierValue(v,P[0],P[1],P[2],P[3]);
+    }
+
     float matrix [4][3];
 
     for(int i=0; i < 4 ; i++)
@@ -666,8 +693,40 @@ Point * Polygon::dUBezier(Patch * patch, float u, float v, float res [3])
     sumMatrix(matrix,res);
 
     return new Point(res[0],res[1],res[2]);
+}*/
+
+
+Point * Polygon::dVBezier(Patch * patch, float u, float v,float res [3])
+{
+    Point * uCurve[4];
+    Point * P[4];
+
+    for (int i = 0; i < 4; ++i) {
+        P[0] = patch->pointAt(i);
+        P[1] = patch->pointAt(i+1);
+        P[2] = patch->pointAt(i+2);
+        P[3] = patch->pointAt(i+3);
+        uCurve[i] = brezierValue(u,P[0],P[1],P[2],P[3]);
+    }
+
+    float b0 = -3 * powf((1-v),2);
+    float b1 = 3 * (3*powf(v,2) - 4*v + 1);
+    float b2 = 3*(2*v - 3*powf(v,2));
+    float b3 = 3 * v * v;
+
+    res[0] = uCurve[0]->getX()*b0 + uCurve[1]->getX()*b1 + uCurve[2]->getX()*b2 +  uCurve[3]->getX()*b3;
+    res[1] = uCurve[0]->getY()*b0 + uCurve[1]->getY()*b1 + uCurve[2]->getY()*b2 +  uCurve[3]->getY()*b3;
+    res[2] = uCurve[0]->getZ()*b0 + uCurve[1]->getZ()*b1 + uCurve[2]->getZ()*b2 +  uCurve[3]->getZ()*b3;
+
+
+
+    return new Point(res[0],res[1],res[2]);
+
+
 }
 
+
+/*
 Point * Polygon::dVBezier(Patch * patch, float u, float v,float res [3])
 {
     Point * uCurve[4];
@@ -694,7 +753,7 @@ Point * Polygon::dVBezier(Patch * patch, float u, float v,float res [3])
     sumMatrix(matrix,res);
 
     return new Point(res[0],res[1],res[2]);
-}
+}*/
 
 
 Point * Polygon::brezierPatch(float u, float v,Patch * patch){
@@ -716,10 +775,6 @@ Point * Polygon::brezierPatch(float u, float v,Patch * patch){
     }
 
     Point * res = brezierValue(v,v_points[0],v_points[1],v_points[2],v_points[3]);
-
-    /**
-    for(int i= 0; i < 4; i++)
-        delete(v_points[i]);*/
 
     return res;
 }
@@ -745,61 +800,67 @@ void Polygon::brezierPoints(vector<Patch *> * patches, int tessellation){
                 Point * p4 = brezierPatch(u2,v2,p);
 
 
+
+                pontos->push_back(p4);
+                dUBezier(p,u2,v2,res1);
+                dVBezier(p,u2,v2,res2);
+                cross(res1,res2,res3);
+                normalize(res3);
+                normal->push_back(new Point(res3[0],res3[1],res3[2]));
+                textures->push_back(new Point(u2,v2));
+
+                pontos->push_back(p1);
+                dUBezier(p,u,v,res1);
+                dVBezier(p,u,v,res2);
+                cross(res1,res2,res3);
+                normalize(res3);
+                normal->push_back(new Point(res3[0],res3[1],res3[2]));
+                textures->push_back(new Point(u,v));
+
                 pontos->push_back(p2);
                 dUBezier(p,u2,v,res1);
                 dVBezier(p,u2,v,res2);
-                cross(res2,res1,res3);
+                cross(res1,res2,res3);
                 normalize(res3);
                 normal->push_back(new Point(res3[0],res3[1],res3[2]));
                 textures->push_back(new Point(u2,v));
 
 
 
-                pontos->push_back(p1);
-                dUBezier(p,u,v,res1);
-                dVBezier(p,u,v,res2);
-                cross(res2,res1,res3);
-                normalize(res3);
-                normal->push_back(new Point(res3[0],res3[1],res3[2]));
-                textures->push_back(new Point(u,v));
-
                 pontos->push_back(p4);
                 dUBezier(p,u2,v2,res1);
                 dVBezier(p,u2,v2,res2);
-                cross(res2,res1,res3);
+                cross(res1,res2,res3);
                 normalize(res3);
                 normal->push_back(new Point(res3[0],res3[1],res3[2]));
                 textures->push_back(new Point(u2,v2));
-
-
-                pontos->push_back(p1);
-                dUBezier(p,u,v,res1);
-                dVBezier(p,u,v,res2);
-                cross(res2,res1,res3);
-                normalize(res3);
-                normal->push_back(new Point(res3[0],res3[1],res3[2]));
-                textures->push_back(new Point(u,v));
 
                 pontos->push_back(p3);
                 dUBezier(p,u,v2,res1);
                 dVBezier(p,u,v2,res2);
-                cross(res2,res1,res3);
+                cross(res1,res2,res3);
                 normalize(res3);
                 normal->push_back(new Point(res3[0],res3[1],res3[2]));
                 textures->push_back(new Point(u,v2));
 
-                pontos->push_back(p4);
-                dUBezier(p,u2,v2,res1);
-                dVBezier(p,u2,v2,res2);
-                cross(res2,res1,res3);
+                pontos->push_back(p1);
+                dUBezier(p,u,v,res1);
+                dVBezier(p,u,v,res2);
+                cross(res1,res2,res3);
                 normalize(res3);
                 normal->push_back(new Point(res3[0],res3[1],res3[2]));
-                textures->push_back(new Point(u2,v2));
+                textures->push_back(new Point(u,v));
+
             }
         }
     }
 }
 
+void mycross(float *a, float *b,float * res){
+    res[0] = (-a[2])*b[1] + a[1]*b[2];
+    res[1] = a[2]*b[0] - a[0]*b[2];
+    res[2] = -a[1] * b[0] + a[0]*b[1];
+}
 
 float dist_2_P(float p1 [3],float p2 [3]){
     float x = p1[0] - p2[0];

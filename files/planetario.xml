@@ -113,7 +113,7 @@
             <translate X="0" Y="-2" Z="0" />
             <rotate Angle="40" axisX="1" axisY="0" axisZ="1" />
             <group>
-                <translate Time="6.0" >
+                <translate Time="120.0" >
                     <point X="4" Y="0" Z="-6" />
                     <point X="4" Y="0" Z="0" />
                     <point X="1.5" Y="0" Z="5" />
@@ -125,8 +125,8 @@
                 </translate>
                 <scale X="0.3" Y="0.3" Z="0.3" />
                 <models>
-                    <model file='tea.3ds' texture='steel_texture.jpg'>
-                        <material type='Emissive' X="1" Y="1" Z="1" />
+                    <model file='tea.3ds' texture='8k_sun.jpg'>
+                        <material type='Emissive' X="0" Y="0" Z="0" />
                     </model>
                 </models>
             </group>

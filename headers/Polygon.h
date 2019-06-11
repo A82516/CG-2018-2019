@@ -45,6 +45,7 @@ public:
     virtual ~Polygon();
 };
 
+void mycross(float *a, float *b,float * res);
 void vector_between_normalized(float p1[3],float p2[3],float res[3]);
 float quadratic_equation(float middle,float p[3]);
 float dist_2_P(float p1 [3],float p2 [3]);
