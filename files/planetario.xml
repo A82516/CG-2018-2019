@@ -272,7 +272,7 @@
                 <scale X="0.02" Y="0.02" Z="0.02" />
                 <rotate Angle="180" axisX="0" axisY="1" axisZ="0" />
                 <models>
-                    <model file='ships/falcon2.obj.3d' texture='steel_texture.jpg'>
+                    <model file='ships/falcon2.obj.3d' texture='ships/falcon.jpg'>
                         <material type='Emissive' X="0" Y="0" Z="0" />
                     </model>
                 </models>
